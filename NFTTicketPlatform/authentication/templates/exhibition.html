@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{%block content%}
+{% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{% static 'css/exhibition.css' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <!-- font awesome link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <title>NFT Platform</title>
+
+
+    <!-- fixed container -->
+    <div class="container-fluid p-0">
+
+
+        <!-- ticket container -->
+        <div class="container">
+
+            <h1 id="top-title">Welcome to one-stop NFT ticket site</h1>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
+                <!--
+                    Extra small<576px 一行1欄
+                    Small≥576px 一行2欄
+                    Medium≥768px 一行3欄
+                    Large≥992px	一行3欄
+                    Extra large≥1200px 一行3欄
+                -->
+                {%if exhibitionEvents %}
+                    {%for exhibitionEvent in exhibitionEvents%}
+                    <div class="col">
+                        <div class="card">
+                            <img src="{{exhibitionEvent.event_pic.url}}"  style="height: ２00px; width: ３00px;"  class="card-img-top" alt="city-at-home.jpg">
+                            <div class="card-body">
+                                <h5 class="card-title">{{exhibitionEvent.eventname}}</h5>
+                                <h4 class="card-title">${{exhibitionEvent.eventprice}}</h5>
+                                {% comment %} <p class="card-text"></p> {% endcomment %}
+                                {% comment %} <p class="card-text">Starting Time：{{exhibitionEvent.pk}}</p> {% endcomment %}
+                                <p class="card-text">Starting Time：{{exhibitionEvent.date_StartTime}}</p>
+                                <p class="card-text">Ending Time：{{exhibitionEvent.date_EndTime}}</p>
+                                <a href="{%url 'exhibitionDetail' exhibitionEvent.id %}" class="btn btn-primary">展覽內容</a>
+                                <a href="#" class="btn btn-primary">購買票券</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>There is no exhibition!.....</p>
+                {% endif %}
+
+
+                {% comment %} <div class="col">
+                    <div class="card">
+                        <img src="{% static 'imgs/city-ashome.jpg' %}" class="card-img-top" alt="city-at-home.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title">票券名稱</h5>
+                            <p class="card-text">票券內容</p>
+                            <a href="#" class="btn btn-primary">購買票券</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="{% static 'imgs/city-ashome.jpg' %}" class="card-img-top" alt="city-at-home.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title">票券名稱</h5>
+                            <p class="card-text">票券內容</p>
+                            <a href="#" class="btn btn-primary">購買票券</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="{% static 'imgs/city-ashome.jpg' %}" class="card-img-top" alt="city-at-home.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title">票券名稱</h5>
+                            <p class="card-text">票券內容</p>
+                            <a href="#" class="btn btn-primary">購買票券</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="{% static 'imgs/city-ashome.jpg' %}" class="card-img-top" alt="city-at-home.jpg">
+                        <div class="card-body">
+                            <h5 class="card-title">票券名稱</h5>
+                            <p class="card-text">票券內容</p>
+                            <a href="#" class="btn btn-primary">購買票券</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="{% static 'imgs/city-ashome.jpg' %}" class="card-img-top" alt="city-at-home.jpg">  \
+                        <div class="card-body">
+                            <h5 class="card-title">票券名稱</h5>
+                            <p class="card-text">票券內容</p>
+                            <a href="#" class="btn btn-primary">購買票券</a>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+            </div>
+        </div>
+        <!-- end ticket container -->
+        {% comment %} <div class="row m-5">
+            <div class="col-md-12 m-2">
+
+              {% if Events.has_other_pages %}
+                <ul class="pagination">
+                      {% if Events.has_previous %}
+                          <li class="page-item">
+                            <a href="?page={{ Events.previous_page_number }}" class="page-link">&laquo;
+                            </a>
+                          <li>
+                        {% else %}
+                          <li class="page-item disabled">
+                            <a class="page-link" href="?page=1">&laquo;</a>
+                          </li>
+                       {% endif %}
+
+                    {% for i in Events.paginator.page_range %}
+                          {% if Events.number == i %}
+                            <li class="page-item active">
+                              <a class="page-link">{{ i }}</a>
+                            </li>
+                          {% else %}
+                          <li class="page-item">
+                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                          </li>
+                          {% endif %}
+                    {% endfor %}
+
+
+
+                    {% if Events.has_next %}
+                    <li class="page-item">
+                      <a href="?page={{ Events.next_page_number }}" class="page-link">&raquo;
+                      </a>
+                    <li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="?page={{ Events.paginator.num_pages }}">&raquo;</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+              {% endif %}
+
+            </div>
+          </div>
+
+    </div> {% endcomment %}
+    <!-- end of fixed container -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+{%endblock%}
