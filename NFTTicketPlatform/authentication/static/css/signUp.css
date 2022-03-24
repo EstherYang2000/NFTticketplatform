@@ -1,0 +1,234 @@
+/* ------------------------- CSS for navbar ------------------------- */
+
+#brand {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+}
+
+#brand:hover {
+    color: white;
+    transition: 0.5s;
+}
+
+#brand:not(:hover) {
+    transition: 0.5s;
+}
+
+.navbar-custom {
+    background: linear-gradient(90deg, #a8c0ff 0%, #3f2b96 100%);
+}
+
+.navbar .nav-link {
+    font-size: 18px;
+    color: black;
+    transition: all 0.5s;
+    font-weight: 600;
+}
+
+.navbar .nav-link:hover {
+    transition: all 0.5s;
+    color: white;
+    font-weight: 600;
+}
+
+.navbar .nav-item .dropdown-menu>a {
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.navbar .nav-item .dropdown-menu>a:hover {
+    background-color: #7171c7;
+    color: white;
+    border-radius: 6px;
+    transition: all 0.5s;
+}
+
+/* ------------------------- end css for navbar ------------------------- */
+
+
+/* ------------------------- CSS for form ------------------------- */
+#round-corner {
+    margin-top: 2%;
+    margin-bottom: 5%;
+    padding: 20px;
+    border: 3px solid grey;
+    border-radius: 20px;
+    box-shadow: 10px 5px 5px grey;
+}
+
+.form-switcher {
+    font-weight: bolder;
+    color: #ff735c;
+}
+
+.form-switcher:hover {
+    transition: 0.5s;
+    color: black;
+}
+
+.form-switcher:not(:hover) {
+    transition: 0.5s;
+}
+
+h1 {
+    color: #ff735c;
+    font-weight: bolder;
+    cursor: auto;
+}
+
+.shadow-container {
+    margin-bottom: 5%;
+}
+
+#inside-shadow-row {
+    padding: 25px;
+}
+
+#signup-form {
+    margin-top: 24px;
+}
+
+.container-fluid .shadow-container #signup-img-div {
+    padding: 0% 2%;
+}
+
+#signup-img {
+    width: 100%;
+    height: 90%;
+}
+
+/* .enterprice-form .userform{
+    margin-top: 5%;
+    padding-left: 5%;
+    margin-bottom: 3%;
+} */
+
+.form-label {
+    color: #ff735c;
+    font-weight: bolder;
+    font-size: 22px;
+    cursor: auto;
+}
+
+.from-group {
+    width: 80%;
+}
+
+.form-control {
+    width: 70%;
+}
+
+.input-compo {
+    padding: 5px;
+    margin-bottom: 18px;
+    width: 50%;
+    font-size: 18px;
+}
+
+form .btn {
+    background-color: #ff735c;
+    border-color: #ff735c;
+    color: aliceblue;
+    font-size: 18px;
+    font-weight: bolder;
+    justify-content: center;
+
+
+}
+
+form .btn:hover {
+    transition: 0.5s;
+    color: #ff735c;
+    background-color: white;
+    border-color: #ff735c;
+}
+
+form .btn:not(:hover) {
+    transition: 0.5s;
+} */
+
+
+
+.user_card {
+    width: 350px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: #74cfbf;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+
+}
+
+.form_container {
+    margin-top: 20px;
+}
+
+#form-title{
+    color: #fff;
+}
+.login_btn {
+    width: 100%;
+    background: #ff735c !important;
+    color: white !important;
+}
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+.login_container {
+    padding: 0 2rem;
+}
+
+.input-group-text {
+    background: #ff735c !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.preference {
+    display: flex;
+    justify-content:flex-start;
+    width: 100%;
+    margin: .5rem;
+}
+
+
+
+  /* Create a custom checkbox */
+
+.preference.id_is_staff.form-control{
+    width: 40%;
+    margin: .10rem;
+
+}
+
+.preference #label1{
+    margin-top: .30rem;
+    width: 400%;
+    background-color: white;
+    /* text-align:center; */
+    font-size: 1.2rem;
+    color: grey;
+    line-height:2rem;
+
+}
+
+/* ------------------------- end css for form ------------------------- */

@@ -1,0 +1,286 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: rgb(231, 231, 231);
+}
+
+/* ------------------------- navbar ------------------------- */
+
+.navbar #brand {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+}
+
+.navbar #brand:hover {
+    color: white;
+    transition: 0.5s;
+}
+
+.navbar-custom {
+    background: linear-gradient(90deg, #a8c0ff 0%, #3f2b96 100%);
+}
+
+.navbar .nav-link {
+    font-size: 18px;
+    color: black;
+    transition: all 0.5s;
+    font-weight: 600;
+}
+
+.navbar .nav-link:hover {
+    transition: all 0.5s;
+    color: white;
+    font-weight: 600;
+}
+
+.navbar .nav-item .dropdown-menu>a {
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.navbar .nav-item .dropdown-menu>a:hover {
+    background-color: #7171c7;
+    color: white;
+    border-radius: 6px;
+    transition: all 0.5s;
+}
+
+/* ------------------------- end navbar ------------------------- */
+
+/*------------------------- Sidebar -------------------------*/
+
+.wrapper {
+    /* border: 5px solid black; */
+    display: flex;
+    text-decoration: none;
+    transition: 0.5s;
+
+}
+
+.wrapper .sidebar {
+    /* border: 3px solid blue; */
+    min-width: 250px;
+    max-width: 250px;
+    background: #8c98e4;
+    color: white;
+    font-weight: 600;
+    /* Apply to all changed properties */
+    transition: all 0.5s;
+}
+
+
+.sidebar-item-a:hover {
+    text-decoration: none;
+    transition: 0.5s;
+    color: white;
+}
+
+.sidebar-item-a:not(:hover) {
+    color: black;
+    transition: 0.5s;
+}
+
+#sidebar .sidebar-header-div {
+    padding: 20px;
+    background: rgb(228, 227, 157);
+    /* border: 5px solid navy; */
+}
+
+#sidebar-header {
+    margin: 30px 0;
+    color: black;
+}
+
+#sidebar .sidebar-compos {
+    padding: 20px 0;
+    border-bottom: 3px solid #d6d291;
+    margin-top: 10px;
+    /* border: 3px solid purple; */
+}
+
+.sidebar-item {
+    padding: 10px;
+}
+
+.sidebar-item-a {
+    color: black;
+    font-size: 19px;
+    display: block;
+}
+
+.sidebar ul li a.active>a,
+a[aria-expnaded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+#dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+}
+
+.sidebar-item:hover {
+    transition: all 0.3s;
+    background-color: #fff;
+    color: #7d67df;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sidebar-item-a:hover {
+    color: black;
+    transition: 0.5s;
+}
+
+.sidebar-item:not(:hover) {
+    transition: 0.5s;
+    color: white;
+    border-radius: 50px;
+}
+
+.sidebar-item-a:not(:hover) {
+    color: black;
+    transition: 0.5s;
+}
+
+.i-item {
+    /* float: right; */
+    margin-left: 50%;
+}
+
+.sublist-item {
+    padding: 10px;
+    margin: 10px 0px;
+}
+
+.sublist-item:not(:hover) {
+    transition: 0.5s;
+}
+
+.sublist-item-a {
+    text-decoration: none;
+    color: black;
+}
+
+.sublist-item-a:hover,
+.sublist-item-a:not(:hover) {
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+/*------------------------- end Sidebar -------------------------*/
+
+/*------------------------- content pane -------------------------*/
+
+.row{
+    padding: 20px;
+}
+
+.row {
+    width: 100%;
+    min-height: 100%;
+    transition: all 0.5s;
+}
+
+.row .btn {
+    margin-bottom: 1.3%;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.row .links-div {
+    padding: 3% 5%;
+    display: flex;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.row .links {
+    /* margin: 0 7%; */
+    padding: 10px;
+    color: rgb(35, 70, 175);
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.row .links:hover{
+    text-align: center;
+    text-decoration: none;
+    color: #7d67df;
+    font-weight: 500;
+    transition: all 0.3s
+}
+
+
+/*------------------------- end content pane -------------------------*/
+
+/*------------------------- footer -------------------------*/
+
+.card .card-body .social-btns {
+    padding: 10px;
+}
+
+.container-fluid .card .social-btns {
+    padding: 20px;
+}
+
+
+/*------------------------- end footer -------------------------*/
+
+@media screen and (max-width: 576px) {
+    .row .btn{
+        color: black;
+    }
+    .row .links-div {
+        margin: 10% 0;
+        display: block;
+        /* overflow: auto; */
+    }
+    .row .links-div .links {
+        font-size: 17px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .row .links-div .links:hover {
+        /* font-size: 16px; */
+        text-align: center;
+    }
+}
+
+@media (max-width:768px) {
+
+    .content-container {
+        overflow: auto;
+    }
+
+    .navbar-toggler{
+        color: black;
+    }
+
+    .wrapper #sidebar {
+        width: 150px;
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    #sidebarCollapse.active {
+        display: none;
+    }
+
+}
