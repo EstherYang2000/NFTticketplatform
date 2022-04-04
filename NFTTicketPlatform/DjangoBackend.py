@@ -1,10 +1,9 @@
-from decimal import Decimal
 from web3 import Web3,HTTPProvider
-from hexbytes import HexBytes as hb
 import sys
 
+
 w3 = Web3(HTTPProvider('http://127.0.0.1:7545'))
-address='0x9Ce6dFa5C5DA043A2Af34E2c1E0206Be9624BcBB'
+address='0xf8aFD4d0BfFb78c302Ff367b39496741B6Ac1F00'
 #Remember to check deployed address and connection
 #In our test and presentation, we will use ganache's environment,so the function of connection is localhost with port7545
 #Rembmber to check up "listen on network" in the remix terminal to surveillance transaction from web3.py
@@ -273,6 +272,11 @@ abi=[
 			{
 				"internalType": "uint256",
 				"name": "_TicketPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "decimal",
 				"type": "uint256"
 			}
 		],
@@ -813,10 +817,7 @@ List of subroutines: (● represent that subroutines are done)
 	●GetSellSituation(Return the number of tickets which have been selled, ActID need to be pointed out)
 	●GetCustomer(Return the tokenIDs and current totalcost in smartcontract that the customer have)
 	●DeleteActivity(Owner's privilege to delete activity. tickey money will refund to activity's tickey buyer and the ticket token will be burn out)
-	●QuertOwnerBonus(Query current Owner bonus which all from the handling fee of buying ticket)
-	●OwnerWithdrawBonus(Owner's unique privilege to withdraw his own money)
-	●GetCompanyActNumber(Return the detail number of company's activities including TotalAct,CurrentAvailableAct,DeadAct)
-	Latest revised by Limindog at 2022/03/22 04:09
+	Latest revised by Limindog at 2022/03/16 00:14
 
 The process of transfer Token(Use A to B for example):
 	First: A call approve function to endow B with the right to receive specific token which A have
@@ -826,6 +827,8 @@ The process of transfer Token(Use A to B for example):
 Memo:
 	return sys.exc_info()[1](Get error message)
 	tx_receipt['status']='1'(meaning the transaction is successful)
+	There is no float type in solidity, all of unit of money need to be 'wei' to avoid float type number input to the contract, 1 eth = 10^18 wei.
+
 """
 
 deployed_contract = w3.eth.contract(address=address, abi=abi)
@@ -836,40 +839,48 @@ CustomerB=w3.eth.accounts[3]
 CustomerC=w3.eth.accounts[4]
 
 
-def Web3Name(Address):
-    return deployed_contract.functions.name().call({'from':Address})
+def Web3Name():
+    return deployed_contract.functions.name().call({'from':Owner})
 
-def Web3Owner(Address):
-	return deployed_contract.functions.owner().call({'from':Address})
+def Web3Owner():
+	return deployed_contract.functions.owner().call({'from':Owner})
 
-def Web3Symbol(Address):
-    return deployed_contract.functions.symbol().call({'from':Address})
+def Web3Symbol():
+    return deployed_contract.functions.symbol().call({'from':Owner})
 
 def Web3SetActivity(ActID,Address,TicketNum,TicketPrice):
+    decimal=0
     try:
-        tx_hash=deployed_contract.functions.SetActivity(ActID,Address,TicketNum,TicketPrice).transact({'from':Owner,'gas':5000000})
+        while True:
+            if TicketPrice==int(TicketPrice):
+                break
+            else:
+                TicketPrice*=10
+                decimal+=1
+        tx_hash=deployed_contract.functions.SetActivity(ActID,Address,TicketNum,int(TicketPrice),decimal).transact({'from':Owner,'gas':5000000})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
         if tx_receipt['status']==1:
-            return [True,"活動{} 已建立成功，張數{}張、價格{}eth".format(ActID,TicketNum,TicketPrice)]
+            return "活動{} 已建立成功，張數{}張、價格{}eth".format(ActID,TicketNum,TicketPrice/(10**decimal))
         return tx_receipt
     except:
         e=sys.exc_info()[1]
         dir(sys.exc_info()[1])
-        return [False,e.args[0]['message']]
+        return e.args[0]['message']
 
         #Get error message
-def Web3GetActivity(ActID,Address):
+def Web3GetActivity(ActID):
 	try:
-		content=deployed_contract.functions.GetActivity(ActID).call({'from':Address})
+		content=deployed_contract.functions.GetActivity(ActID).call({'from':Owner})
 		contentDict={'OwnerCompany':content[0],'OriginalTicketNumber':content[1],'RemainTicket':content[2],
                'Price':content[3]/(10**18),'Available':content[4],'ActOwnToken':content[6]}
 		return contentDict
+
 	except:
 		return sys.exc_info()[1]
 
-def Web3StopAvailable(ActID,Address):
+def Web3StopAvailable(ActID):
     try:
-        tx_hash=deployed_contract.functions.StopAvailable(ActID).transact({'from':Address})
+        tx_hash=deployed_contract.functions.StopAvailable(ActID).transact({'from':Owner})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
         if tx_receipt['status']==1:
             return "活動{}已停止販賣".format(ActID)
@@ -877,9 +888,9 @@ def Web3StopAvailable(ActID,Address):
     except:
         return sys.exc_info()[1]#Get error message
 
-def Web3ContinueAvailable(ActID,Address):
+def Web3ContinueAvailable(ActID):
     try:
-        tx_hash=deployed_contract.functions.ContinueAvailable(ActID).transact({'from':Address})
+        tx_hash=deployed_contract.functions.ContinueAvailable(ActID).transact({'from':Owner})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
         if tx_receipt['status']==1:
             return "活動{}已恢復販賣".format(ActID)
@@ -889,7 +900,7 @@ def Web3ContinueAvailable(ActID,Address):
 
 def Web3safeMint(ActID,MintAddress,CallerAddress,Money):
     try:
-        tx_hash=deployed_contract.functions.safeMint(ActID,MintAddress).transact({'from':CallerAddress,'gas':5000000,'value': w3.toWei(Money*1.03,"ether")})
+        tx_hash=deployed_contract.functions.safeMint(ActID,MintAddress).transact({'from':CallerAddress,'gas':5000000,'value': w3.toWei('{:.8f}'.format(Money*1.03),"ether")})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
         if tx_receipt['status']==1:
             TokenID=int(tx_receipt['logs'][0]['topics'][3].hex(),16)
@@ -900,22 +911,22 @@ def Web3safeMint(ActID,MintAddress,CallerAddress,Money):
         dir(sys.exc_info()[1])
         return e.args[0]['message']
 
-def Web3ownerOf(Token,Address):
+def Web3ownerOf(Token):
 	try:
-		Add=deployed_contract.functions.ownerOf(Token).call({'from':Address})
+		Add=deployed_contract.functions.ownerOf(Token).call({'from':Owner})
 		return ["TokenID {} 的擁有錢包:{}".format(Token,Add),Add]
 	except:
 		return sys.exc_info()[1]
 
-def Web3QueryContractBalance(Address):
+def Web3QueryContractBalance():
 	try:
-		return deployed_contract.functions.QueryContractBalance().call({'from':Address})/(10**18)
+		return deployed_contract.functions.QueryContractBalance().call({'from':Owner})/(10**18)
 	except:
 		return sys.exc_info()[1]
 
-def Web3tokenURI(Token,Address):
+def Web3tokenURI(Token):
 	try:
-		return deployed_contract.functions.tokenURI(Token).call({'from':Address})
+		return deployed_contract.functions.tokenURI(Token).call({'from':Owner})
 	except:
 		return sys.exc_info()[1]
 
@@ -924,27 +935,27 @@ def Web3Approve(toAddress,Token,CallerAddress):
 		tx_hash=deployed_contract.functions.approve(toAddress,Token).transact({'from':CallerAddress})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 		if tx_receipt['status']==1:
-			return [True,"{} 已賦予 {} 購買TokenID {} 的權力".format(CallerAddress,toAddress,Token)]
+			return "{} 已賦予 {} 購買TokenID {} 的權力".format(CallerAddress,toAddress,Token)
 		return tx_receipt
-	except:
-		return [False,sys.exc_info()[1]]
-
-def Web3getApproved(Token,Address):
-	try:
-		return deployed_contract.functions.getApproved(Token).call({'from':Address})
 	except:
 		return sys.exc_info()[1]
 
-def Web3balanceOf(QueryAddress,CallerAddress):
+def Web3getApproved(Token):
 	try:
-		num=deployed_contract.functions.balanceOf(QueryAddress).call({'from':CallerAddress})
+		return deployed_contract.functions.getApproved(Token).call({'from':Owner})
+	except:
+		return sys.exc_info()[1]
+
+def Web3balanceOf(QueryAddress):
+	try:
+		num=deployed_contract.functions.balanceOf(QueryAddress).call({'from':Owner})
 		return ["{} 目前擁有的Token數量為{}".format(QueryAddress,num),num]
 	except:
 		return sys.exc_info()[1]
 
-def Web3transferOwnership(toAddress,CallerAddress):
+def Web3transferOwnership(toAddress):
 	try:
-		tx_hash=deployed_contract.functions.transferOwnership(toAddress).transact({'from':CallerAddress})
+		tx_hash=deployed_contract.functions.transferOwnership(toAddress).transact({'from':Owner})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 		return tx_receipt
 	except:
@@ -954,12 +965,12 @@ def Web3CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token,Money,CallerAdd
 	try:
 		tx_hash=deployed_contract.functions.CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token).transact({'from':CallerAddress,'gas':5000000,'value':w3.toWei(Money,"ether")})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
-		if tx_receipt['status']==1:return[True,"{} 已成功購買來自{} 的Token:{} ".format(toAddress,fromAddress,Token)]
+		if tx_receipt['status']==1:return"{} 已成功購買來自{} 的Token:{} ".format(toAddress,fromAddress,Token)
 		return tx_receipt
 	except:
 		e=sys.exc_info()[1]
 		dir(sys.exc_info()[1])
-		return [False,e.args[0]['message']]
+		return e.args[0]['message']
 
 def Web3SetApprovalForAll(approvedAddress,Approved,CallerAddress):
 	try:
@@ -971,42 +982,42 @@ def Web3SetApprovalForAll(approvedAddress,Approved,CallerAddress):
 		dir(sys.exc_info()[1])
 		return e.args[0]['message']
 
-def Web3CompanyWithdrawMoney(ActID,CallerAddress):
+def Web3CompanyWithdrawMoney(ActID):
 	try:
-		tx_hash=deployed_contract.functions.CompanyWithdrawMoney(ActID).transact({'from':CallerAddress,"gas":5000000})
+		tx_hash=deployed_contract.functions.CompanyWithdrawMoney(ActID).transact({'from':Owner,"gas":5000000})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 		if tx_receipt['status']==1:
-			return [True,"公司已成功領取活動{} 的收益".format(ActID)]
+			return "公司已成功領取活動{} 的收益".format(ActID)
 	except:
 		e=sys.exc_info()[1]
 		dir(sys.exc_info()[1])
-		return [False,e.args[0]['message']]
+		return e.args[0]['message']
 
-def Web3GetSellSituation (ActID,CallerAddress):
+def Web3GetSellSituation (ActID):
 	try:
-		num=deployed_contract.functions.GetSellSituation(ActID).call({'from':CallerAddress})
+		num=deployed_contract.functions.GetSellSituation(ActID).call({'from':Owner})
 		return ["活動{} 銷售的票數為{}".format(ActID,num),num]
 	except:
 		return sys.exc_info()[1]
 
-def Web3DeleteActivity(ActID,CallerAddress):
+def Web3DeleteActivity(ActID):
 	try:
-		tx_hash=deployed_contract.functions.DeleteActivities(ActID).transact({'from':CallerAddress,"gas":5000000})
+		tx_hash=deployed_contract.functions.DeleteActivities(ActID).transact({'from':Owner,"gas":5000000})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 		return tx_receipt
 	except:
 		e=sys.exc_info()[1]
 		dir(sys.exc_info()[1])
 		return e.args[0]['message']
-def Web3QueryOwnerBonus(CallerAddress):
+def Web3QueryOwnerBonus():
     try:
-        return "SmartContract擁有者目前的收益是{} eth".format(deployed_contract.functions.QueryOwnerBonus().call({'from':CallerAddress})/(10**18))
+        return "SmartContract擁有者目前的收益是{} eth".format(deployed_contract.functions.QueryOwnerBonus().call({'from':Owner})/(10**18))
     except:
         return sys.exc_info()[1]
 
-def Web3OwnerWithdraw(CallerAddress):
+def Web3OwnerWithdraw():
     try:
-        tx_hash=deployed_contract.functions.OwnerWithdraw().transact({'from':CallerAddress})
+        tx_hash=deployed_contract.functions.OwnerWithdraw().transact({'from':Owner})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
         if tx_receipt['status']==1:
             return "SmartContractOwner已成功領取收益"
@@ -1014,9 +1025,9 @@ def Web3OwnerWithdraw(CallerAddress):
     except:
         return sys.exc_info()[1]
 
-def Web3GetCustomer(QueryAddress,CallerAddress):
+def Web3GetCustomer(QueryAddress):
 	try:
-		content=deployed_contract.functions.GetCustomer(QueryAddress).call({'from':CallerAddress})
+		content=deployed_contract.functions.GetCustomer(QueryAddress).call({'from':Owner})
 		try:
 			while True:content[1].remove(-1)
 		except:
@@ -1024,7 +1035,6 @@ def Web3GetCustomer(QueryAddress,CallerAddress):
 		return{'Customer':QueryAddress,'TotalCostInSmartContract':content[0]/(10**18),"CurrentOwnToken":content[1]}
 	except:
 		return sys.exc_info()[1]
-
 def Web3GetCompanyActNumber(QueryAddress):
 	try:
 		content=deployed_contract.functions.Companys(QueryAddress).call({'from':Owner})
@@ -1032,11 +1042,5 @@ def Web3GetCompanyActNumber(QueryAddress):
 	except:
 		return sys.exc_info()[1]
 
-# a = Decimal("0.93")
-# b = Decimal("1.03")
-# c=a*b
-# aa = float(c)
-# print(aa)
-# print(Web3GetCompanyActNumber(Owner))
-# print(Web3GetActivity('16',Owner))
-# print(Web3GetSellSituation('16',Owner))
+print(CustomerA)
+

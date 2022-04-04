@@ -19,11 +19,18 @@ urlpatterns = [
     path('company/companyhelpcenter',views.companyhelpcenter,name='companyhelpcenter'),
     path('exhibition',views.exhibition,name='exhibition'),
     path('exhibition/<int:pk>',views.exhibitionDetail,name='exhibitionDetail'),
+    path('exhibition/<int:pk>/exhibitionOrder',views.exhibitionOrder,name='exhibitionOrder'),
+
+    path('searchEvent',views.searchEvent,name='searchEvent'),
 
     path('performance',views.performance,name='performance'),
+    path('personal',views.personal,name='personal'),
+    path("personal/personalAvatar",views.personalAvatar,name='personalAvatar'),
+    path('personal/personalInfowallet',views.personalInfowallet,name='personalInfowallet'),
 
-
-
+    path('personal/personalasset',views.personalasset,name='personalasset'),
+    path('personal/personaltransfer',views.personaltransfer,name='personaltransfer'),
+    path('personal/personalhelp',views.personalhelp,name='personalhelp'),
     # path('reset_Password/',auth_views.PasswordResetView.as_view(template_name="registration/password_reset.html"), name="reset_password", ),
     # path('reset_Password_sent/',auth_views.PasswordResetDoneView.as_view(template_name="registration/password_reset_sent.html"), name="password_reset_done"),
     # path('reset/<uidb64>/<token>',auth_views.PasswordResetConfirmView.as_view(template_name="registration/password_reset_form.html"), name="password_reset_confirm"),
@@ -64,7 +71,7 @@ urlpatterns = [
     ),
 
 
-    path('personal',views.personal,name='personal'),
+
 
 
 

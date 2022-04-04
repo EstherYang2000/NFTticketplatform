@@ -14,9 +14,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from .models import Events
+from .models import Events,CustomerProfile
 from django.forms.fields import DateTimeField
 from django.forms.fields import DateTimeInput
+from .models import Order
 
 
 
@@ -36,17 +37,61 @@ def _unicode_ci_compare(s1, s2):
     )
 
 class RegistrationForm(UserCreationForm):
+
     class Meta:
         model = User
         email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
         is_staff = forms.BooleanField(label="Comapny or not?" ,help_text='Company registration?',required=False)
 
         fields = ('username', 'email','password1', 'password2','is_staff')
+        # widgets = {
+        #     'username': forms.fields.TextInput(attrs={
+        #                 'class':'form-control',
+        #                 'placeholder':'Username here',
+        #         }),
+        #     'email': forms.fields.EmailInput(attrs={
+        #                 'class':'form-control',
+        #                 'placeholder':'Email here',
+        #         }),
+        #     'password1': forms.fields.PasswordInput(attrs={
+        #                 'class':'form-control',
+        #                 'placeholder':'Password here',
+        #         }),
+        #     'password2': forms.fields.PasswordInput(attrs={
+        #                 'class':'form-control',
+        #                 'placeholder':'Re-enter Your Password here',
+        #         }),
 
+        # }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'placeholder':_('Username')})
+        self.fields['email'].widget.attrs.update({'placeholder':_('Email')})
+        self.fields['password1'].widget.attrs.update({'placeholder':_('Password')})
+        self.fields['password2'].widget.attrs.update({'placeholder':_('Repeat password')})
 class DateTimePickerInput(forms.DateTimeInput):
         input_type = 'datetime'
 
+# from django.core.validators import RegexValidator
+# my_validator = RegexValidator(r"^0x{1}[a-z\d]{64}$", "Unvalid or empty wallet id entered!")
 
+class CustomerProfileForm(forms.ModelForm):
+    personal_walletId = forms.CharField(
+        max_length=100,
+        label='User Wallet:',
+        # validators=[my_validator],
+        widget = forms.TextInput(attrs={'class': 'form-control','placeholder':'0x00012132423423'}))
+    avatars =forms.ImageField()
+    class Meta:
+        model = CustomerProfile
+        fields = ('personal_walletId','avatars')
+        widgets = {
+            'personal_walletId': forms.TextInput(attrs={'class': 'form-control'}),
+
+        }
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['personal_walletId']
 
 class EventCreateForm(forms.ModelForm):
     CATEGORY = (
@@ -106,6 +151,38 @@ class EventCreateForm(forms.ModelForm):
 
 
 
+
+class OrderForm(forms.ModelForm):
+    # user_name = forms.CharField(max_length=100)
+    # wallet_ID= forms. CharField(max_length=100)
+    # email = forms.EmailField()
+    # eventname = forms.CharField(max_length=100)
+    # eventcategory = forms.CharField(max_length=100)
+    # ordernumber = forms.DecimalField(widget=forms.NumberInput)
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+# class OrderFormStepOne(forms.ModelForm):
+#     user_name = forms.CharField(max_length=100)
+#     wallet_ID= forms. CharField(max_length=100)
+#     email = forms.EmailField()
+
+#     class Meta:
+# 	    model = Order
+
+# class OrderFormStepTwo(forms.ModelForm):
+#     eventname = forms.CharField(max_length=100)
+#     eventcategory = forms.CharField(max_length=100)
+#     ordernumber = forms.DecimalField(widget=forms.NumberInput)
+#     class Meta:
+# 	    model = Order
+# class OrderFormStepThree(forms.ModelForm):
+#     ticketcost = forms.DecimalField(max_length=100)
+#     handlingcharge = forms.DecimalField(max_length=100)
+#     totalcost =forms.DecimalField(max_length=100)
+#     class Meta:
+# 	    model = Order
 
     #     self.fields['category'].widget.attrs.update({
     #         'class': 'form-input',

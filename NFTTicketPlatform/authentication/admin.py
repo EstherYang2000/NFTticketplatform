@@ -1,10 +1,25 @@
 from django.contrib import admin
-from authentication.models import CompanyProfile,CustomerProfile,Tag,Events
+from authentication.models import CompanyProfile,CustomerProfile,Tag,Events,Order
 
-admin.site.register(CompanyProfile)
-admin.site.register(CustomerProfile)
+class CompanyProfileAdmin(admin.ModelAdmin):
+    list_display =('id','companyuser','company_email','company_walletId','company_avatars','date_created')
+
+class CustomerProfileAdmin(admin.ModelAdmin):
+    list_display =('id','customeruser','personal_email','personal_walletId','avatars','date_created')
+
+class EventAdmin(admin.ModelAdmin):
+    list_display =('id','companycreater','category','eventname','eventdescription','eventticketnumber','eventprice','date_created','date_StartTime','date_EndTime','event_pic','status')
+class OrderAdmin(admin.ModelAdmin):
+    list_display =('id','customer','events','orderNumber','date_created','orderPrice','orderHandlingfee','orderTotalPrice','status')
+# event_id = models.AutoField(primary_key=True)
+
+
+
+admin.site.register(CompanyProfile,CompanyProfileAdmin)
+admin.site.register(CustomerProfile,CustomerProfileAdmin)
 admin.site.register(Tag)
-admin.site.register(Events)
+admin.site.register(Events,EventAdmin)
+admin.site.register(Order,OrderAdmin)
 
 
 

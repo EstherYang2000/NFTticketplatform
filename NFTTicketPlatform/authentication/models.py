@@ -3,21 +3,21 @@ from distutils.command.upload import upload
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-
-
+from PIL import Image
+from django.dispatch import receiver
 
 
 
 class CustomerProfile(models.Model):
     # Customer_id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    customeruser = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     personal_email = models.CharField(max_length=200, null=True)
     personal_walletId = models.CharField(max_length=100,blank=True)
-    avatars = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatars = models.ImageField(upload_to=settings.MEDIA_ROOT,default='imgs/avatar.jpg', null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.customeruser.username
 pass
 
 class CompanyProfile(models.Model):
@@ -25,7 +25,7 @@ class CompanyProfile(models.Model):
     companyuser = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     company_email = models.CharField(max_length=200, null=True)
     company_walletId = models.CharField(max_length=100,blank=True)
-    company_avatars = models.ImageField(upload_to='company_avatars/', null=True, blank=True)
+    company_avatars = models.ImageField(upload_to=settings.MEDIA_ROOT, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
@@ -51,6 +51,8 @@ class Events(models.Model):
     eventdescription = models.CharField(max_length=200, null=True, blank=True)
     eventticketnumber = models.IntegerField(null=False)
     eventprice = models.DecimalField(null=True,max_digits=5, decimal_places=2)
+    totalorderedTicket = models.IntegerField(null=False,default=0)
+    remainedTicketNum = models.IntegerField(null=False,default=0)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_StartTime = models.DateTimeField(null=True)
     date_EndTime = models.DateTimeField(null=True)
@@ -59,7 +61,12 @@ class Events(models.Model):
     status = models.CharField(max_length=200, null=True, choices=status,default="Not Started")
 
     # tags = models.ManyToManyField(Tag)
-
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        SIZE =300,300
+        if self.event_pic:
+            pic = Image.open(self.event_pic.path)
+            pic.thumbnail(SIZE,Image.LANCZOS)
     def __str__(self):
         return self.eventname
     def changestatus(self):
@@ -71,6 +78,46 @@ class Events(models.Model):
         else:
             status ="Expired"
         return status
+
+class Order(models.Model):
+    STATUS = (
+            ('Unpaid', 'Unpaid'),
+            ('Paid', 'Paid'),
+            )
+    tokenID = models.IntegerField(null=False,default=0)
+    customer = models.ForeignKey(CustomerProfile, null=True, on_delete=models.SET_NULL)
+    events = models.ForeignKey(Events, null=True, on_delete=models.SET_NULL)
+
+    orderNumber = models.IntegerField(null=False,default=1)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    orderPrice = models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
+    orderHandlingfee =models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
+    orderTotalPrice = models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
+    status = models.CharField(max_length=200, null=True, choices=STATUS)
+
+    def __str__(self):
+        return self.events.eventname
+
+
+class Transfer(models.Model):
+    STATUS = (
+            #sender send the transferring form
+            ('UnConfirmed', 'UnConfirmed'), #
+            ('Success', 'Success'),
+            )
+    Sender = models.ForeignKey(CustomerProfile, null=True, related_name="sender",on_delete=models.SET_NULL)
+    Receiver = models.ForeignKey(CustomerProfile, null=True, related_name="receiver",on_delete=models.SET_NULL)
+    senderOrder = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL)
+    tranferEvent = models.ForeignKey(Events, null=True, on_delete=models.SET_NULL)
+    transferFee = models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
+    senderNote = models.CharField(max_length=200, null=True, blank=True)
+    receiverNote = models.CharField(max_length=200, null=True, blank=True)
+    transferDate_created = models.DateTimeField(auto_now_add=True, null=True)
+    transferDate_Success = models.DateTimeField(null=True)
+    status = models.CharField(max_length=200, null=True, choices=STATUS,default="UnConfirmed")
+
+    def __str__(self):
+        return self.status
 
 
 # from django.contrib.auth.models import AbstractUser

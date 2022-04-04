@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
 
+
 ]
 
 MIDDLEWARE = [
@@ -102,7 +103,7 @@ WSGI_APPLICATION = 'NFTTicketPlatform.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nftticketplatform',
+        'NAME': 'nftticketwebsite',
         'USER': 'root',
         'PASSWORD': 'Sester890627',
         'HOST': '127.0.0.1',

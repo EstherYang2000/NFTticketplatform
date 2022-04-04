@@ -1,0 +1,439 @@
+{% extends 'personal/personal.html'%}
+{% load static %}
+{%block personal%}
+{% load static %}
+<html lang="en">
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="{% static 'imgs/ape.jpeg' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap">
+    <!-- font awesome link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- step wizard -->
+    <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet"
+        type="text/css" />
+    <!-- jquery CDN(content delivery network) must before my own css as I'm depend on it -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- my css -->
+    <link rel="stylesheet" href="{% static 'css/personal.css' %}">
+
+
+     <!-- chart.js 3.7.1 CDN (Content Delivery Network) -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+
+    <title>NFT Platform</title>
+    <!-- <script> //這裡可以用那個部落格的方法做新增 </script> -->
+
+    <!-- start full screen container -->
+    <div class="container-fluid p-0">
+
+
+        <!-- --------------------------------------------------------------------------------------------------------------------- -->
+
+        <!-- sidebar + content -->
+        <div class="wrapper p-0">
+
+
+            <!-- contnet -->
+            <div class="content-container container p-0" id="content">
+
+                <div class="row" id="content-row">
+
+                    <!-- tab content -->
+                    <div class="tab-content">
+
+
+                        <!-- asset content -->
+                        <div class="container tab-pane show active col-12 p-0 " role="tabpanel" id="pane-asset" aria-labelledby="tab-asset">
+
+                            <div class="row mt-2 mb-5" id="user-asset-intro">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
+                                    <div>
+                                        <h1 class="content-title" id="user-asset-title">
+                                            <span style="font-size:2.5em;font-weight: 600;">個人資產 </span><br>
+                                            <span style="font-size:1.0649em;font-weight: 600;">Personal Assets</span>
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7" id="user-asset-img-div">
+                                    <img id="user-asset-img" src="{%static 'imgs/user-asset850.jpg'%}">
+                                </div>
+                            </div>
+
+                            <!-- Asset Display card -->
+                            <div class="row p-3" id="three-cards">
+
+                                <div class="col-12 col-sm-10 col-md-6 col-lg-3 col-xl-4 displays">
+                                    <div class="card shadow">
+                                        <div class="card-body p-2" id="asset-profit-card">
+                                            <div class="mt-2" id="profit-title">
+                                                <h5 class="card-title mt-0.5">Asset Profit</h5>
+                                                <button type="button" class="btn btn-default p-0" id="invisible-switch"
+                                                    data-toggle="tooltip" data-placement="right" title="hide">
+                                                    <i class="fa-solid fa-eye-slash"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-default p-0" id="visible-switch"
+                                                    data-toggle="tooltip" data-placement="right" title="show">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </button>
+                                            </div>
+                                            <div class="b-div">
+                                                <div id="profit-num">
+                                                    <b class="b-num">{{totalAsset}}</b>
+                                                </div>
+                                                <div id="unit" style="font-size:23px;">
+                                                    <div class="">
+                                                        <b class="b-unit" style="font-size:25px;">ETH</b>
+                                                    </div>
+                                                    <div style="color:#dc3545;">
+                                                        <b class="b-unit" style="font-size:25px;">0.2%</b>
+                                                        <i class="fas fa-arrow-circle-down"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Total of Holdings -->
+                                <div class="col-12 col-sm-10 col-md-6 col-lg-3 col-xl-3 displays">
+                                    <div class="card shadow">
+                                        <div class="card-body p-3">
+                                            <h5 class="card-title" id="total-holdings">Total of Holdings</h5>
+                                            <div class="b-div">
+                                                <div id="holdings-num">
+                                                    <b class="b-num">{{totaltokennum}}</b>
+                                                </div>
+                                                <div class="unit">
+                                                    <div>
+                                                        <b class="b-unit">ITEMS</b>
+                                                    </div>
+                                                    <div
+                                                        style="color:#7fdf48;display:flex;justify-content: space-between;align-items:center;font-size:20px;">
+                                                        <b class="b-percent">3%</b>
+                                                        <i class="fas fa-arrow-circle-up"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Sum -->
+                                <div class="col-12 col-sm-10 col-md-10 col-lg-6 col-xl-5 displays" id="sum">
+                                    <div class="card shadow">
+                                        <div class="card-body p-3 convert-card">
+                                            <div id="convert-card"
+                                                style="display: block;justify-content: center;align-items: center;">
+                                                <h5 class="convert-title">Convert into NTD</h5>
+
+                                                <div class="b-div" style="margin-top: 5%;">
+                                                    <div id="convert-num">
+                                                        <b class="convert-num">{{etherAsset.etherToTWD}}</b>
+                                                    </div>
+                                                    <div class="unit">
+                                                        <div>
+                                                            <b id="convert-unit">NTD</b>
+                                                        </div>
+                                                        <div
+                                                            style="color:#7fdf48;display:flex;justify-content: space-between;align-items:center;font-size:25px;">
+                                                            <b class="convert-percent"></b>
+                                                            <i class="fas fa-arrow-circle-up"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="chart-row">
+
+                                <!-- chart -->
+                                <div class="card shadow rounded mb-5 col-7 col-sm-12 col-lg-7">
+                                    <div class="card-body">
+                                        <div style="padding:0;border-bottom: 2px solid darkgrey;">
+                                            <h4 class="card-title">My Assets</h4>
+                                            <p class="card-text" style="margin-bottom:10px;">Here's all assets that you
+                                                currently have.
+                                            </p>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h3>Holdings</h3>
+                                                <div class="canvas-container">
+                                                    <canvas id="assetChart" aria-label="Asset Chart"
+                                                        role="canvas"></canvas>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    var asset = document.getElementById('assetChart').getContext('2d');
+                                    var myChart = new Chart(asset, {
+                                        type: 'pie',
+                                        data: {
+                                            labels: [{%for myOrder in myOrders%}'{{myOrder.events.eventname}}',{%endfor%}],
+                                            datasets: [{
+                                                label: 'prpportion of NFT1',
+                                                data: [{%for myOrder in myOrders%}{{myOrder.orderPrice}},{%endfor%}],
+                                                backgroundColor: [
+                                                    'rgba(255, 99, 132, 0.4)',
+                                                    'rgba(54, 162, 235, 0.4)',
+                                                    'rgba(255, 206, 86, 0.4)',
+                                                    'rgba(75, 192, 192, 0.4)',
+                                                    'rgba(153, 102, 255, 0.4)',
+                                                    'rgba(255, 159, 64, 0.4)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)',
+                                                    'rgba(255, 159, 64, 1)'
+                                                ],
+                                                borderWidth: 4
+
+                                            }]
+                                        },
+                                        options: {
+                                            response: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: {
+                                                    position: "right",
+                                                    align: "middle",
+                                                    padding: {
+                                                        top: 50,
+                                                        bottom: 10
+                                                    },
+                                                    labels: {
+                                                        font: {
+                                                            size: 14
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
+                                <div class="card shadow rounded mb-5 col-4 col-sm-8 col-lg-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural
+                                            lead-in to additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                                <p class="p-4">
+                                    The chart above automatically gathers user's assets data and shows in different
+                                    types.
+                                    You can simply click on the button on top right corner to change chart types.
+                                </p>
+                            </div>
+                            <!-- end chart -->
+
+                            <!-- asset table -->
+                            <div class="col-12 p-3 mb-5" id="asset-table-div">
+                                <h3>List Assets</h3>
+                                <div class="table-container p-3">
+                                    <table class="table table-hover table-lg">
+
+                                        <thead class="thead-dark text-center">
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Bought Date</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Transaction fee</th>
+                                                <th scope="col">Total fee</th>
+                                                <th scope="col">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        {%for myOrder in myOrders%}
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <th scope="row">{{myOrder.id}}</th>
+                                                <td>{{myOrder.events.eventname}}</td>
+                                                <td>{{myOrder.date_created}}</td>
+                                                <td>{{myOrder.orderPrice}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderHandlingfee}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderTotalPrice}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderNumber}}</td>
+                                            </tr>
+                                        {%endfor%}
+
+                                            {% comment %} <tr>
+                                                <th scope="row">2</th>
+                                                <td>NFT 2</td>
+                                                <td>2020/03/21</td>
+                                                <td>0.23 <span>ETH</span></td>
+                                                <td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>NFT 3</td>
+                                                <td>2020/09/07</td>
+                                                <td>50 <span>BUSD</span></td>
+                                                <td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">4</th>
+                                                <td>NFT 4</td>
+                                                <td>2019/10/25</td>
+                                                <td>38 <span>BUSD</span></td>
+                                                <td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">5</th>
+                                                <td>NFT 5</td>
+                                                <td>2022/01/09</td>
+                                                <td>0.52 <span>ETH</span></td>
+                                                <td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">6</th>
+                                                <td>NFT 6</td>
+                                                <td>2018/12/23</td>
+                                                <td>26 <span>BUSD</span></td>
+                                                <td>1</td>
+                                            </tr> {% endcomment %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                             <!-- asset table -->
+                             <div class="col-12 p-3 mb-5" id="asset-table-div">
+                                <h3>Transfer Status</h3>
+                                <div class="table-container p-3">
+                                    <table class="table table-hover table-lg">
+
+                                        <thead class="thead-dark text-center">
+                                            <tr>
+                                                <th scope="col">TOKEN ID</th>
+                                                <th scope="col">Sender</th>
+                                                <th scope="col">Recipiant</th>
+                                                <th scope="col">Transfer Event</th>
+                                                <th scope="col">Note</th>
+                                                <th scope="col">Date of Application</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        {%for myOrder in myOrders%}
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <th scope="row">{{myOrder.id}}</th>
+                                                <td>{{myOrder.events.eventname}}</td>
+                                                <td>{{myOrder.date_created}}</td>
+                                                <td>{{myOrder.orderPrice}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderHandlingfee}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderTotalPrice}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderNumber}}</td>
+                                            </tr>
+                                        {%endfor%}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                             <!-- asset table -->
+                             <div class="col-12 p-3 mb-5" id="asset-table-div">
+                                <h3>AcceptTransfer Status</h3>
+                                <div class="table-container p-3">
+                                    <table class="table table-hover table-lg">
+
+                                        <thead class="thead-dark text-center">
+                                            <tr>
+                                                <th scope="col">TOKEN ID</th>
+                                                <th scope="col">Sender</th>
+                                                <th scope="col">Recipiant</th>
+                                                <th scope="col">Transfer Event</th>
+                                                <th scope="col">Note</th>
+                                                <th scope="col">Date of Application</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        {%for myOrder in myOrders%}
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <th scope="row">{{myOrder.id}}</th>
+                                                <td>{{myOrder.events.eventname}}</td>
+                                                <td>{{myOrder.date_created}}</td>
+                                                <td>{{myOrder.orderPrice}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderHandlingfee}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderTotalPrice}} <span>ETH</span></td>
+                                                <td>{{myOrder.orderNumber}}</td>
+                                            </tr>
+                                        {%endfor%}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <!-- end tab content -->
+
+                </div>
+
+            </div>
+            <!-- end contnet -->
+
+
+        </div>
+        <!-- end sidebar + content -->
+        <!-- --------------------------------------------------------------------------------------------------------------------- -->
+
+
+
+    </div>
+    <!-- end container -->
+
+    <!-- --------------------------------------------------------------------------------------------------------------------- -->
+
+    {% comment %} <!-- font awesome link  -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    {% comment %} <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+    {% comment %} <script type="text/javascript" src="{% static 'js/personal.js'%}"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js"
+        type="text/javascript"></script> {% endcomment %}
+{% endblock %}

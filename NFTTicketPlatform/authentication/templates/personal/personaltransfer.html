@@ -1,0 +1,416 @@
+{% extends 'personal/personal.html'%}
+
+{% load static %}
+{%block personal%}
+{% load static %}
+
+    <!-- <script> //這裡可以用那個部落格的方法做新增 </script> -->
+
+
+<body>
+    <!-- start full screen container -->
+    <div class="container-fluid p-0">
+
+        <!-- sidebar + content -->
+        <div class="wrapper p-0">
+
+            <!-- contnet -->
+            <div class="content-container container p-0" id="content">
+
+                <div class="row" id="content-row">
+
+                    <!-- tab content -->
+                    <div class="tab-content">
+
+
+                        <!-- transaction content -->
+                        <div class="container tab-pane show active col-12 p-0 " role="tabpanel" id="pane-transfer"
+                            aria-labelledby="tab-transfer">
+
+                            <!-- <div class="navigator" id="content-navigator">
+                                <div id="href-div">
+                                    <a href="#form-div" style="color:navy">Apply</a>
+                                    <a href="#" style="color:navy">Status</a>
+                                    <a href="#" style="color:navy">Third a</a>
+                                </div>
+                            </div> -->
+
+                            <div class="row mb-5 p-0" id="transfer-intro" style="margin-left:0px;">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+                                    <div>
+                                        <h1 class="content-title mt-4" id="transfer-title">
+                                            <span id="title-cn">轉讓申請</span>
+                                            <br>
+                                            <span id="title-en">Transaction Application</span>
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="col-10 col-sm-10 col-md-7 col-lg-7 p-0" id="user-transfer-img-div">
+                                    <img id="transfer-img" src="{%static 'imgs/transfer850.jpg'%}">
+                                </div>
+                            </div>
+
+                            <div class="row mb-5 p-0" style="width:100%;margin: 0 auto;">
+
+                                <div class="col-12 p-5" id="form-div" style="background-image: url({%static 'imgs/list.jpg' %})" >
+
+                                    <label class="mb-4 p-0" id="form-title" style="display:block;align-items:center;">
+                                        <span id="span-cn">轉讓申請 </span>
+                                        <span id="span-en"> Application Procedures</span>
+                                    </label>
+
+                                    <form class="steps" id="step-1" style="border: 2px solid darkgrey;">
+                                        {% csrf_token %}
+                                        <div>
+                                            <label class="labels mb-4">Step 1 -<br>Sender Informations</label>
+                                            <br>
+                                            <label class="tab-labels" for="sender-username">*輸入使用者名稱 Enter User
+                                                Name</label>
+                                            <p>
+                                                <input type="text" id="sender-username" name="sender-username" value="{{customerProfile.customeruser.username}}"placeholder="Enter Sender User Name" required>
+                                            </p>
+
+                                            <label class="tab-labels" for="sender-wid">*輸入虛擬錢包ID Enter Virtual Wallet
+                                                Id</label>
+                                            <p><input type="text" id="sender-wid" name ="sender-wid"placeholder="Enter Wallet Id" value="{{customerProfile.personal_walletId}}" required></p>
+
+                                            <label class="tab-labels" for="sender-item">*選擇轉讓物品 Choose Item for
+                                                Transfermation</label>
+
+                                            <!-- 用p包起來讓他成為一個row, 就不用在那邊display block -->
+                                            <p>
+                                                <select id="sender-item" name="sender-item">
+                                                    {%for myAsset in myAssets%}
+                                                        <option value="{{myAsset.events.eventname}}">{{myAsset.events.eventname}}</option>
+                                                    {%endfor%}
+                                                </select>
+                                            </p>
+
+                                            <label class="tab-labels" for="sender-notes">備註 Notes (optional)</label>
+                                            <p><input type="text" id="sender-notes" name="sender-notes" placeholder="notes? (optional)"></p>
+                                        </div>
+
+                                        <p>
+                                            <button type="button" class="btn btn-outline-success" id="veriBtn1">Verify</button>
+                                            <button type="button" class="btn btn-outline-info" id="s1-nextBtn" style="float:right;">Next</button>
+                                        </p>
+
+                                    </form>
+
+                                    <form class="steps" id="step-2" style="border: 2px solid darkgrey;">
+                                        {% csrf_token %}
+                                        <div>
+                                            <label class="labels mb-4">Step 2:<br>Recipiant Informations</label>
+                                            <br>
+
+                                            <label class="tab-labels" for="recei-wid">*輸入接收者錢包ID Enter Recipiant Wallet Id</label>
+                                            <p><input type="text" id="recei-wid" name ="recei-wid"placeholder="Enter Wallet Id" required></p>
+
+                                            <label class="tab-labels" for="recei-notes">備註 Notes (optional)</label>
+                                            <p><input type="text" id="recei-notes" name ="recei-notes" placeholder="notes? (optional)"></p>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-outline-success" id="veriBtn2">Verify</button>
+                                        </div>
+
+                                        <div id="btn-div">
+                                        <div style="float:right;">
+                                            <button type="button" class="btn btn-outline-info" id="s2-prevBtn">Previous</button>
+                                            <button type="button" class="btn btn-outline-info" id="s2-nextBtn">Next</button>
+                                        </div>
+                                    </div>
+                                    </form>
+
+                                    <form class="steps" id="step-3" style="border: 2px solid darkgrey;">
+                                        {% csrf_token %}
+                                        <div>
+                                            <label class="labels mb-4">Step 3:<br>Validations</label>
+                                            <p><input id="veriCode-input" placeholder="Enter verification code" required></p>
+                                            <p><label id="veri-label">Verification Code: </label><span id="veri-code">0000</span></p>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-outline-success" id="veriBtn3">Verify</button>
+                                        </div>
+
+                                        <div id="btn-div">
+                                        <div style="float:right;">
+                                            <button type="button" class="btn btn-outline-info" id="s3-prevBtn">Previous</button>
+                                            <button type="button" class="btn btn-outline-info" id="s3-nextBtn">Next</button>
+                                        </div>
+                                    </div>
+                                    </form>
+
+                                    <form class="steps" name="step-4" id="step-4" method="POST" style="border: 2px solid darkgrey;" action="personaltransfer">
+                                        {% csrf_token %}
+                                        <div>
+                                            <p><label class="labels mb-0">Step 4:<br>Confirmation</label></p>
+
+                                            <div class="row mt-0">
+
+                                                <div class="col-6 p-0">
+                                                    <div style="border-bottom: 3px solid red;">
+                                                        <label style="font-size:18px;" for="">Sender Informations:</label>
+                                                    </div>
+                                                    <div class="mt-2 ml-3" style="font-size: 16px;color:black;">
+                                                        <p>Username:
+                                                            <input type="text" id="s4-sender-username" name="s4-sender-username" required >
+                                                            {% comment %} <span id="s4-sender-username" name="s4-sender-username">AAA</span> {% endcomment %}
+                                                        </p>
+                                                        <p>Wallet Id: <br>
+                                                            <input type="text" id="s4-sender-wid" name="s4-sender-wid" required>
+                                                            {% comment %} <span id="s4-sender-wid"name="s4-sender-wid">BBB</span> {% endcomment %}
+                                                        </p>
+                                                        <p>Selected Item:
+                                                            <input type="text" id="s4-sender-itemNum" name="s4-sender-itemNum" required>
+                                                            {% comment %} <span id="s4-sender-itemNum"name="s4-sender-itemNum">CCC</span> {% endcomment %}
+                                                         </p>
+                                                        <p>Notes:
+                                                            <input type="text" id="s4-sender-notes" name="s4-sender-notes" required>
+                                                            {% comment %} <span id="s4-sender-notes" name="s4-sender-notes">DDD</span> {% endcomment %}
+                                                         </p>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-6 p-0">
+                                                    <div style="border-bottom: 3px solid black;">
+                                                        <label style="font-size:18px;" for="">Recipiant Informations:</label>
+                                                    </div>
+                                                    <div class="mt-2 ml-3" style="font-size: 16px;color:black;">
+                                                        <p>Wallet Id: <br>
+                                                            <input type="text" id="s4-recei-wid" name="s4-recei-wid" required>
+                                                            {% comment %} <span id="s4-recei-wid" name="s4-recei-wid">BBB</span> {% endcomment %}
+                                                        </p>
+                                                        <p>Notes:
+                                                            <input type="text" id="s4-recei-notes" name="s4-recei-notes" required>
+                                                            {% comment %} <span id="s4-recei-notes" name="s4-recei-notes">DDD</span> {% endcomment %}
+                                                         </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+                                        </div>
+
+                                        <div id="btn-div">
+                                        <div style="float:right;">
+                                            <button type="button" class="btn btn-outline-info" id="s4-prevBtn">Previous</button>
+                                            <button type="submit" class="btn btn-outline-info" id="s4-appBtn">Apply</button>
+                                        </div>
+                                    </div>
+                                    </form>
+
+
+
+
+                                    <!-- Circles which indicates the steps of the form: -->
+                                    <div style="text-align:center;margin-top:40px;">
+                                        <span class="step"></span>
+                                        <span class="step"></span>
+                                        <span class="step"></span>
+                                        <span class="step"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- status row -->
+                            <div class="row p-0" style="width:100%;margin: 0 auto;">
+
+                                <div class="col-12">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                    <!-- end tab content -->
+
+                </div>
+
+            </div>
+            <!-- end contnet -->
+
+
+        </div>
+        <!-- end sidebar + content -->
+
+
+
+    </div>
+    <!-- end container -->
+
+
+    <script>
+        // replacing verification code
+    $(document).ready(function () {
+
+
+        // ---------------------- application form ----------------------
+
+        // replacing verification code
+        var geneCode = Math.floor(1000 + Math.random() * 9000); //generate new code
+        console.log(geneCode);
+        var veriCode = document.querySelector("#veri-code");
+        console.log(veriCode);
+        veriCode.textContent = geneCode;
+
+        var nextBtn1 = $('#s1-nextBtn');
+        var nextBtn2 = $('#s2-nextBtn');
+        var nextBtn3 = $('#s3-nextBtn');
+
+        var prevBtn2 = $('#s2-prevBtn');
+        var prevBtn3 = $('#s3-prevBtn');
+        var prevBtn4 = $('#s4-prevBtn');
+
+        var step1 = $('#step-1');
+        var step2 = $('#step-2');
+        var step3 = $('#step-3');
+        var step4 = $('#step-4');
+
+        nextBtn1.on("click", function () {
+            step1.css("left", "-570px");
+            step2.css("left", "260px");
+        })
+        prevBtn2.on("click", function () {
+            step2.css("left", "1110px");
+            step1.css("left", "260px");
+        })
+        nextBtn2.on("click", function () {
+            step2.css("left", "-570px");
+            step3.css("left", "260px");
+        })
+        prevBtn3.on("click", function () {
+            step2.css("left", "260px");
+            step3.css("left", "1110px");
+        })
+        nextBtn3.on("click", function () {
+            step3.css("left", "-570px");
+            step4.css("left", "260px");
+        })
+        prevBtn3.on("click", function () {
+            step2.css("left", "260px");
+            step3.css("left", "1110px");
+        })
+        prevBtn4.on("click", function () {
+            step3.css("left", "260px");
+            step4.css("left", "1110px");
+        })
+
+        nextBtn1.css("pointerEvents", "none");
+        // step 1 verification
+        $('#veriBtn1').click(function () {
+
+            var senderUsername = document.querySelector('#sender-username').value;
+            var senderWallet = document.querySelector('#sender-wid').value;
+            // this regex stands for: start with a single '0' along with a 'x', ends up with 64 (a-z)s/numbers
+            const regex = /^0x[a-fA-F0-9]{40}$/;
+
+            // Multiplying by 9000 results in a range of [0, 9000).
+            // Adding 1000 results in a range of [1000, 10000).
+            // Flooring chops off the decimal value to give you an integer(讓結果是整數). Note that it does not round.(四捨五入)
+            // var randNum = Math.floor(1000 + Math.random() * 9000);
+
+            // not empty and pass the regex
+            if (senderUsername != "" && senderWallet != "") {
+                if (regex.test(senderWallet) == true) {
+                    nextBtn1.css("pointerEvents", "auto");
+                    alert('Verified.');
+                } else if (regex.test(senderWallet) == false) {
+                    alert('Unvalid wallet id ! Please try again');
+                }
+            } else {
+                alert('User name or wallet id is missing! Next button is disabled');
+            }
+        });
+
+
+        nextBtn2.css("pointerEvents", "none");
+        // step 2 verification
+        $('#veriBtn2').click(function () {
+
+            // var inputStr = input_recipiant_walletid;
+            var receiWallet = document.querySelector('#recei-wid').value;
+            const regex = /^0x[a-fA-F0-9]{40}$/;
+            // this regex stands for: start with a single '0' along with a 'x', ends up with 64 (a-z)s/numbers
+
+            if (receiWallet != "") {
+                if (regex.test(receiWallet) == true) {
+                    nextBtn2.css('pointerEvents', 'auto');
+                    alert('Wallet Id verified');
+                } else if (regex.test(receiWallet) == false) {
+                    alert('Unvalid wallet id ! Next button is disabled');
+                }
+            }
+            if (receiWallet == "") {
+                alert('Missing recipiant wallet id !');
+            }
+        });
+
+        $('#veriBtn3').click(function () {
+            var inputCode = document.querySelector("#veriCode-input").value;
+            console.log(inputCode);
+
+            if (inputCode == geneCode) {
+                $('#s3-nextBtn').css("pointerEvents", "auto");
+                alert('Code verified !');
+            } else if (inputCode != geneCode) {
+                $('#s3-nextBtn').css("pointerEvents", "none");
+                alert('Unvalid code !');
+            } else {
+                alert('Unmatched content entered !');
+            }
+        });
+
+        nextBtn3.css("pointerEvents", "none");
+        $('#s3-nextBtn').click(function () {
+            $('#s4-sender-username').val(document.querySelector("#sender-username").value);
+            $('#s4-sender-wid').val(document.querySelector("#sender-wid").value);
+            $('#s4-sender-itemNum').val(document.querySelector("#sender-item").value);
+            $('#s4-sender-notes').val(document.querySelector("#sender-notes").value);
+            $('#s4-recei-wid').val(document.querySelector("#recei-wid").value);
+            $('#s4-recei-notes').val(document.querySelector("#recei-notes").value);
+
+            var s1_senUsername = document.querySelector("#sender-username").value;
+            var s1_senWid = document.querySelector("#sender-wid").value;
+            var s1_senItem = document.querySelector("#sender-item");
+            var s1_selected_item = s1_senItem.options[s1_senItem.selectedIndex].text;
+            var s1_senNote = document.querySelector("#sender-notes").value;
+
+            var s2_receiWid = document.querySelector("#recei-wid").value;
+            var s2_receiNote = document.querySelector("#recei-notes").value;
+
+            console.log(s1_senUsername, s1_senWid, s1_selected_item, s1_senNote);
+            console.log(s2_receiWid, s2_receiNote);
+
+            var s4_sen_username = document.querySelector("#s4-sender-username");
+            var s4_sen_wid = document.querySelector("#s4-sender-wid");
+            var s4_sen_itemNum = document.querySelector("#s4-sender-itemNum");
+            var s4_sen_notes = document.querySelector("#s4-sender-notes");
+            console.log(s4_sen_username, s4_sen_wid, s4_sen_itemNum, s4_sen_notes);
+
+            var s4_recei_wid = document.querySelector("#s4-recei-wid");
+            var s4_recei_notes = document.querySelector("#s4-recei-notes");
+            console.log(s4_recei_wid, s4_recei_notes);
+
+            s4_sen_username.textContent = s1_senUsername;
+            s4_sen_wid.textContent = s1_senWid;
+            s4_sen_itemNum.textContent = s1_selected_item;
+            s4_sen_notes.textContent = s1_senNote;
+            console.log(s4_sen_username, s4_sen_wid, s4_sen_itemNum, s4_sen_notes);
+
+            s4_recei_wid.textContent = s2_receiWid;
+            s4_recei_notes.textContent = s2_receiNote;
+            console.log(s4_recei_wid, s4_recei_notes);
+        });
+    });
+
+    </script>
+</body>
+
+{% endblock %}
