@@ -877,7 +877,8 @@ List of subroutines: (● represent that subroutines are done)
 	●GetSellSituation(Return the number of tickets which have been selled, ActID need to be pointed out)
 	●GetCustomer(Return the tokenIDs and current totalcost in smartcontract that the customer have)
 	●DeleteActivity(Owner's privilege to delete activity. tickey money will refund to activity's tickey buyer and the ticket token will be burn out)
-	Latest revised by Limindog at 2022/03/16 00:14
+	●Web3WebUserVerify(The function to make sure token's owner and the gas will return to msg.sender)
+	Latest revised by Limindog at 2022/04/06 22:50
 
 The process of transfer Token(Use A to B for example):
 	First: A call approve function to endow B with the right to receive specific token which A have
