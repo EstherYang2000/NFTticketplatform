@@ -3,7 +3,7 @@ import sys
 
 
 w3 = Web3(HTTPProvider('http://127.0.0.1:7545'))
-address='0xf8aFD4d0BfFb78c302Ff367b39496741B6Ac1F00'
+address='0xaC96d10028D3C0271E5346B5a8328053E6Ab5072'
 #Remember to check deployed address and connection
 #In our test and presentation, we will use ganache's environment,so the function of connection is localhost with port7545
 #Rembmber to check up "listen on network" in the remix terminal to surveillance transaction from web3.py
@@ -181,6 +181,24 @@ abi=[
 		"name": "renounceOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "receiver",
+				"type": "address"
+			}
+		],
+		"name": "ReturnVerifiedGasToUser",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -375,6 +393,19 @@ abi=[
 		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenID",
+				"type": "uint256"
+			}
+		],
+		"name": "WebUserVerify",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -790,6 +821,35 @@ abi=[
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "VerifyData",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "TokenOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "Verified",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "isValue",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]
 #Remember to change abi's content if the code of smartcontract have any change
@@ -857,7 +917,7 @@ def Web3SetActivity(ActID,Address,TicketNum,TicketPrice):
             else:
                 TicketPrice*=10
                 decimal+=1
-        tx_hash=deployed_contract.functions.SetActivity(ActID,Address,TicketNum,int(TicketPrice),decimal).transact({'from':Owner,'gas':5000000})
+        tx_hash=deployed_contract.functions.SetActivity(ActID,Address,TicketNum,int(TicketPrice),decimal).transact({'from':Owner})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
         if tx_receipt['status']==1:
             return "活動{} 已建立成功，張數{}張、價格{}eth".format(ActID,TicketNum,TicketPrice/(10**decimal))
@@ -865,7 +925,7 @@ def Web3SetActivity(ActID,Address,TicketNum,TicketPrice):
     except:
         e=sys.exc_info()[1]
         dir(sys.exc_info()[1])
-        return e.args[0]['message']
+        return sys.exc_info()[1]
 
         #Get error message
 def Web3GetActivity(ActID):
@@ -900,7 +960,7 @@ def Web3ContinueAvailable(ActID):
 
 def Web3safeMint(ActID,MintAddress,CallerAddress,Money):
     try:
-        tx_hash=deployed_contract.functions.safeMint(ActID,MintAddress).transact({'from':CallerAddress,'gas':5000000,'value': w3.toWei('{:.8f}'.format(Money*1.03),"ether")})
+        tx_hash=deployed_contract.functions.safeMint(ActID,MintAddress).transact({'from':CallerAddress,'value': w3.toWei('{:.8f}'.format(Money*1.03),"ether")})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
         if tx_receipt['status']==1:
             TokenID=int(tx_receipt['logs'][0]['topics'][3].hex(),16)
@@ -963,15 +1023,14 @@ def Web3transferOwnership(toAddress):
 
 def Web3CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token,Money,CallerAddress):
 	try:
-		tx_hash=deployed_contract.functions.CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token).transact({'from':CallerAddress,'gas':5000000,'value':w3.toWei(Money,"ether")})
+		tx_hash=deployed_contract.functions.CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token).transact({'from':CallerAddress,'value':w3.toWei(Money,"ether")})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 		if tx_receipt['status']==1:return"{} 已成功購買來自{} 的Token:{} ".format(toAddress,fromAddress,Token)
 		return tx_receipt
 	except:
 		e=sys.exc_info()[1]
 		dir(sys.exc_info()[1])
-		return e.args[0]['message']
-
+		return sys.exc_info()[1]
 def Web3SetApprovalForAll(approvedAddress,Approved,CallerAddress):
 	try:
 		tx_hash=deployed_contract.functions.setApprovalForAll(approvedAddress,Approved).transact({'from':CallerAddress})
@@ -984,7 +1043,7 @@ def Web3SetApprovalForAll(approvedAddress,Approved,CallerAddress):
 
 def Web3CompanyWithdrawMoney(ActID):
 	try:
-		tx_hash=deployed_contract.functions.CompanyWithdrawMoney(ActID).transact({'from':Owner,"gas":5000000})
+		tx_hash=deployed_contract.functions.CompanyWithdrawMoney(ActID).transact({'from':Owner})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 		if tx_receipt['status']==1:
 			return "公司已成功領取活動{} 的收益".format(ActID)
@@ -1002,7 +1061,7 @@ def Web3GetSellSituation (ActID):
 
 def Web3DeleteActivity(ActID):
 	try:
-		tx_hash=deployed_contract.functions.DeleteActivities(ActID).transact({'from':Owner,"gas":5000000})
+		tx_hash=deployed_contract.functions.DeleteActivities(ActID).transact({'from':Owner})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 		return tx_receipt
 	except:
@@ -1042,5 +1101,14 @@ def Web3GetCompanyActNumber(QueryAddress):
 	except:
 		return sys.exc_info()[1]
 
-print(CustomerA)
+def Web3WebUserVerify(tokenID,CallerAddress):
+	try:
+		tx_hash=deployed_contract.functions.WebUserVerify(tokenID).transact({'from':CallerAddress})
+		tx_receipt=w3.eth.waitForTransactionReceipt(tx_hash)
+		est_gas=int(tx_receipt['gasUsed'])+150000
+		tx_hash=deployed_contract.functions.ReturnVerifiedGasToUser(est_gas,CallerAddress).transact({'from':Owner})
+		return ['WalletID{} 已成功驗證 TokenID：{}的使用，並已反退其花費的gas'.format(CallerAddress,tokenID),True]
+	except:
+		return [sys.exc_info()[1],False]
+
 
