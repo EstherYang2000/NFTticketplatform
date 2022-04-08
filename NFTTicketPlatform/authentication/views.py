@@ -49,6 +49,8 @@ sys.path.append("..")
 
 from web3 import Web3, HTTPProvider
 
+from sq import *
+
 # Create your views here.
 # @login_required(login_url='login_user')
 
@@ -104,8 +106,8 @@ def register(request):
 
                 try:
 
-                    p = sql.connect(host='127.0.0.1', user='root',
-                                    password='Sester890627', database='nftticketwebsite')
+                    p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
                     if p.is_connected():
 
                         # 顯示資料庫版本
@@ -295,8 +297,8 @@ def personalInfowallet(request):
             customerProfile.save()  # 寫入資料庫
 
         try:
-            p = sql.connect(host='127.0.0.1', user='root',
-                            password='Sester890627', database='nftticketwebsite')
+            p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
             if p.is_connected():
                 # 顯示資料庫版本
                 db_Info = p.get_server_info()
@@ -342,12 +344,23 @@ def personalasset(request):
     user = request.user
 
     customerProfile = CustomerProfile.objects.get(customeruser=user)
+
 # 個人錢包換算
     # get asset
     # myAssertEther = 0.00
     # totalAsset = Decimal(myAssertEther)
+    CustomerOrders =[]
     customerOrders = Order.objects.filter(customer=customerProfile)
     myOrders = customerOrders.all()
+    # for myOrder in myOrders:
+    #     totalPerCost=myOrder[(CustomerOrders[myOrder.events.eventname])]
+    #     totalPerCosts =Decimal (totalPerCost)
+    #     thisprice = myOrder.orderPrice
+    #     thispriceA = Decimal(thisprice)
+    #     totalPerCosts+= thispriceA
+
+    # print(CustomerOrders)
+    print("_________________________________________________")
     print(customerOrders)
     # etherAsset = {}
     # for myOrder in myOrders:
@@ -362,12 +375,12 @@ def personalasset(request):
     print(type(totalAsset))
     totalAssetD = Decimal(totalAsset)
     lastEtherRate = getEtherRate()
+
     # Convert to USD
     lastEtherRate = Decimal(lastEtherRate)
     etherToUSD = totalAssetD * lastEtherRate
     print("etherToUSD:"+str(etherToUSD))
     etherToUSD = Decimal(etherToUSD)
-
     # Convert to TW
     lastUSDTWRate = getUSDTW()
     lastUSDTWRate = Decimal(lastUSDTWRate)
@@ -439,8 +452,8 @@ def personaltransfer(request):
         #     messages.success(request, "'TransferEvent was created for ' + customerProfile.customeruser.username＋'Status:' + wantToTransfer.status")
         #     try:
 
-        #         p = sql.connect(host='127.0.0.1', user='root',
-        #                         password='Sester890627', database='nftticketwebsite')
+        #         p = sql.connect(host=changehost, user=changeuser,
+                                        #password=changepassword, database='nftticketwebsite')
         #         if p.is_connected():
         #             # 顯示資料庫版本
         #             db_Info = p.get_server_info()
@@ -585,8 +598,8 @@ def exhibitionOrder(request, pk):
             eachExhibition.save()
             try:
 
-                p = sql.connect(host='127.0.0.1', user='root',
-                                password='Sester890627', database='nftticketwebsite')
+                p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
                 if p.is_connected():
                     # 顯示資料庫版本
                     db_Info = p.get_server_info()
@@ -678,7 +691,10 @@ def company(request):
 
         companyuserProfile = CompanyProfile.objects.get(companyuser=user)
         print(companyuserProfile)
+        eventstatus =[]
         eventstatus = (Web3GetCompanyActNumber(companyuserProfile.company_walletId))
+        print("------------------------------------")
+        print(eventstatus)
         del eventstatus[0]
         print(eventstatus)
         num = [0, 1, 2]
@@ -744,8 +760,8 @@ def createevent(request):
 
                     try:
 
-                        p = sql.connect(host='127.0.0.1', user='root',
-                                        password='Sester890627', database='nftticketwebsite')
+                        p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
                         if p.is_connected():
 
                             # 顯示資料庫版本
@@ -841,8 +857,8 @@ def updateevent(request, pk):
 
             try:
 
-                p = sql.connect(host='127.0.0.1', user='root',
-                                password='Sester890627', database='nftticketwebsite')
+                p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
                 if p.is_connected():
 
                     # 顯示資料庫版本
@@ -912,8 +928,8 @@ def deleteevent(request, pk):
 
     try:
 
-        p = sql.connect(host='127.0.0.1', user='root',
-                        password='Sester890627', database='nftticketwebsite')
+        p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
         if p.is_connected():
 
             # 顯示資料庫版本
@@ -979,8 +995,8 @@ def companyInfowallet(request):
     context = {'companyuserProfile': companyuserProfile}
     print(context)
     try:
-        p = sql.connect(host='127.0.0.1', user='root',
-                        password='Sester890627', database='nftticketwebsite')
+        p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
         if p.is_connected():
             # 顯示資料庫版本
             db_Info = p.get_server_info()
