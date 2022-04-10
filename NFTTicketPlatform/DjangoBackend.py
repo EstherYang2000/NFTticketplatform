@@ -3,7 +3,7 @@ import sys
 
 
 w3 = Web3(HTTPProvider('http://127.0.0.1:7545'))
-address='0xaC96d10028D3C0271E5346B5a8328053E6Ab5072'
+address='0xDc58523f43Fc8410f53670a87D8eE77774E93633'
 #Remember to check deployed address and connection
 #In our test and presentation, we will use ganache's environment,so the function of connection is localhost with port7545
 #Rembmber to check up "listen on network" in the remix terminal to surveillance transaction from web3.py
@@ -920,8 +920,9 @@ def Web3SetActivity(ActID,Address,TicketNum,TicketPrice):
                 decimal+=1
         tx_hash=deployed_contract.functions.SetActivity(ActID,Address,TicketNum,int(TicketPrice),decimal).transact({'from':Owner})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
+        block_number=tx_receipt["blockNumber"]
         if tx_receipt['status']==1:
-            return "活動{} 已建立成功，張數{}張、價格{}eth".format(ActID,TicketNum,TicketPrice/(10**decimal))
+            return ["活動{} 已建立成功，張數{}張、價格{}eth BlockNumber:{}".format(ActID,TicketNum,TicketPrice/(10**decimal),block_number),block_number]
         return tx_receipt
     except:
         e=sys.exc_info()[1]
@@ -963,9 +964,11 @@ def Web3safeMint(ActID,MintAddress,CallerAddress,Money):
     try:
         tx_hash=deployed_contract.functions.safeMint(ActID,MintAddress).transact({'from':CallerAddress,'value': w3.toWei('{:.8f}'.format(Money*1.03),"ether")})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
+        block_number=tx_receipt["blockNumber"]
+        print(tx_receipt)
         if tx_receipt['status']==1:
             TokenID=int(tx_receipt['logs'][0]['topics'][3].hex(),16)
-            return(["Address {} 已購買活動{}成功 TokenID:{}".format(MintAddress,ActID,TokenID),TokenID])
+            return(["Address {} 已購買活動{}成功 TokenID:{} BlockNumber:{}".format(MintAddress,ActID,TokenID,block_number),TokenID,block_number])
         return tx_receipt
     except:
         e=sys.exc_info()[1]
@@ -1026,7 +1029,8 @@ def Web3CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token,Money,CallerAdd
 	try:
 		tx_hash=deployed_contract.functions.CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token).transact({'from':CallerAddress,'value':w3.toWei(Money,"ether")})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
-		if tx_receipt['status']==1:return"{} 已成功購買來自{} 的Token:{} ".format(toAddress,fromAddress,Token)
+		block_number=tx_receipt["blockNumber"]
+		if tx_receipt['status']==1:return["{} 已成功購買來自{} 的Token:{} BlockNumber:{}".format(toAddress,fromAddress,Token,block_number),block_number]
 		return tx_receipt
 	except:
 		e=sys.exc_info()[1]
@@ -1106,10 +1110,17 @@ def Web3WebUserVerify(tokenID,CallerAddress):
 	try:
 		tx_hash=deployed_contract.functions.WebUserVerify(tokenID).transact({'from':CallerAddress})
 		tx_receipt=w3.eth.waitForTransactionReceipt(tx_hash)
+		block_number=tx_receipt["blockNumber"]
 		est_gas=int(tx_receipt['gasUsed'])+150000
 		tx_hash=deployed_contract.functions.ReturnVerifiedGasToUser(est_gas,CallerAddress).transact({'from':Owner})
-		return ['WalletID{} 已成功驗證 TokenID：{}的使用，並已反退其花費的gas'.format(CallerAddress,tokenID),True]
+		return ['WalletID{} 已成功驗證 TokenID：{}的使用，並已反退其花費的gas BlockNumber:{}'.format(CallerAddress,tokenID,block_number),True,block_number]
 	except:
 		return [sys.exc_info()[1],False]
 
-
+def Web3GetVerityData(tokenID,CallerAddress):
+	try:
+		tx_hash=deployed_contract.functions.VerifyData(tokenID).call({'from':CallerAddress})
+		return ['TokenID:{} 的驗證狀態目前為{}'.format(tokenID,tx_hash[1]),tx_hash[1]]
+	except:
+		return [sys.exc_info()[1],False]
+print(w3.eth.get_transaction_by_block(9,0))
