@@ -1,0 +1,182 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
+pragma experimental ABIEncoderV2;
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
+contract MyToken is ERC721, Ownable {
+    
+    // 1.03eth = 1,030,000,000,000,000,000 
+    struct Activity {
+        address OwnerCompany;
+        int OriginalTicket;
+        int RemainTicket;
+        uint256 Price;
+        bool Available;
+        bool isValue;
+        uint[] TicketToken;
+    }
+    struct Information{
+        uint256 TotalCost;
+        int[] OwnToken;
+    }
+    struct CompanyInformation{
+        uint256 NumberofAct;
+        uint256 AvailableAct;
+        uint256 DeadAct;
+    }
+    
+
+    uint256 public OwnerBonus=0 ether;
+
+    mapping (address => Information) public Customers;
+    mapping (string => Activity)  public Activities;
+    mapping (uint256 => uint256)  private TokenIndex;
+    mapping (address => CompanyInformation) public Companys;
+    address[] public instructorAccts;
+
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIdCounter;
+    constructor() ERC721("NTUSTTicketPlatfrom", "NTUSTTicket") {}
+
+
+
+    function SetActivity(string memory _ActID, address _CompanyAddress, int _TicketNum, uint256 _TicketPrice, uint decimal) public onlyOwner {
+        require(Activities[_ActID].isValue==false,"Your Activity's ID is repeated");
+        Activity storage Act=Activities[_ActID];
+        Act.OriginalTicket=_TicketNum;
+        Act.OwnerCompany=_CompanyAddress;
+        Act.RemainTicket=_TicketNum;
+        Act.Price=uint256(uint(_TicketPrice)*(10**18)/(10**decimal))*1 wei;
+        Act.Available=true;
+        Act.isValue=true;
+        Companys[_CompanyAddress].NumberofAct+=1;
+        Companys[_CompanyAddress].AvailableAct+=1;
+    }
+    function GetActivity(string memory _ActID) public view returns(Activity memory ){
+        require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+        return Activities[_ActID];
+    }
+
+    function GetSellSituation(string memory _ActID) public view returns(int){
+        require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+        return (Activities[_ActID].OriginalTicket-Activities[_ActID].RemainTicket);
+    }
+    function _baseURI() internal pure override returns(string memory){
+        return "http://api.ntustticket.com/token/";
+    }
+
+    function safeMint(string memory _ActID,address to) public payable{
+        require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+        require(Activities[_ActID].RemainTicket>0,"This Activity dosen't have enough tickets to buy");
+        require(Activities[_ActID].Available==true,"This Activity is unavailable now!");
+        require(msg.value==Activities[_ActID].Price*103/100,"Your ticket price is not correspond to this activity's ticket price");
+        uint256 tokenId = _tokenIdCounter.current();
+        OwnerBonus+=Activities[_ActID].Price*3/100;
+        OwnerBonus+=Activities[_ActID].Price*5/(2*100);
+        _tokenIdCounter.increment();
+        _safeMint(to, tokenId);
+        Activities[_ActID].RemainTicket-=1;
+        Activities[_ActID].TicketToken.push(tokenId);
+        Customers[msg.sender].OwnToken.push(int(tokenId));
+        Customers[msg.sender].TotalCost+=Activities[_ActID].Price;
+        TokenIndex[tokenId]=uint256(Customers[msg.sender].OwnToken.length-1);
+
+    }
+    function OwnerWithdraw() public onlyOwner payable{
+        address payable receiver = payable(owner());
+        require (QueryContractBalance()>=OwnerBonus,"Contract doesn't have enough money to withdraw!!");
+        receiver.transfer(OwnerBonus);
+        OwnerBonus-=OwnerBonus;
+
+    }
+    function QueryOwnerBonus() public view onlyOwner returns(uint256){
+        return OwnerBonus;
+    }
+    
+    function StopAvailable(string memory _ActID) public onlyOwner{
+        //if(msg.sender != owner()){
+            //require(msg.sender == Activities[_ActID].OwnerCompany,"You are not the contract owner or activity owner");
+        //}       
+        //above comment's result is that judge whether msg.sender is Owner or ActivityCompany, We need more discussion to make sure who can change the statue of activity,
+        //Option A: Changing statue is only office Available
+        //Option B: Changing statue is both office and Company Available
+        require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+        Activities[_ActID].Available=false;
+    }
+
+    function ContinueAvailable(string memory _ActID) public onlyOwner{
+        
+        //if(msg.sender != owner()){SS
+            //require(msg.sender == Activities[_ActID].OwnerCompany,"You are not the contract owner or activity owner");
+        //}       
+        require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+        require(Activities[_ActID].Available==false,"This avtivity has been available now, don't need to set it available again!!");
+
+        Activities[_ActID].Available=true;
+    }
+
+    function CustomApprove(address to, uint256 tokenId, uint256 test) private returns(uint256) {
+        address owner = ERC721.ownerOf(tokenId);
+        require(to != owner, "ERC721: approval to current owner");
+        require(
+            _msgSender() == owner || isApprovedForAll(owner, _msgSender()),
+            "ERC721: approve caller is not owner nor approved for all"
+        );
+
+        _approve(to, tokenId);
+        return test;
+    }
+
+    function DeleteActivities(string memory _ActID) public onlyOwner payable{
+        require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+        for(uint i=0;i<Activities[_ActID].TicketToken.length;i++){
+            require(QueryContractBalance()>=Activities[_ActID].Price,"Contract dosen't have enough money,please contact us for help!!");
+            address payable buyAddress=payable(ownerOf(Activities[_ActID].TicketToken[i]));
+            buyAddress.transfer(Activities[_ActID].Price);
+            burn(Activities[_ActID].TicketToken[i]);
+            delete Activities[_ActID].TicketToken[i];
+            Customers[buyAddress].OwnToken[TokenIndex[Activities[_ActID].TicketToken[i]]]=-1;
+        }
+        delete Activities[_ActID];
+      }
+
+      function CustomSafeTransferFrom(string memory _ActID,address from,address to,uint256 tokenId) public payable{
+        require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
+        require(msg.value==Activities[_ActID].Price,"Your ticket price is not correspond to this activity's ticket price");
+        address payable receiver=payable(ERC721.ownerOf(tokenId));
+        receiver.transfer(Activities[_ActID].Price);
+        Customers[from].OwnToken[TokenIndex[tokenId]]=-1;
+        Customers[from].TotalCost-=Activities[_ActID].Price;
+        Customers[to].TotalCost+=Activities[_ActID].Price;
+        Customers[to].OwnToken.push(int(tokenId));
+        TokenIndex[tokenId]=Customers[to].OwnToken.length-1;
+        safeTransferFrom(from, to, tokenId, "");
+    }
+    function GetCustomer(address QueryAddress) public view returns(Information memory){
+        return Customers[QueryAddress];
+    }
+    
+    function QueryContractBalance() public view onlyOwner returns(uint256) {
+        return address(this).balance;
+    }
+
+    function CompanyWithdrawMoney(string memory _ActID) public onlyOwner payable{
+         require(Activities[_ActID].Available==true,"This Act is stoping right now, please contact us for more help");
+         require(Activities[_ActID].isValue==true,"Couldn't found your request ID, please make sure you typing right ID");
+         address payable receiver=payable(Activities[_ActID].OwnerCompany);
+         uint256 Value=uint256(Activities[_ActID].OriginalTicket-Activities[_ActID].RemainTicket)*Activities[_ActID].Price;     
+         require(QueryContractBalance()>=Value,"Contract dosen't have enough money,please contact us for help!!");
+         Activities[_ActID].Available=false;
+         Companys[Activities[_ActID].OwnerCompany].AvailableAct-=1;
+         Companys[Activities[_ActID].OwnerCompany].DeadAct+=1;
+         Value-=Value*5/(2*100);
+         receiver.transfer(Value);
+    }
+    function burn(uint256 tokenId) private onlyOwner {
+        _burn(tokenId);
+    }
+
+}
