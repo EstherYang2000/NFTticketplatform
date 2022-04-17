@@ -14,7 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from .models import Events,CustomerProfile
+from .models import Events,CustomerProfile,Transfer
 from django.forms.fields import DateTimeField
 from django.forms.fields import DateTimeInput
 from .models import Order
@@ -65,10 +65,10 @@ class RegistrationForm(UserCreationForm):
         # }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'placeholder':_('Username')})
-        self.fields['email'].widget.attrs.update({'placeholder':_('Email')})
-        self.fields['password1'].widget.attrs.update({'placeholder':_('Password')})
-        self.fields['password2'].widget.attrs.update({'placeholder':_('Repeat password')})
+        self.fields['username'].widget.attrs.update({'placeholder':_('Username.....')})
+        self.fields['email'].widget.attrs.update({'placeholder':_('Email....')})
+        self.fields['password1'].widget.attrs.update({'placeholder':_('Password....')})
+        self.fields['password2'].widget.attrs.update({'placeholder':_('Repeat password....')})
 class DateTimePickerInput(forms.DateTimeInput):
         input_type = 'datetime'
 
@@ -161,6 +161,16 @@ class OrderForm(forms.ModelForm):
     # ordernumber = forms.DecimalField(widget=forms.NumberInput)
     class Meta:
         model = Order
+        fields = '__all__'
+class AcceptTransferForm(forms.ModelForm):
+    # user_name = forms.CharField(max_length=100)
+    # wallet_ID= forms. CharField(max_length=100)
+    # email = forms.EmailField()
+    # eventname = forms.CharField(max_length=100)
+    # eventcategory = forms.CharField(max_length=100)
+    # ordernumber = forms.DecimalField(widget=forms.NumberInput)
+    class Meta:
+        model = Transfer
         fields = '__all__'
 
 # class OrderFormStepOne(forms.ModelForm):

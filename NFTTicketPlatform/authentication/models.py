@@ -13,7 +13,7 @@ class CustomerProfile(models.Model):
     customeruser = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     personal_email = models.CharField(max_length=200, null=True)
     personal_walletId = models.CharField(max_length=100,blank=True)
-    avatars = models.ImageField(upload_to=settings.MEDIA_ROOT,default='imgs/avatar.jpg', null=True, blank=True)
+    avatars = models.ImageField(upload_to=settings.MEDIA_ROOT,default='avatars/avatar.jpg', null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
@@ -81,8 +81,10 @@ class Events(models.Model):
 
 class Order(models.Model):
     STATUS = (
-            ('Unpaid', 'Unpaid'),
-            ('Paid', 'Paid'),
+            ('transferring', 'transferring'),
+            ('UnConfirmed', 'UnConfirmed'),
+            ('Valid', 'Valid'),
+            ('Used', 'Used'),
             )
     tokenID = models.IntegerField(null=False,default=0)
     customer = models.ForeignKey(CustomerProfile, null=True, on_delete=models.SET_NULL)
@@ -93,7 +95,8 @@ class Order(models.Model):
     orderPrice = models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
     orderHandlingfee =models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
     orderTotalPrice = models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
-    status = models.CharField(max_length=200, null=True, choices=STATUS)
+    status = models.CharField(max_length=200, null=True, choices=STATUS,default='UnConfirmed')
+    enterPWD = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.events.eventname
@@ -109,6 +112,7 @@ class Transfer(models.Model):
     Receiver = models.ForeignKey(CustomerProfile, null=True, related_name="receiver",on_delete=models.SET_NULL)
     senderOrder = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL)
     tranferEvent = models.ForeignKey(Events, null=True, on_delete=models.SET_NULL)
+    tokenID = models.IntegerField(null=False,default=0)
     transferFee = models.DecimalField(null=False,max_digits=5, decimal_places=4,default=0)
     senderNote = models.CharField(max_length=200, null=True, blank=True)
     receiverNote = models.CharField(max_length=200, null=True, blank=True)
@@ -117,7 +121,7 @@ class Transfer(models.Model):
     status = models.CharField(max_length=200, null=True, choices=STATUS,default="UnConfirmed")
 
     def __str__(self):
-        return self.status
+        return self.tranferEvent.eventname
 
 
 # from django.contrib.auth.models import AbstractUser

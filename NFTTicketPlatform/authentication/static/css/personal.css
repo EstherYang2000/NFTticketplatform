@@ -4,7 +4,8 @@ body {
 }
 
 .container-fluid {
-    z-index: 1;
+    z-index: 0;
+    /* background-color: #1A1423; */
 }
 
 /* ------------------------- NAVBAR ------------------------- */
@@ -64,13 +65,13 @@ body {
     border-radius: 6px;
     transition: all 0.3s;
 }
+
 .container-fluid .navbar .navbar-toggler {
     color: white;
 }
 
-/* ------------------------- end navbar ------------------------- */
 
-/*------------------------- Sidebar -------------------------*/
+/*------------------------- SIDEBAR -------------------------*/
 .profile-picture {
 
     vertical-align: middle;
@@ -78,6 +79,9 @@ body {
     height: 36%;
     border-radius: 50%;
   }
+#display-img {
+    border: 5px solid black;
+}
 .wrapper {
     display: flex;
     text-decoration: none;
@@ -86,7 +90,7 @@ body {
 
 .wrapper .sidebar {
     z-index: 2;
-	width: -200px;
+    width: -200px;
     min-width: 200px;
     max-width: 200px;
     min-height: 100vh;
@@ -96,8 +100,6 @@ body {
     position: fixed;
     /* Apply to all changed properties */
     transition: all 0.5s;
-    /* position: fixed; */
-    /* top: 0; */
 }
 
 .wrapper #sidebar .sidebar-header-div {
@@ -106,15 +108,12 @@ body {
 
 .wrapper #sidebar .sidebar-header-div .profile-img {
     margin-bottom: 10px;
-    /* padding: 3% 10%; */
-    /* border: 2px solid white; */
     display: block;
     justify-content: center;
     align-items: center;
 }
 
 .wrapper #sidebar .sidebar-header-div .display-img {
-    /* background-image: url("D/MINE/110-2/Front-End2.3/imgs/default-user.png") fixed center; */
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -137,8 +136,9 @@ body {
     font-weight: 600;
 }
 
-#display-img {
-    border: 5px solid black;
+.wrapper .sidebar .sidebar-header-div #display-img {
+    border: 4px solid black;
+    margin-left: 10%;
 }
 
 .wrapper .sidebar .sidebar-item {
@@ -207,7 +207,7 @@ body {
 .sidebar #light-switch {
     display: none;
     font-size: 20px;
-    color:gold;
+    color: gold;
 }
 
 .sidebar #light-switch:hover {
@@ -215,7 +215,6 @@ body {
     background: #f5f5dc;
 }
 
-/*------------------------- end Sidebar -------------------------*/
 
 /*------------------------- content pane -------------------------*/
 #dvPassport11 .container .profile-picture111{
@@ -227,76 +226,92 @@ body {
 #content {
     z-index: 1;
 }
+/* .content-container {
+    border: 3px solid black;
+} */
 
 .content-container .row {
-    padding: 20px;
+    /* padding: 20px; */
+    min-width: 100%;
+    /* padding: 0px auto; */
 }
 
-.content-container .row {
+.content-container #content-row {
     width: 100%;
     min-height: 100%;
     transition: all 0.5s;
+    /* border: 3px solid green; */
 }
 
-/* ------------------ info content ------------------ */
+/*
+.content-container .row .tab-content {
+    margin: 0px auto;s
+} */
 
-.content-container .tab-content .container #user-info-intro {
+/* ------------------ INFO content ------------------ */
+
+.tab-content #pane-info #user-info-intro {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.tab-content .container #user-info-intro #user-info-title {
+.tab-content #pane-info #user-info-intro #info-title {
+    font-size: 4em;
     text-align: center;
 }
 
-.content-container .tab-content .container #user-info-img-div {
-    padding: 20px;
+.tab-content #pane-info #user-info-intro .content-title #info-title-cn {
+    font-size: 1.4em;
+    font-weight: 600;
 }
 
-.content-container .tab-content .container #user-info-img {
+.tab-content #pane-info #user-info-intro .content-title #info-title-en {
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.tab-content #pane-info #user-info-img {
     width: 100%;
     height: 100%;
 }
 
-.content-container .tab-content #pane-info .card .info-compo {
+.tab-content #pane-info .card .info-label {
     font-size: 20px;
     font-weight: 500;
 }
 
-.content-container .tab-content #pane-info .card .info-compo span {
+.tab-content #pane-info #info-card .card .info-data {
+    margin: 0 auto;
+}
+
+.tab-content #pane-info #info-card .card .info-label span {
     font-size: 22px;
     cursor: auto;
     overflow: hidden;
 }
 
-.content-container .tab-content #pane-info .card #walletid-part {
-    width: 100%;
+.tab-content #pane-info #info-card .card #walletid-part {
     display: flex;
-    align-items: center;
-}
-.content-container .tab-content #pane-info .card #avatar-part {
-    width: 100%;
-    display: flex;
-    align-items: center;
 }
 
-.content-container .tab-content #pane-info .card #input-wallet-id {
-    margin-left: 20px;
-    margin-right: 20px;
+.tab-content #pane-info #info-card .card #walletid-part #label-walletid {
+    width: 90px;
+}
+
+.tab-content #pane-info #info-card .card #input-walletid {
+    margin-right: 15px;
     height: 30px;
-    width: 80%;
-    font-size: 17px;
+    width: 70%;
+    font-size: 15px;
 }
 
-.content-container .tab-content #pane-info #security-img {
-    /* border: 2px solid black; */
+.tab-content #pane-info #security-img {
     width: 100%;
     height: 100%;
 }
 
-.content-container .tab-content #pane-info #info-instruction {
-    /* border: 2px solid black; */
+.tab-content #pane-info #info-instruction {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -306,10 +321,10 @@ body {
     z-index: 10000000 !important;
     /* due to sidebar's z-index, this should pint ot top layer*/
 }
+
 small, label {
     cursor: auto;
 }
-
 
 /* ------------------ ASSET content ------------------ */
 
@@ -345,7 +360,7 @@ small, label {
 
 .tab-content #pane-asset #three-cards .card-body {
     width: 100%;
-    height: 160px;
+    height: 130px;
 }
 
 .tab-content #pane-asset #three-cards #profit-title {
@@ -426,7 +441,49 @@ small, label {
     border: 2px solid black;
 }
 
+#pane-asset .tables {
+    background-color: #FFF;
+}
+
+#pane-asset .tables .table-container table tbody .claim .status-btn,
+#pane-asset .tables .table-container table tbody .enter .enter-btn,
+#pane-asset .tables .table-container table tbody .auth .auth-btn {
+    font-size: 18px;
+    font-weight: 600;
+    border: 2px solid rgb(211, 211, 211);
+    border-radius: 5px;
+    background-color: #FFF;
+    box-shadow: 5px 5px #888888;
+}
+
+#pane-asset .tables .table-container table tbody .enter .enter-btn {
+    color: #7171c7;
+    --fa-animation-duration: 3s;
+}
+
+#pane-asset .tables .table-container table tbody .auth .auth-btn {
+    color: #01A7C2;
+    --fa-animation-duration: 4s;
+}
+
+#pane-asset .tables .modal form input {
+    background: white;
+    border: none;
+    width: 100%;
+}
+
+
+#pane-asset .tables .modal form #confirm-btn-div {
+    border-top: 3px solid gray;
+}
+
+#pane-asset .tables .modal form #confirm-btn-div div {
+    width: auto;
+    margin: 0px auto;
+}
+
 /*------------------------- TRANSFER content -------------------------*/
+
 
 .tab-content #pane-transfer #content-navigator {
     border: 3px solid grey;
@@ -477,7 +534,7 @@ small, label {
 
 #pane-transfer .row #form-div {
     /* "." means current folder, ".." means parent folder */
-    background-image: url("../static/imgs/list.jpg");
+    background-image: url("../imgs/list.jpg");
     background-position: center;
     background-size: cover;
     padding: 500px;
@@ -576,8 +633,6 @@ small, label {
 
 .tab-content #pane-help #help-intro #help-title {
     text-align: center;
-    width: 400px;
-    margin: 0 auto;
 }
 
 .tab-content #pane-help #help-img {
@@ -585,26 +640,24 @@ small, label {
     height: 100%;
 }
 
-#pane-help #textarea-row #help-div {
+#pane-help #textarea-row #help-message-div {
     height: 100%;
 }
 
-#pane-help #textarea-row #help-div #area-title {
+#pane-help #textarea-row #help-message-div #area-title {
     font-weight: 600;
 }
 
-#pane-help #textarea-row #help-div #help-card {
+#pane-help #textarea-row #help-message-div #help-card {
     border: 3px solid #59c0e6;
     width: 80%;
-    margin-left: 30%;
-    margin: 0 auto;
 }
 
-#pane-help #textarea-row #help-div #help-card .text-info {
+#pane-help #textarea-row #help-message-div #help-card .text-info {
     display: block;
 }
 
-#pane-help #textarea-row #help-div #textarea-div {
+#pane-help #textarea-row #help-message-div #textarea-div {
     padding: 10px;
     transition: 0.3s;
     width: 100%;
@@ -614,27 +667,74 @@ small, label {
     align-items: center;
 }
 
-#pane-help #textarea-row #help-div #textarea-div #textarea:focus {
+#pane-help #textarea-row #help-message-div #textarea-div #textarea:focus {
     outline: none;
     transition: 0.3s;
     border-radius: 5px;
     border: 3px solid #9dc4e0;
 }
 
-#pane-help #textarea-row #help-div .card-body .card-text span {
+#pane-help #textarea-row #help-message-div .card-body .card-text span {
     color: #253ecc;
     font-size: 18px;
     font-weight: 600;
 }
 
-/*------------------------- footer -------------------------*/
+/* -------------------- footer -------------------- */
 
-.card .card-body .social-btns {
-    padding: 10px;
+.container-fluid .footer {
+    background: #000;
 }
 
-.container-fluid .card .social-btns {
-    padding: 20px;
+.container-fluid .footer .links-div {
+    color: azure;
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+/* this means styles are apply to all descendants (childrens) */
+.container-fluid .footer .links-div .sub {
+    /* border: 2px solid cyan; */
+    border-radius: 5px;
+    width: 50%;
+    height: auto;
+    margin: 20px auto;
+}
+
+.container-fluid .footer .sub-header {
+    /* border: 2px solid gray; */
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.container-fluid .footer .links-div .sub ul {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 30%;
+    /* border: 2px solid gray; */
+}
+
+.container-fluid .footer .links-div .sub ul li {
+    list-style-type: none;
+    width: 100%;
+    margin: 5px auto;
+    /* border: 2px solid white; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+}
+
+.container-fluid .footer .links-div .sub ul li a {
+    /* border: 2px solid lightcoral; */
+    color: white;
+    margin: 20px auto;
 }
 
 
@@ -672,10 +772,10 @@ small, label {
         width: 18%;
     }
 
-    .tab-content #pane-info #info-title {
-        font-size: 2.1em;
+    /* .tab-content #pane-info #info-title {
+        font-size: 5em;
         text-align: center;
-    }
+    } */
 
     .tab-content #pane-asset #asset-title {
         font-size: 2.1em;
@@ -779,7 +879,6 @@ small, label {
         width: 100%;
     }
 
-    /* ---------------------------  end pane-info --------------------------- */
 
     /* --------------------------- pane-asset --------------------------- */
 
@@ -846,6 +945,7 @@ small, label {
         margin: 4px 2px;
         padding: 4px 8px;
     }
+
 
 }
 
@@ -1020,6 +1120,7 @@ small, label {
     .tab-content #pane-transfer .smartwizard .tab-content #form-div {
         background: #7171c7;
     }
+
 }
 
 

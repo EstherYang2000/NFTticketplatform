@@ -345,21 +345,35 @@ def personalasset(request):
 
     customerProfile = CustomerProfile.objects.get(customeruser=user)
 
-# 個人錢包換算
+    # 個人錢包換算
     # get asset
     # myAssertEther = 0.00
     # totalAsset = Decimal(myAssertEther)
-    CustomerOrders =[]
+    CustomerOrders ={}
     customerOrders = Order.objects.filter(customer=customerProfile)
     myOrders = customerOrders.all()
-    # for myOrder in myOrders:
-    #     totalPerCost=myOrder[(CustomerOrders[myOrder.events.eventname])]
-    #     totalPerCosts =Decimal (totalPerCost)
-    #     thisprice = myOrder.orderPrice
-    #     thispriceA = Decimal(thisprice)
-    #     totalPerCosts+= thispriceA
+    for myOrder in myOrders:
+        CustomerOrders[str(myOrder.events.eventname)] = 0.0
+    for myOrder in myOrders:
+        print("_________________________________________________")
 
-    # print(CustomerOrders)
+
+        # totalCost = CustomerOrders[str(myOrder.events.eventname)]
+        totalPerCost=float(myOrder.orderPrice)
+        print(totalPerCost)
+        print(type(totalPerCost))
+        # totalCost+=totalPerCost
+        CustomerOrders[(myOrder.events.eventname)] += totalPerCost
+        # thisprice = myOrder.orderPrice
+        # thispriceA = Decimal(thisprice)
+        # totalPerCosts+= thispriceA
+
+    print(CustomerOrders)
+    CustomerOrdersKeys = CustomerOrders.keys()
+    CustomerOrdersKeys = list(CustomerOrdersKeys)
+    CustomerOrdersvalues = CustomerOrders.values()
+    CustomerOrdersvalues = list(CustomerOrdersvalues)
+    print(type(CustomerOrders))
     print("_________________________________________________")
     print(customerOrders)
     # etherAsset = {}
@@ -399,15 +413,225 @@ def personalasset(request):
     # myOrdersCount = myOrders.count()
 
     # TransferData
-    context = {'myOrders': myOrders, 'customerProfile': customerProfile,
-               'totaltokennum': totaltokennum, 'etherAsset': etherAsset,'totalAsset':totalAsset}
+    transferappllieds = Transfer.objects.filter(Sender = customerProfile)
+    transferreceiveds = Transfer.objects.filter(Receiver = customerProfile,status ="UnConfirmed" )
+    transferreceivedCount = Transfer.objects.filter(Receiver = customerProfile,status ="UnConfirmed" ).count()
+    if transferreceiveds:
+        if transferreceivedCount < 2 :
+            strMSG ="You still have {0} unaccepted transfer".format(transferreceivedCount)
+        else:
+            strMSG ="You still have {0} unaccepted transfers".format(transferreceivedCount)
+        messages.success(request, strMSG)
+
+
+
+    context = {'CustomerOrdersKeys':CustomerOrdersKeys,'CustomerOrdersvalues':CustomerOrdersvalues,'myOrders': myOrders, 'customerProfile': customerProfile,
+               'totaltokennum': totaltokennum, 'etherAsset': etherAsset,'totalAsset':totalAsset,'transferappllieds':transferappllieds,'transferreceiveds':transferreceiveds}
 
     return render(request, 'personal/personalasset.html', context)
 
 
 pass
 
-# transferFee待補
+@login_required(login_url='login_user')
+#個人接受轉讓
+def Accept(request):
+    print("-----------accept-----------")
+    user = request.user
+    customerProfile = CustomerProfile.objects.get(customeruser=user)
+    if request.method == "POST":
+        transferID = request.POST.get('transferID')
+        tokenID = request.POST.get('tokenID')
+        receiverName = request.POST.get('confirm-recei')
+        senderName = request.POST.get('confrim-sender')
+        sendEvent = request.POST.get('confirm-item')
+        sendermsg = request.POST.get('confirm-msg')
+        print("------------------ID:"+str(transferID))
+        print("------------------ID:"+str(tokenID))
+        print("------------------receiverName:"+str(receiverName))
+        print("------------------senderName:"+str(senderName))
+        print("------------------sendEvent:"+str(sendEvent))
+        print("------------------sendermsg:"+str(sendermsg))
+        loc_dt = datetime.datetime.now()
+        # time_del = datetime.timedelta(hours=3)
+        # new_dt = loc_dt - time_del
+        # datetime_format = new_dt.strftime("%Y/%m/%d %H:%M:%S")
+
+        transferAccpeted = Transfer.objects.get(id =transferID)
+        transferOrder = Order.objects.get(tokenID=tokenID)
+        print(transferAccpeted)
+        transferAccpeted.status = "Success"
+        transferAccpeted.transferDate_Success = loc_dt
+        transferAccpeted.save()
+        transferOrder.status = "UnConfirmed"
+        transferOrder.customer = customerProfile
+        transferOrder.save()
+        messages.success(request, "Successfully Accept the transfer !!")
+        try:
+
+                p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
+                if p.is_connected():
+                    # 顯示資料庫版本
+                    db_Info = p.get_server_info()
+                    print("資料庫版本：", db_Info)
+                    pcursor = p.cursor()
+                    print("連資料庫成功")
+
+                    if transferAccpeted:
+                        transferID = transferAccpeted.id
+                        transferStatus = transferAccpeted.status
+                        successTime = transferAccpeted.transferDate_Success
+                        UpdateTransfer = "UPDATE transferticket SET transferDate_Success = %s,status = %s WHERE transferID = %s;"
+
+                        val = (successTime,transferStatus,transferID)
+                        pcursor.execute(UpdateTransfer, val)
+                        p.commit()
+                        messages.success(
+                                request, "Successfully Update the data into transferticket database !!")
+                        if transferOrder:
+                            tokenID = transferOrder.tokenID
+                            print("取得各資料成功")
+                            cusID = "SELECT CustomerID FROM customerprofile WHERE CustomerName = %s"
+                            receName = str(request.user.username)
+                            value = (receName,)
+                            print(value)
+                            pcursor.execute(cusID, value)
+                            cusIDs = pcursor.fetchall()
+                            cusID = cusIDs[0][0]
+
+                            strTransfer = "UnConfirmed"
+                            UpdateOrder = "UPDATE orderevent SET CustomerID = %s,ticketStatus = %s WHERE tokenID = %s;"
+                            orderValue = (cusID,strTransfer,tokenID)
+                            pcursor.execute(UpdateOrder, orderValue)
+                            p.commit()
+                            messages.success(
+                                request, "Successfully Insert the data into orderevent database !!")
+
+                            # eventID = "SELECT eventID FROM event WHERE eventname = %s"
+                            # value = (Geteventname,)
+                            # print(value)
+                            # pcursor.execute(eventID, value)
+                            # eventpk = pcursor.fetchall()
+
+                            # eventpk = eventpk[0][0]
+                            # cmpWallet = companyuserProfile.company_walletId
+                            # print(cmpWallet)
+                            # print(Web3SetActivity(str(eventpk),cmpWallet,int(Geteventticketnumber),int(Geteventprice)))
+                            # print('活動ID:'+eventID)
+
+                            # Web3SetActivity()
+
+                            return redirect('personalasset')
+                        #     print("Successfully Insert the data into company database !!")
+                        else:
+
+                            print("取得資料不成功")
+                            return redirect('personalasset')
+        except Error as e:
+                print("資料庫連接失敗：", e)
+                return redirect('personalasset')
+
+        finally:
+                if (p.is_connected()):
+                    pcursor.close()
+                    p.close()
+                    print("資料庫連線已關閉")
+
+    else:
+        messages.info(request, 'AcceptTransfer was invalid !!')
+        return redirect('personalasset')
+
+    context ={'customerProfile':customerProfile}
+    return render(request, 'personal/personalasset.html', context)
+
+pass
+
+
+
+def Auth(request,pk):
+
+    print("-----------Auth-----------")
+
+    user = request.user
+    customerProfile = CustomerProfile.objects.get(customeruser=user)
+    thisorder =Order.objects.get(id=pk)
+    print(thisorder)
+    if request.method == "POST":
+
+        print("-----------form-----------")
+        tokenId = request.POST.get('tokenIDpwd')
+        authpwd = request.POST.get('auth-pwd')
+        print('tokenIDpwd:'+str(tokenId))
+        print('authpwd:'+authpwd)
+        authOrder = Order.objects.get(tokenID=tokenId)
+        print(authOrder)
+        authOrder.enterPWD = authpwd
+        strValid ="Valid"
+        authOrder.status = "Valid"
+        authOrder.save()
+        messages.success(request, "Successfully Authenticate this order !!")
+        try:
+
+                p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
+                if p.is_connected():
+                    # 顯示資料庫版本
+                    db_Info = p.get_server_info()
+                    print("資料庫版本：", db_Info)
+                    pcursor = p.cursor()
+                    print("連資料庫成功")
+
+                    if authOrder:
+                        authID = authOrder.id
+                        authStatus = authOrder.status
+
+                        UpdateTransfer = "UPDATE orderevent SET enterPWD = %s WHERE orderEventID = %s;"
+
+                        val = (authStatus,authID)
+                        pcursor.execute(UpdateTransfer, val)
+                        p.commit()
+                        messages.success(
+                                request, "Successfully Update the data into order database !!")
+
+                            # eventID = "SELECT eventID FROM event WHERE eventname = %s"
+                            # value = (Geteventname,)
+                            # print(value)
+                            # pcursor.execute(eventID, value)
+                            # eventpk = pcursor.fetchall()
+
+                            # eventpk = eventpk[0][0]
+                            # cmpWallet = companyuserProfile.company_walletId
+                            # print(cmpWallet)
+                            # print(Web3SetActivity(str(eventpk),cmpWallet,int(Geteventticketnumber),int(Geteventprice)))
+                            # print('活動ID:'+eventID)
+
+                            # Web3SetActivity()
+
+                        return redirect('personalasset')
+                        #     print("Successfully Insert the data into company database !!")
+                    else:
+
+                        print("取得資料不成功")
+                        return redirect('personalasset')
+        except Error as e:
+                print("資料庫連接失敗：", e)
+                return redirect('personalasset')
+
+        finally:
+                if (p.is_connected()):
+                    pcursor.close()
+                    p.close()
+                    print("資料庫連線已關閉")
+
+    else:
+        messages.info(request, 'Authform was invalid !!')
+        return redirect('personalasset')
+    context ={'customerProfile':customerProfile,'authStatus':authStatus,"strValid":strValid,'thisorder':thisorder}
+
+    return render(request, 'personal/authform.html', context)
+
+pass
 #個人轉讓中心
 @login_required(login_url='login_user')
 def personaltransfer(request):
@@ -426,95 +650,112 @@ def personaltransfer(request):
         receiverWalletID = request.POST.get('s4-recei-wid')
         receiverNote = request.POST.get('s4-recei-notes')
 
-        Receiver = CustomerProfile.objects.filter(
+        Receiver = CustomerProfile.objects.get(
             personal_walletId=receiverWalletID)
-        thisevent = Events.objects.filter(eventname=transferEvent)
-        # print("----------------------------------------------------------------------")
-        # thissenderorder = Order.objects.filter(customer=customerProfile, events=thisevent)
 
+        print("----------------------------------------------------------------------")
+        thissenderorder = Order.objects.get(customer=customerProfile, id=transferEvent)
+        thisOrderToken = thissenderorder.tokenID
         # print(thissenderorder)
+        thisSenderOrderName = thissenderorder.events.eventname
+        thisevent = Events.objects.get(eventname=thisSenderOrderName)
+
+        print(thisevent)
                 # firstSenderorder =senderorder[0]
         # mysenderOrder= Order.objects.filter(customer=Sender, events=thisevent)
         # mysenderOrders=mysenderOrder.all()
         # mysenderOrderCount = mysenderOrders.objects.count()
-        mysenderOrderCount=Order.objects.filter(customer=customerProfile, events=thisevent).count()
+        mysenderOrderCount=Order.objects.filter(customer=customerProfile, events= thisevent).count()
+
         # mysenderOrderCount= Order.objects.filter(customer__in=Sender, events__in=thisevent).count()
-        # print("mysenderOrderCount"+str(mysenderOrderCount)+"-------------------------------")
+        print("mysenderOrderCount"+str(mysenderOrderCount)+"-------------------------------")
         # mysenderOrder=senderOrders.all()
         # mysenderOrderCount = mysenderOrder.count()
         # transferFee
         # status = "UnConfirmed"
-        # if (mysenderOrderCount>0):
-        #     wantToTransfer = Transfer.objects.create(Sender=customerProfile, Receiver=Receiver, senderOrder=senderorder,
-        #                                              tranferEvent=thisevent, transferFee=0, status=status, senderNote=senderNote, receiverNote=receiverNote)
-        #     wantToTransfer.save()
-        #     wantToTransferID = wantToTransferID.id
-        #     messages.success(request, "'TransferEvent was created for ' + customerProfile.customeruser.username＋'Status:' + wantToTransfer.status")
-        #     try:
+        if (mysenderOrderCount>0):
+            wantToTransfer = Transfer.objects.create(Sender=Sender, Receiver=Receiver, senderOrder=thissenderorder, tokenID = thisOrderToken,
+                                                     tranferEvent=thisevent, transferFee=0, senderNote=senderNote, receiverNote=receiverNote)
+            wantToTransfer.save()
+            wantToTransferID = wantToTransfer.id
+            wantToTransferOrder = Order.objects.get(tokenID=thisOrderToken)
+            print(wantToTransferOrder)
+            wantToTransferOrder.status = "transferring"
+            wantToTransferOrder.save()
+            messages.success(request, "'TransferEvent was created for ' + customerProfile.customeruser.username＋'Status:' + wantToTransfer.status")
+            try:
 
-        #         p = sql.connect(host=changehost, user=changeuser,
-                                        #password=changepassword, database='nftticketwebsite')
-        #         if p.is_connected():
-        #             # 顯示資料庫版本
-        #             db_Info = p.get_server_info()
-        #             print("資料庫版本：", db_Info)
-        #             pcursor = p.cursor()
-        #             print("連資料庫成功")
-        #             getTransfer = Transfer.objects.get(id=wantToTransferID)
-        #             if getTransfer:
-        #                 getTransferID = getTransfer.id
-        #                 getSenderWallet = customerProfile.personal_walletId
-        #                 getReceiverWallet = getTransfer.Receiver.personal_walletId
-        #                 getTokenID = getTransfer.senderorder.tokenID
-        #                 getEventID = getTransfer.tranferEvent.id
-        #                 getTransferfee = getTransfer.transferFee
-        #                 getTransferDate_created = getTransfer.transferDate_created
-        #                 getTransferDate_Success = getTransfer.transferDate_Success
-        #                 status = getTransfer.status
+                p = sql.connect(host=changehost, user=changeuser,
+                                        password=changepassword, database='nftticketwebsite')
+                if p.is_connected():
+                    # 顯示資料庫版本
+                    db_Info = p.get_server_info()
+                    print("資料庫版本：", db_Info)
+                    pcursor = p.cursor()
+                    print("連資料庫成功")
+                    getTransfer = Transfer.objects.get(id=wantToTransferID)
+                    if getTransfer:
+                        getTransferID = getTransfer.id
+                        getSenderWallet = customerProfile.personal_walletId
+                        getReceiverWallet = getTransfer.Receiver.personal_walletId
+                        getTokenID = getTransfer.senderOrder.tokenID
+                        getEventID = getTransfer.tranferEvent.id
+                        getTransferfee = getTransfer.transferFee
+                        getTransferDate_created = getTransfer.transferDate_created
+                        getTransferDate_Success = getTransfer.transferDate_Success
+                        status = getTransfer.status
 
-        #                 print(getTransfer)
-        #                 print("取得各資料成功")
-        #                 transferticket = "INSERT INTO transferticket SET transferID =%s,senderID = (SELECT CustomerID FROM customerprofile WHERE CustomerWalletAdress = %s),\
-        #                         receiverID = (SELECT CustomerID FROM customerprofile WHERE CustomerWalletAdress = %s),tokenID = %s, transferEventID=%s,transferFee=%s,transferDate_created=%s,\
-        #                             transferDate_Success=%s,status=%s;"
+                        print(getTokenID)
+                        print(getTransfer)
+                        print("取得各資料成功")
+                        transferticket = "INSERT INTO transferticket SET transferID =%s,senderID = (SELECT CustomerID FROM customerprofile WHERE CustomerWalletAdress = %s),\
+                                receiverID = (SELECT CustomerID FROM customerprofile WHERE CustomerWalletAdress = %s),tokenID = %s, transferEventID=%s,transferFee=%s,transferDate_created=%s,\
+                                    transferDate_Success=%s,status=%s;"
 
-        #                 val = (getTransferID, getSenderWallet, getReceiverWallet, getTokenID, getEventID,
-        #                        getTransferfee, getTransferDate_created, getTransferDate_Success, status)
-        #                 pcursor.execute(transferticket, val)
-        #                 p.commit()
-        #                 # eventID = "SELECT eventID FROM event WHERE eventname = %s"
-        #                 # value = (Geteventname,)
-        #                 # print(value)
-        #                 # pcursor.execute(eventID, value)
-        #                 # eventpk = pcursor.fetchall()
+                        val = (getTransferID, getSenderWallet, getReceiverWallet, getTokenID, getEventID,
+                               getTransferfee, getTransferDate_created, getTransferDate_Success, status)
+                        pcursor.execute(transferticket, val)
+                        p.commit()
+                        strTransfer = "transfering"
+                        UpdateOrder = "UPDATE orderevent SET ticketStatus = %s WHERE tokenID = %s;"
+                        orderValue = (strTransfer,thisOrderToken)
+                        pcursor.execute(UpdateOrder, orderValue)
+                        p.commit()
+                        messages.success(
+                                request, "Successfully Update the data into orderevent database !!")
+                        # eventID = "SELECT eventID FROM event WHERE eventname = %s"
+                        # value = (Geteventname,)
+                        # print(value)
+                        # pcursor.execute(eventID, value)
+                        # eventpk = pcursor.fetchall()
 
-        #                 # eventpk = eventpk[0][0]
-        #                 # cmpWallet = companyuserProfile.company_walletId
-        #                 # print(cmpWallet)
-        #                 # print(Web3SetActivity(str(eventpk),cmpWallet,int(Geteventticketnumber),int(Geteventprice)))
-        #                 # print('活動ID:'+eventID)
+                        # eventpk = eventpk[0][0]
+                        # cmpWallet = companyuserProfile.company_walletId
+                        # print(cmpWallet)
+                        # print(Web3SetActivity(str(eventpk),cmpWallet,int(Geteventticketnumber),int(Geteventprice)))
+                        # print('活動ID:'+eventID)
 
-        #                 # Web3SetActivity()
-        #                 messages.success(
-        #                     request, "Successfully Insert the data into transferticket database !!")
-        #                 return redirect('personaltransfer')
-        #             #     print("Successfully Insert the data into company database !!")
-        #             else:
+                        # Web3SetActivity()
+                        messages.success(
+                            request, "Successfully Insert the data into transferticket database !!")
+                        return redirect('personaltransfer')
+                    #     print("Successfully Insert the data into company database !!")
+                    else:
 
-        #                 print("取得資料不成功")
-        #                 return redirect('personaltransfer')
-        #     except Error as e:
-        #         print("資料庫連接失敗：", e)
-        #         return redirect('personaltransfer')
+                        print("取得資料不成功")
+                        return redirect('personaltransfer')
+            except Error as e:
+                print("資料庫連接失敗：", e)
+                return redirect('personaltransfer')
 
-        #     finally:
-        #         if (p.is_connected()):
-        #             pcursor.close()
-        #             p.close()
-        #             print("資料庫連線已關閉")
-        # else:
-        #     messages.info(request, 'TransferEvent was not invalid !!')
-        #     return redirect('personaltransfer')
+            finally:
+                if (p.is_connected()):
+                    pcursor.close()
+                    p.close()
+                    print("資料庫連線已關閉")
+        else:
+            messages.info(request, 'TransferEvent was not invalid !!')
+            return redirect('personaltransfer')
 
     context = {'customerProfile': customerProfile, 'myAssets': myAssets}
     return render(request, 'personal/personaltransfer.html', context)
@@ -622,13 +863,15 @@ def exhibitionOrder(request, pk):
                         getOrderPrice = GetOrder.orderPrice
                         getOrderHandlingfee = GetOrder.orderHandlingfee
                         getOrderTotalPrice = GetOrder.orderTotalPrice
+                        getOrderStatus = GetOrder.status
                         print(GetOrder)
                         print("取得訂購各資料成功")
                         eventorder = "INSERT INTO orderevent SET orderEventID=%s,CustomerID = (SELECT CustomerID FROM customerprofile WHERE CustomerName = %s),\
-                            eventID= (SELECT eventID FROM event WHERE eventname = %s),OrderNumber = %s,tokenID=%s,orderDate_created=%s,OrderPrice=%s , OrderHandlingfee=%s ,OrderTotalPrice=%s;"
+                            eventID= (SELECT eventID FROM event WHERE eventname = %s),OrderNumber = %s,tokenID=%s,orderDate_created=%s,OrderPrice=%s ,\
+                                 OrderHandlingfee=%s ,OrderTotalPrice=%s,ticketStatus=%s;"
 
-                        val = (OrderID, getOrdercustomer.customeruser.username, getevent.eventname, getOrderNumber, getTokenID, getDate_created, getOrderPrice,
-                               getOrderHandlingfee, getOrderTotalPrice)
+                        val = (getOrderEventID, getOrdercustomer.customeruser.username, getevent.eventname, getOrderNumber, getTokenID, getDate_created, getOrderPrice,
+                               getOrderHandlingfee, getOrderTotalPrice,getOrderStatus)
                         pcursor.execute(eventorder, val)
                         p.commit()
                         # eventID = "SELECT orderID FROM event WHERE orderEventID = %s"

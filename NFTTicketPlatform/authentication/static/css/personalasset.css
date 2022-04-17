@@ -1,0 +1,198 @@
+/* ----------------- chart row ----------------- */
+
+.tab-content #pane-asset #chart-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tab-content #pane-asset .card .canvas-container {
+    width: 100%;
+    height: 300px;
+}
+
+.tab-content #pane-asset #asset-table-div {
+    border: 2px solid black;
+}
+
+#pane-asset .tables {
+    background-color: #FFF;
+}
+
+#pane-asset .tables .table-container p-3 table tbody .claim .status-btn,
+#pane-asset .tables .table-container p-3 table tbody .enter .enter-btn,
+#pane-asset .tables .table-container p-3 table tbody .auth .auth-btn {
+    font-size: 18px;
+    font-weight: 600;
+    border: 2px solid rgb(211, 211, 211);
+    border-radius: 5px;
+    background-color: #FFF;
+    box-shadow: 5px 5px #888888;
+}
+
+#pane-asset .tables .table-container p-3 table tbody .enter .enter-btn {
+    color: #7171c7;
+    --fa-animation-duration: 3s;
+}
+
+#pane-asset .tables .table-container p-3 table tbody .auth .auth-btn {
+    color: #01A7C2;
+    --fa-animation-duration: 4s;
+}
+
+#pane-asset .tables .modal form input {
+    background: white;
+    border: none;
+    width: 100%;
+}
+
+#pane-asset .tables .modal form #confirm-btn-div {
+    border-top: 3px solid gray;
+}
+
+#pane-asset .tables .modal form #confirm-btn-div div {
+    width: auto;
+    margin: 0px auto;
+}
+
+/*------------------------- TRANSFER content -------------------------*/
+#authModal{
+    z-index: 1000000 !important;
+}
+
+.tab-content #pane-transfer #content-navigator {
+    border: 3px solid grey;
+    box-shadow: 5px 10px #888888;
+    background-color: #f5f5dc;
+    border-radius: 3px;
+    width: 150px;
+    height: 100px;
+    right: 20px;
+    position: fixed;
+    z-index: 2;
+    padding: 0px 13px;
+}
+
+#pane-transfer #content-navigator #href-div a {
+    display: block;
+    font-size: 16px;
+}
+
+.tab-content #pane-transfer #transfer-intro {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tab-content #pane-transfer #transfer-intro #transfer-title {
+    text-align: center;
+    font-weight: 600;
+}
+
+.tab-content #pane-transfer #transfer-intro #transfer-title #title-cn {
+    font-size: 2.1em;
+}
+
+.tab-content #pane-transfer #transfer-intro #transfer-title #title-en {
+    font-size: 1.0649em;
+}
+
+.tab-content #pane-transfer #transfer-img {
+    width: 100%;
+    height: 100%;
+}
+
+#pane-transfer #transfer-intro #transfer-img-div #transfer-img {
+    width: 100%;
+    height: 100%;
+}
+
+#pane-transfer .row #form-div {
+    /* "." means current folder, ".." means parent folder */
+    background-image: url("../imgs/list.jpg");
+    background-position: center;
+    background-size: cover;
+    padding: 500px;
+    width: 400px;
+    height: 800px;
+    overflow: hidden;
+    position: relative;
+}
+
+#pane-transfer .row #form-div .steps {
+    border-radius: 5px;
+    background-color: #ffffff;
+    opacity: 0.95;
+    color: #3f2b96;
+    font-weight: 600;
+    margin: 30px auto;
+    padding: 30px 40px;
+    width: 550px;
+    height: 560px;
+    min-width: 300px;
+    position: absolute;
+    left: 260px;
+    transition: 0.6s;
+}
+
+/* #pane-transfer .row #form-div #step-2,
+#pane-transfer .row #form-div #step-3,
+#pane-transfer .row #form-div #step-4 {
+    left: 1110px;
+    border: 2px solid black;
+} */
+
+#pane-transfer .row #form-div #step-2,
+#pane-transfer .row #form-div #step-3 {
+    left: 1110px;
+    border: 2px solid black;
+}
+
+#pane-transfer .row #form-div #step-4 {
+    left: 1110px;
+}
+
+#pane-transfer .row #form-div #step-4 .row span {
+    /* must add "display: block;" when styling span's width */
+    display: block;
+    width: 180px;
+    overflow: auto;
+}
+
+#pane-transfer .row #form-div #form-title #span-cn {
+    font-size: 36px;
+}
+
+#pane-transfer .row #form-div #form-title #span-en {
+    font-size: 25px;
+}
+
+#pane-transfer .row #form-div .tab-labels {
+    font-size: 20px;
+    color: #253ecc;
+}
+
+#pane-transfer .row #form-div .labels {
+    font-size: 30px;
+}
+
+#pane-transfer .row #form-div .steps input {
+    font-size: 16px;
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+}
+
+#pane-transfer .row #form-div #step-3 #veri-label,
+#pane-transfer .row #form-div #step-3 #veri-code {
+    font-size: 20px;
+}
+
+#pane-transfer .row #form-div #sender-item-dropdown {
+    width: 100%;
+    height: 35px;
+    font-size: 19px;
+    padding: 0px 10px;
+    border-radius: 5px;
+}

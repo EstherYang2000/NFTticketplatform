@@ -1,51 +1,16 @@
+
 {% extends 'personal/personal.html'%}
-{% load static %}
+
 {%block personal%}
 {% load static %}
-<html lang="en">
 
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="shortcut icon" href="{% static 'imgs/ape.jpeg' %}">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <!-- Google font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap">
-    <!-- font awesome link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- step wizard -->
-    <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet"
-        type="text/css" />
-    <!-- jquery CDN(content delivery network) must before my own css as I'm depend on it -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- my css -->
-    <link rel="stylesheet" href="{% static 'css/personal.css' %}">
 
 
      <!-- chart.js 3.7.1 CDN (Content Delivery Network) -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
 
-    <title>NFT Platform</title>
-    <!-- <script> //這裡可以用那個部落格的方法做新增 </script> -->
-
-    <!-- start full screen container -->
-    <div class="container-fluid p-0">
-
-
-        <!-- --------------------------------------------------------------------------------------------------------------------- -->
-
-        <!-- sidebar + content -->
-        <div class="wrapper p-0">
 
 
             <!-- contnet -->
@@ -58,7 +23,7 @@
 
 
                         <!-- asset content -->
-                        <div class="container tab-pane show active col-12 p-0 " role="tabpanel" id="pane-asset" aria-labelledby="tab-asset">
+                        <div class="container tab-pane show active col-12 mb-5 p-0 " role="tabpanel" id="pane-asset" aria-labelledby="tab-asset">
 
                             <div class="row mt-2 mb-5" id="user-asset-intro">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
@@ -191,10 +156,10 @@
                                     var myChart = new Chart(asset, {
                                         type: 'pie',
                                         data: {
-                                            labels: [{%for myOrder in myOrders%}'{{myOrder.events.eventname}}',{%endfor%}],
+                                            labels: [{%for CustomerOrdersKey in CustomerOrdersKeys%}'{{CustomerOrdersKey}}',{%endfor%}],
                                             datasets: [{
                                                 label: 'prpportion of NFT1',
-                                                data: [{%for myOrder in myOrders%}{{myOrder.orderPrice}},{%endfor%}],
+                                                data: [{%for CustomerOrdersvalue in CustomerOrdersvalues%}{{CustomerOrdersvalue}},{%endfor%}],
                                                 backgroundColor: [
                                                     'rgba(255, 99, 132, 0.4)',
                                                     'rgba(54, 162, 235, 0.4)',
@@ -253,83 +218,81 @@
                             <!-- end chart -->
 
                             <!-- asset table -->
-                            <div class="col-12 p-3 mb-5" id="asset-table-div">
-                                <h3>List Assets</h3>
+                            <div class="col-12 p-3 mb-5 tables" id="asset-table-div">
+                                <h3 class="table-header">List Assets</h3>
                                 <div class="table-container p-3">
-                                    <table class="table table-hover table-lg">
+                                    <table class="table table-hover table-lg" id="assettable">
 
                                         <thead class="thead-dark text-center">
                                             <tr>
+                                                <th scope="col">Row</th>
                                                 <th scope="col">ID</th>
-                                                <th scope="col">Name</th>
+                                                <th scope="col">TOKEN ID</th>
+                                                <th scope="col">Asset Name</th>
                                                 <th scope="col">Bought Date</th>
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Transaction fee</th>
                                                 <th scope="col">Total fee</th>
                                                 <th scope="col">Amount</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Detail</th>
+                                                <th scope="col">Enter</th>
+                                                <th scope="col">Authentication</th>
                                             </tr>
+
                                         </thead>
                                         {%for myOrder in myOrders%}
                                         <tbody class="text-center">
                                             <tr>
-                                                <th scope="row">{{myOrder.id}}</th>
+                                                <th scope="row" id ="rowNum">{{ forloop.counter }}</th>
+                                                <td>{{myOrder.id}}</td>
+                                                <td id='astokenid'>{{myOrder.tokenID}}</td>
                                                 <td>{{myOrder.events.eventname}}</td>
                                                 <td>{{myOrder.date_created}}</td>
                                                 <td>{{myOrder.orderPrice}} <span>ETH</span></td>
                                                 <td>{{myOrder.orderHandlingfee}} <span>ETH</span></td>
                                                 <td>{{myOrder.orderTotalPrice}} <span>ETH</span></td>
                                                 <td>{{myOrder.orderNumber}}</td>
-                                            </tr>
-                                        {%endfor%}
+                                                <td>{{myOrder.status}}</td>
+                                                <td></td>
 
-                                            {% comment %} <tr>
-                                                <th scope="row">2</th>
-                                                <td>NFT 2</td>
-                                                <td>2020/03/21</td>
-                                                <td>0.23 <span>ETH</span></td>
-                                                <td>1</td>
+                                                <td class="enter">
+                                                        {%if authStatus == strValid %}
+                                                            <button type="button" class="enter-btn" data-toggle="modal" data-target="#enterModal"
+                                                            data-placement="right" title="Enter event" > enter
+                                                                <i class="fa-solid fa-door-open fa-fade"></i>
+                                                            </button>
+                                                        {%else%}
+                                                            <button type="button" class="enter-btn" data-toggle="modal" data-target="#enterModal"
+                                                            data-placement="right" title="Enter event" disabled> enter
+                                                                <i class="fa-solid fa-door-open fa-fade"></i>
+                                                            </button>
+                                                        {%endif%}
+
+                                                </td>
+                                                <td class="auth">
+                                                    {% comment %} <a href="{% url 'Auth' myOrder.id %}" {% endcomment %}
+                                                    <button type="button" class="auth-btn" data-toggle="modal" data-target="#authModal"
+                                                    ata-placement="right" title="Authentications">auth.
+                                                        <i class="fa-solid fa-shield fa-fade"></i>
+
+                                                    {% comment %} </button> {% endcomment %}
+                                                    </a>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>NFT 3</td>
-                                                <td>2020/09/07</td>
-                                                <td>50 <span>BUSD</span></td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">4</th>
-                                                <td>NFT 4</td>
-                                                <td>2019/10/25</td>
-                                                <td>38 <span>BUSD</span></td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">5</th>
-                                                <td>NFT 5</td>
-                                                <td>2022/01/09</td>
-                                                <td>0.52 <span>ETH</span></td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">6</th>
-                                                <td>NFT 6</td>
-                                                <td>2018/12/23</td>
-                                                <td>26 <span>BUSD</span></td>
-                                                <td>1</td>
-                                            </tr> {% endcomment %}
+
                                         </tbody>
+                                        {%endfor%}
                                     </table>
                                 </div>
                             </div>
 
-
-                             <!-- asset table -->
-                             <div class="col-12 p-3 mb-5" id="asset-table-div">
-                                <h3>Transfer Status</h3>
+                            <!-- transfering items table -->
+                            <div class="col-12 mt-5 mb-5 p-3 tables" id="transferItem-table-div">
+                                <h3 class="table-header mb-3">Transfering Items</h3>
                                 <div class="table-container p-3">
-                                    <table class="table table-hover table-lg">
-
-                                        <thead class="thead-dark text-center">
+                                    <table class="table table-hover">
+                                        <thead class="thead-light text-center">
                                             <tr>
                                                 <th scope="col">TOKEN ID</th>
                                                 <th scope="col">Sender</th>
@@ -340,63 +303,240 @@
                                                 <th scope="col">Status</th>
                                             </tr>
                                         </thead>
-                                        {%for myOrder in myOrders%}
+                                        {%for transfer in transferappllieds%}
                                         <tbody class="text-center">
                                             <tr>
-                                                <th scope="row">{{myOrder.id}}</th>
-                                                <td>{{myOrder.events.eventname}}</td>
-                                                <td>{{myOrder.date_created}}</td>
-                                                <td>{{myOrder.orderPrice}} <span>ETH</span></td>
-                                                <td>{{myOrder.orderHandlingfee}} <span>ETH</span></td>
-                                                <td>{{myOrder.orderTotalPrice}} <span>ETH</span></td>
-                                                <td>{{myOrder.orderNumber}}</td>
+                                                <th scope="row">{{transfer.id}}</th>
+                                                <td>{{transfer.Sender.customeruser.username}}</td>
+                                                <td>{{transfer.Receiver.customeruser.username}}</td>
+                                                <td>{{transfer.tranferEvent.eventname}}</td>
+                                                <td>{{transfer.senderNote}}</td>
+                                                <td>{{transfer.transferDate_created}}</td>
+                                                <td>{{transfer.status}}</td>
                                             </tr>
                                         {%endfor%}
-
-
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                             <!-- asset table -->
-                             <div class="col-12 p-3 mb-5" id="asset-table-div">
-                                <h3>AcceptTransfer Status</h3>
-                                <div class="table-container p-3">
-                                    <table class="table table-hover table-lg">
 
-                                        <thead class="thead-dark text-center">
+                            <!-- to be received table -->
+                            <div class="col-12 mt-5 mb-5 p-3 tables" id="receiveItem-table-div">
+                                <h3 class="table-header mb-3">Receiving Items</h3>
+                                <div class="table-container p-3">
+                                    <table class="table table-hover">
+                                        <thead class="thead-light text-center">
                                             <tr>
+                                                <th scope="col">Row</th>
+                                                <th scope="col">ID</th>
                                                 <th scope="col">TOKEN ID</th>
                                                 <th scope="col">Sender</th>
-                                                <th scope="col">Recipiant</th>
                                                 <th scope="col">Transfer Event</th>
                                                 <th scope="col">Note</th>
                                                 <th scope="col">Date of Application</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">Accept</th>
                                             </tr>
                                         </thead>
-                                        {%for myOrder in myOrders%}
+                                        {%for transferreceived in transferreceiveds%}
                                         <tbody class="text-center">
                                             <tr>
-                                                <th scope="row">{{myOrder.id}}</th>
-                                                <td>{{myOrder.events.eventname}}</td>
-                                                <td>{{myOrder.date_created}}</td>
-                                                <td>{{myOrder.orderPrice}} <span>ETH</span></td>
-                                                <td>{{myOrder.orderHandlingfee}} <span>ETH</span></td>
-                                                <td>{{myOrder.orderTotalPrice}} <span>ETH</span></td>
-                                                <td>{{myOrder.orderNumber}}</td>
+                                                <th scope="row" id ="rowNumtr">{{ forloop.counter }}</th>
+                                                <th id="Transferid"scope="row" id="ID">{{transferreceived.id}}</th>
+                                                <th id="tokenID"scope="row" id="transferid">{{transferreceived.tokenID}}</th>
+                                                <td id="Cusname">{{transferreceived.Sender.customeruser.username}}</td>
+                                                <td id="item-name">{{transferreceived.tranferEvent.eventname}}</td>
+                                                <td id="transfernote">{{transferreceived.senderNote}}</td>
+                                                <td id="transferDate">{{transferreceived.transferDate_created}}</td>
+                                                <td id="transferstatus">{{transferreceived.status}}</td>
+                                                <td class="claim">
+                                                    <button type="button" class="status-btn" data-toggle="modal"
+                                                        data-target="#claimModal" title="claim my asset"
+                                                        style="color: rgb(242, 157, 0);">claim
+                                                        <i class="fa-solid fa-triangle-exclamation fa-beat"></i>
+                                                    </button>
+                                                    {% comment %} <a href="{%url 'Accepttransfer' exhibitionEvent.id %}" class="btn btn-primary">展覽內容</a> {% endcomment %}
+                                                    {% comment %} <a href="" class="status-btn" data-toggle="modal" id="confirm"
+                                                            data-target="#claimModal" data-placement="right"
+                                                            title="claim my asset" style="color:rgb(242, 157, 0);">claim
+                                                            <i class="fa-solid fa-triangle-exclamation fa-beat"></i>
+
+                                                    </a> {% endcomment %}
+                                                    {% comment %} <button onclick="Accepttransfer" class="status-btn" data-toggle="modal" id="confirm"
+                                                            data-target="#claimModal" data-placement="right"
+                                                            title="claim my asset" style="color:rgb(242, 157, 0);">claim
+                                                            <i class="fa-solid fa-triangle-exclamation fa-beat"></i>
+
+                                                    </button> {% endcomment %}
+                                                </td>
                                             </tr>
                                         {%endfor%}
-
-
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="authModal" role="dialog" style="z-index: 1000000000  !important; " data-backdrop="false">
+                                <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">密碼驗證</h4>
+                                            <button type="button" class="close"
+                                                data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <form action="Auth" method="POST" name="auth">
+                                                {% csrf_token %}
+
+                                                  <div class="form-group">
+                                                    <label for="confirm-recei">TokenID</label>
+                                                    <input type="text" id="tokenIDpwd"  name="tokenIDpwd" class="form-control"  placeholder="Authen pwd input" readonly="readonly"  >
+                                                    <label for="auth-pwd">請輸入自行設定之密碼</label>
+
+                                                    <input type="text" id="auth-pwd" name="auth-pwd"class="form-control" placeholder="Authen pwd input" style="border:1px solid lightgray;" required>
+                                                  </div>
+                                                  <div class="confirm mt-2 mb-3" id="confirm-btn-div">
+                                                          <p class="mt-3" style="text-align:center;">要驗證嗎？若點按「取消」將會跳出視窗</p>
+                                                          <div style="margin: 0 36%;">
+                                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                                              <button type="submit" class="btn btn-success">驗證</button>
+                                                          </div>
+                                                  </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="claimModal" role="dialog"  style="z-index: 1000000000  !important; " data-backdrop="false">
+                                <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+                                    <!-- Modal content-->
+                                    <div class="modal-content" >
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">確認訊息</h4>
+                                            <button type="button" class="close"
+                                                data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <div class="modal-body" >
+                                            <form action='Accept' method="POST">
+                                                {% csrf_token %}
+
+                                                <!-- <fieldset disabled> -->
+                                                  <legend>確認並索取資產</legend>
+                                                  <div class="form-group mt-4">
+                                                    <label for="confirm-recei">轉讓編號</label>
+                                                    <input type="text" id="transferID"  name="transferID" class="form-control"  placeholder="Disabled input" readonly="readonly"  >
+                                                  </div>
+                                                  <div class="form-group mt-4">
+                                                    <label for="confirm-recei">轉讓物品序號</label>
+                                                    <input type="text" id="tokenIDinput"  name="tokenID" class="form-control"  placeholder="Disabled input" readonly="readonly"  >
+                                                  </div>
+                                                  <div class="form-group mt-4">
+                                                    <label for="confirm-recei">確認接收者</label>
+                                                    <input type="text" id="confirm-recei"  name="confirm-recei" class="form-control"  value ="{{customerProfile.customeruser.username}}"placeholder="Disabled input" readonly="readonly"  >
+                                                  </div>
+                                                  {% comment %} value = "{{transferaccept.Sender.customeruser.username}}"  {% endcomment %}
+                                                  <div class="form-group">
+                                                    <label for="confrim-sender">確認提出轉讓使用者名稱</label>
+                                                    <input type="text" id="confrim-sender" name="confrim-sender"class="form-control" placeholder="Disabled input" readonly="readonly">
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="confirm-item">確認轉讓項目</label>
+                                                    <input type="text" id="confirm-item"  name="confirm-item"class="form-control" placeholder="Disabled input" readonly="readonly" >
+                                                  </div>
+                                                  <div class="form-group mb-3">
+                                                    <label for="confirm-msg">確認訊息</label>
+                                                    <input type="text" id="confirm-msg" name="confirm-msg" class="form-control" placeholder="Disabled input" readonly="readonly">
+                                                  </div>
+                                                  <div class="confirm mt-2 mb-3" id="confirm-btn-div">
+                                                          <p class="mt-3" style="text-align:center;">要確認嗎？若點按「取消」將會跳出視窗</p>
+                                                          <div style="margin: 0 36%;">
+                                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                                              {% comment %} <input type="submit" class="btn btn-success" value="送出"> {% endcomment %}
+                                                              <button type="submit" class="btn btn-success" >確認</button>
+                                                          </div>
+                                                  </div>
+                                              </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
 
                         </div>
+                        <script>
+                            $('.status-btn').click(function () {
 
+                                let trid = $('#Transferid').html();
+                                console.log("Value = " + trid);
+                                $('#transferID').val(trid)
+                                $('#transferID')[0].placeholder = trid;
+
+                                let token = $('#tokenID').html();
+                                console.log("Value = " + token);
+                                $('#tokenIDinput').val(token)
+                                $('#tokenIDinput')[0].placeholder = token;
+
+                                let Cusname = $('#Cusname').html();
+                                console.log("Value = " + Cusname);
+                                $('#confrim-sender').val(Cusname)
+                                $('#confrim-sender')[0].placeholder = Cusname;
+
+                                let itemNames = $('#item-name').html();
+                                console.log("Value = " + itemNames);
+                                $('#confirm-item').val(itemNames)
+                                $('#confirm-item')[0].placeholder = itemNames;
+
+                                let msg = $('#transfernote').html();
+                                console.log("Value = " + msg);
+                                $('#confirm-msg').val(msg)
+                                $('#confirm-msg')[0].placeholder = msg;
+
+                            });
+                            var tabletransfer =document.getElementById("assettable"),rIndex
+
+                            $('.auth-btn').click(function () {
+                                let rowNum1 = $('#rowNum').html();
+                                console.log("Value = " + rowNum1);
+                                let astokenid = $('#astokenid').html();
+                                console.log("Value = " + astokenid);
+                                $('#tokenIDpwd').val(astokenid)
+                                $('#tokenIDpwd')[rowNum1].placeholder = astokenid;
+
+
+
+
+                            });
+
+
+
+                        </script>
+                        {% comment %} <script>
+
+
+                               let rowNum1 = $('#rowNum').html();
+                                        console.log("Value = " + rowNum1);
+                                        let astokenid = $('#astokenid').html();
+                                        console.log("Value = " + astokenid);
+                                        $('#tokenIDpwd').val(astokenid)
+                                        $('#tokenIDpwd')[rowNum1].placeholder = astokenid;
+                            $('#confirm').click(function () {
+
+                                var Cusname = document.querySelector('#Cusname').value;
+                                var s4_recei_notes = document.querySelector("#confirm-recei");
+                                s4_recei_notes.textContent = Cusname;
+
+                            });
+
+                        </script> {% endcomment %}
 
 
 
@@ -410,30 +550,8 @@
             </div>
             <!-- end contnet -->
 
-
-        </div>
-        <!-- end sidebar + content -->
-        <!-- --------------------------------------------------------------------------------------------------------------------- -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
-
-    </div>
-    <!-- end container -->
-
-    <!-- --------------------------------------------------------------------------------------------------------------------- -->
-
-    {% comment %} <!-- font awesome link  -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    {% comment %} <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
-    {% comment %} <script type="text/javascript" src="{% static 'js/personal.js'%}"></script>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js"
-        type="text/javascript"></script> {% endcomment %}
 {% endblock %}
+

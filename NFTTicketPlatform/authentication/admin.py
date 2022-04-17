@@ -1,5 +1,5 @@
 from django.contrib import admin
-from authentication.models import CompanyProfile,CustomerProfile,Tag,Events,Order
+from authentication.models import CompanyProfile,CustomerProfile,Tag,Events,Order,Transfer
 
 class CompanyProfileAdmin(admin.ModelAdmin):
     list_display =('id','companyuser','company_email','company_walletId','company_avatars','date_created')
@@ -12,6 +12,8 @@ class EventAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     list_display =('id','customer','events','orderNumber','date_created','orderPrice','orderHandlingfee','orderTotalPrice','status')
 # event_id = models.AutoField(primary_key=True)
+class TransferTicketAdmin(admin.ModelAdmin):
+    list_display =('id','Sender','Receiver','senderOrder','tranferEvent','transferFee','senderNote','receiverNote','transferDate_created','transferDate_Success','status')
 
 
 
@@ -20,6 +22,8 @@ admin.site.register(CustomerProfile,CustomerProfileAdmin)
 admin.site.register(Tag)
 admin.site.register(Events,EventAdmin)
 admin.site.register(Order,OrderAdmin)
+admin.site.register(Transfer,TransferTicketAdmin)
+
 
 
 

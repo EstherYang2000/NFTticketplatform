@@ -141,7 +141,11 @@ $(document).ready(function () {
         var s1_senUsername = document.querySelector("#sender-username").value;
         var s1_senWid = document.querySelector("#sender-wid").value;
         var s1_senItem = document.querySelector("#sender-item");
-        var s1_selected_item = s1_senItem.options[s1_senItem.selectedIndex].text;
+
+        var s1= s1_senItem.options[s1_senItem.selectedIndex].value+s1_senItem.options[s1_senItem.selectedIndex].text;
+        var s1_selected_item = s1;
+        // var s1_senItem = document.querySelector("#sender-item");
+        // var s1_selected_item = s1_senItem.options[s1_senItem.selectedIndex].text;
         var s1_senNote = document.querySelector("#sender-notes").value;
 
         var s2_receiWid = document.querySelector("#recei-wid").value;
