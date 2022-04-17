@@ -57,6 +57,8 @@ from sq import *
 
 # --------------------------------------------authentication-----------------------------------
 
+
+
 def login_user(request):
     try:
         if request.user.is_authenticated:
@@ -69,14 +71,50 @@ def login_user(request):
                     request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('home')
+                    try:
+
+                        p = sql.connect(host=changehost, user=changeuser,
+                                                password=changepassword, database='nftticketwebsite')
+                        if p.is_connected():
+                            # 顯示資料庫版本
+                            db_Info = p.get_server_info()
+                            print("資料庫版本：", db_Info)
+                            pcursor = p.cursor()
+                            print("連資料庫成功")
+
+
+
+                            is_staff = user.is_staff
+                            if is_staff == True:
+                                UpdatePwd = "UPDATE companyprofile SET companyPassword = %s WHERE companyName = %s;"
+                                val = (password,username)
+                                pcursor.execute(UpdatePwd, val)
+                                p.commit()
+
+                            elif is_staff == False:
+                                    UpdatePwd = "UPDATE customerprofile SET CustomerPassword = %s WHERE CustomerName = %s;"
+                                    val = (password,username)
+                                    pcursor.execute(UpdatePwd, val)
+                                    p.commit()
+                            return redirect('home')
+                        else:
+                                print("取得資料不成功")
+                                return redirect('home')
+                    except Error as e:
+                            print("資料庫連接失敗：", e)
+                            return redirect('home')
+                    finally:
+                            if (p.is_connected()):
+                                pcursor.close()
+                                p.close()
+                                print("資料庫連線已關閉")
+                                return redirect('home')
                 else:
                     messages.info(request, 'Username OR password is incorrect')
             context = {}
             return render(request, 'signIn.html', context)
     except Exception as e:
         print(e)
-
 
 pass
 
@@ -85,7 +123,6 @@ Pem = " "
 Ppw1 = " "
 Pw2 = " "
 Pst = False
-
 
 def register(request):
     global Pn, Pem, Ppw1, Pw2, Pst
@@ -193,13 +230,6 @@ def signout_user(request):
     logout(request)
     # messages.success(request,("You were logged out!!"))
     return redirect('home')
-
-
-pass
-
-
-def resetP(request):
-    return render(request, 'forgotP.html')
 
 
 pass
@@ -335,7 +365,6 @@ def personalInfowallet(request):
 pass
 
 
-
 # 待修改
 
 #個人資產
@@ -429,7 +458,6 @@ def personalasset(request):
                'totaltokennum': totaltokennum, 'etherAsset': etherAsset,'totalAsset':totalAsset,'transferappllieds':transferappllieds,'transferreceiveds':transferreceiveds}
 
     return render(request, 'personal/personalasset.html', context)
-
 
 pass
 
