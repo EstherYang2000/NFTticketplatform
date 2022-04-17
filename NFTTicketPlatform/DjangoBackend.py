@@ -1,9 +1,10 @@
+from cmd import IDENTCHARS
 from web3 import Web3,HTTPProvider
 import sys
 
 
 w3 = Web3(HTTPProvider('http://127.0.0.1:7545'))
-address='0x10D4B9aCF4bbDEaC3254d756F21662B1c60B5dfb'
+address='0xDc58523f43Fc8410f53670a87D8eE77774E93633'
 #Remember to check deployed address and connection
 #In our test and presentation, we will use ganache's environment,so the function of connection is localhost with port7545
 #Rembmber to check up "listen on network" in the remix terminal to surveillance transaction from web3.py
@@ -66,91 +67,6 @@ abi=[
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_ActID",
-				"type": "string"
-			}
-		],
-		"name": "CompanyWithdrawMoney",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_ActID",
-				"type": "string"
-			}
-		],
-		"name": "ContinueAvailable",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_ActID",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "CustomSafeTransferFrom",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_ActID",
-				"type": "string"
-			}
-		],
-		"name": "DeleteActivities",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
 		"anonymous": False,
 		"inputs": [
 			{
@@ -168,171 +84,6 @@ abi=[
 		],
 		"name": "OwnershipTransferred",
 		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "OwnerWithdraw",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "price",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "receiver",
-				"type": "address"
-			}
-		],
-		"name": "ReturnVerifiedGasToUser",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_ActID",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			}
-		],
-		"name": "safeMint",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "_data",
-				"type": "bytes"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_ActID",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "_CompanyAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "int256",
-				"name": "_TicketNum",
-				"type": "int256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_TicketPrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "decimal",
-				"type": "uint256"
-			}
-		],
-		"name": "SetActivity",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			}
-		],
-		"name": "setApprovalForAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_ActID",
-				"type": "string"
-			}
-		],
-		"name": "StopAvailable",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": False,
@@ -358,55 +109,6 @@ abi=[
 		],
 		"name": "Transfer",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenID",
-				"type": "uint256"
-			}
-		],
-		"name": "WebUserVerify",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -455,20 +157,14 @@ abi=[
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
+				"internalType": "string",
+				"name": "_ActID",
+				"type": "string"
 			}
 		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"name": "CompanyWithdrawMoney",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -503,6 +199,47 @@ abi=[
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "_ActID",
+				"type": "string"
+			}
+		],
+		"name": "ContinueAvailable",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_ActID",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "CustomSafeTransferFrom",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
@@ -517,6 +254,19 @@ abi=[
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_ActID",
+				"type": "string"
+			}
+		],
+		"name": "DeleteActivities",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -578,25 +328,6 @@ abi=[
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "getApproved",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "QueryAddress",
 				"type": "address"
@@ -639,6 +370,154 @@ abi=[
 				"internalType": "int256",
 				"name": "",
 				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "OwnerBonus",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "OwnerWithdraw",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "QueryContractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "QueryOwnerBonus",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_ActID",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_CompanyAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "int256",
+				"name": "_TicketNum",
+				"type": "int256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_TicketPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "decimal",
+				"type": "uint256"
+			}
+		],
+		"name": "SetActivity",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_ActID",
+				"type": "string"
+			}
+		],
+		"name": "StopAvailable",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "getApproved",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -714,19 +593,6 @@ abi=[
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "OwnerBonus",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -747,28 +613,96 @@ abi=[
 	},
 	{
 		"inputs": [],
-		"name": "QueryContractBalance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "QueryOwnerBonus",
-		"outputs": [
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_ActID",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			}
+		],
+		"name": "safeMint",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "tokenId",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_data",
+				"type": "bytes"
+			}
+		],
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
+			}
+		],
+		"name": "setApprovalForAll",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -825,30 +759,37 @@ abi=[
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "VerifyData",
-		"outputs": [
-			{
 				"internalType": "address",
-				"name": "TokenOwner",
+				"name": "from",
 				"type": "address"
 			},
 			{
-				"internalType": "bool",
-				"name": "Verified",
-				"type": "bool"
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
 			},
 			{
-				"internalType": "bool",
-				"name": "isValue",
-				"type": "bool"
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "transferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
@@ -879,17 +820,14 @@ List of subroutines: (● represent that subroutines are done)
 	●DeleteActivity(Owner's privilege to delete activity. tickey money will refund to activity's tickey buyer and the ticket token will be burn out)
 	●Web3WebUserVerify(The function to make sure token's owner and the gas will return to msg.sender)
 	Latest revised by Limindog at 2022/04/06 22:50
-
 The process of transfer Token(Use A to B for example):
 	First: A call approve function to endow B with the right to receive specific token which A have
 	Next : B call SafeTransferFrom function to receive the token from A, the smartcontract will refund ticket price to A and receive ticket price from B
 	With above process, the Token's owner has been changed, A receive his money, and B need to pay the ticket money
-
 Memo:
 	return sys.exc_info()[1](Get error message)
 	tx_receipt['status']='1'(meaning the transaction is successful)
 	There is no float type in solidity, all of unit of money need to be 'wei' to avoid float type number input to the contract, 1 eth = 10^18 wei.
-
 """
 
 deployed_contract = w3.eth.contract(address=address, abi=abi)
@@ -920,8 +858,9 @@ def Web3SetActivity(ActID,Address,TicketNum,TicketPrice):
                 decimal+=1
         tx_hash=deployed_contract.functions.SetActivity(ActID,Address,TicketNum,int(TicketPrice),decimal).transact({'from':Owner})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
+        block_number=tx_receipt["blockNumber"]
         if tx_receipt['status']==1:
-            return "活動{} 已建立成功，張數{}張、價格{}eth".format(ActID,TicketNum,TicketPrice/(10**decimal))
+            return ["活動{} 已建立成功，張數{}張、價格{}eth BlockNumber:{}".format(ActID,TicketNum,TicketPrice/(10**decimal),block_number),block_number]
         return tx_receipt
     except:
         e=sys.exc_info()[1]
@@ -963,9 +902,11 @@ def Web3safeMint(ActID,MintAddress,CallerAddress,Money):
     try:
         tx_hash=deployed_contract.functions.safeMint(ActID,MintAddress).transact({'from':CallerAddress,'value': w3.toWei('{:.8f}'.format(Money*1.03),"ether")})
         tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
+        block_number=tx_receipt["blockNumber"]
+        print(tx_receipt)
         if tx_receipt['status']==1:
             TokenID=int(tx_receipt['logs'][0]['topics'][3].hex(),16)
-            return(["Address {} 已購買活動{}成功 TokenID:{}".format(MintAddress,ActID,TokenID),TokenID])
+            return(["Address {} 已購買活動{}成功 TokenID:{} BlockNumber:{}".format(MintAddress,ActID,TokenID,block_number),TokenID,block_number])
         return tx_receipt
     except:
         e=sys.exc_info()[1]
@@ -1026,7 +967,8 @@ def Web3CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token,Money,CallerAdd
 	try:
 		tx_hash=deployed_contract.functions.CustomSafeTransferFrom(ActID,fromAddress,toAddress,Token).transact({'from':CallerAddress,'value':w3.toWei(Money,"ether")})
 		tx_receipt=w3.eth.wait_for_transaction_receipt(tx_hash)
-		if tx_receipt['status']==1:return"{} 已成功購買來自{} 的Token:{} ".format(toAddress,fromAddress,Token)
+		block_number=tx_receipt["blockNumber"]
+		if tx_receipt['status']==1:return["{} 已成功購買來自{} 的Token:{} BlockNumber:{}".format(toAddress,fromAddress,Token,block_number),block_number]
 		return tx_receipt
 	except:
 		e=sys.exc_info()[1]
@@ -1106,10 +1048,16 @@ def Web3WebUserVerify(tokenID,CallerAddress):
 	try:
 		tx_hash=deployed_contract.functions.WebUserVerify(tokenID).transact({'from':CallerAddress})
 		tx_receipt=w3.eth.waitForTransactionReceipt(tx_hash)
+		block_number=tx_receipt["blockNumber"]
 		est_gas=int(tx_receipt['gasUsed'])+150000
 		tx_hash=deployed_contract.functions.ReturnVerifiedGasToUser(est_gas,CallerAddress).transact({'from':Owner})
-		return ['WalletID{} 已成功驗證 TokenID：{}的使用，並已反退其花費的gas'.format(CallerAddress,tokenID),True]
+		return ['WalletID{} 已成功驗證 TokenID：{}的使用，並已反退其花費的gas BlockNumber:{}'.format(CallerAddress,tokenID,block_number),True,block_number]
 	except:
 		return [sys.exc_info()[1],False]
 
-
+def Web3GetVerityData(tokenID,CallerAddress):
+	try:
+		tx_hash=deployed_contract.functions.VerifyData(tokenID).call({'from':CallerAddress})
+		return ['TokenID:{} 的驗證狀態目前為{}'.format(tokenID,tx_hash[1]),tx_hash[1]]
+	except:
+		return [sys.exc_info()[1],False]
