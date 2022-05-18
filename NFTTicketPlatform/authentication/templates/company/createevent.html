@@ -1,290 +1,230 @@
-<!doctype html>
+
 {% extends 'base.html' %}
 {%block content%}
 {% load static %}
+<!doctype html>
+<html lang="en">
 
-
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/company.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/company.css'%}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-
-
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap">
     <!-- font awesome link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-    <!-- date  -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
     <!-- Chart.js link -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-      crossorigin="anonymous"></script>
 
-    <!-- Bootstrap 4 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
-    <!-- Font Awesome -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"
-        integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
-    <!-- Tempus Dominus Bootstrap 4 -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
-        integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"
-        integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
     <title>NFT Platform</title>
 
     <script> //這裡可以用那個部落格的方法做新增 </script>
+    <style>
+        .sidebar-item:hover .sidebar-item-a {
+            color:black !important;
+        }
+        .sidebar-item:hover {
+            transition: all 0.3s;
+            background-color: white;
+            color: #1AB6E4;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
+    </style>
+</head>
 
-    <!-- start full screen container -->
-    <div class="container-fluid p-0">
-
-
-
-        <!-- --------------------------------------------------------------------------------------------------------------------- -->
-
-        <!-- sidebar + content -->
-        <div class="wrapper p-0">
-
-            <!-- sidebar -->
-            <nav class="sidebar" id="sidebar">
-
-                <div class="sidebar-header-div">
-                    <h3 id="sidebar-header">BootStrap Sidebar</h3>
-                </div>
-
-                <ul class="list-unstyled sidebar-compos">
-
-                    <li class="sidebar-item" id="tab-info" >
-                        <a class="sidebar-item-a" href="{%url 'company'%}" >公司資訊 <i class="fa-solid fa-user i-item"></i>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item" id="tab-asset" >
-                        <a class="sidebar-item-a"  href="{%url 'companyAsset'%}" id="personal-asset">公司資產
-                            <i class="fa-solid fa-wallet i-item"></i>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item" id="tab-activity" >
-                        <a class="sidebar-item-a" href="{%url 'eventcreatform'%}" >新增活動
-                            <i class="fa-solid fa-ticket i-item"></i>
-                        </a>
-                    </li>
-
-
-                    <li class="sidebar-item" id="tab-sell">
-                        <a class="sidebar-item-a"  href="{%url 'salesstatus'%}">銷售狀況
-                            <i class="fa-solid fa-circle-question i-item"></i>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item" id="tab-help">
-                        <a class="sidebar-item-a" href="{%url 'companyhelpcenter'%}">詢問中心
-                            <i class="fa-solid fa-circle-question i-item"></i>
-                        </a>
-                    </li>
-
-                </ul>
-            </nav>
-            <!-- end sidebar -->
-
-            <div class="content-container container">
-
-                <div class="row" id="content-row">
-
-                    <button type="button" id="close-btn" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        <span>Close Sidebar</span>
-                    </button>
-                    <button type="button" id="open-btn" class="btn btn-info" style="display: none;">
-                        <i class="fas fa-align-left"></i>
-                        <span>Open Sidebar</span>
-                    </button>
+<body>
 
 
 
-                    <div class="col-12 p-0" id="pane-activity" >
-                        <h1>新增活動</h1>
-                        <form action="createevent" method="POST" enctype ="multipart/form-data">
-                            {%csrf_token%}
-                            <div class="form-group">
-                                <label>活動類型:</label>
-                                <div class="form-check">
 
-                                    <label class="form-check-label">
-                                        {{eventform.category}}
+    <!-- --------------------------------------------------------------------------------------------------------------------- -->
 
-                                    </label>
-                                </div>
+    <!-- sidebar + content -->
+    <div class="wrapper p-0">
 
+
+        <!-- 遠謀有改start -->
+        <!-- sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <ul class="list-unstyled sidebar-compos">
+                <li class="sidebar-item" id="tab-info">
+                    <i class="fa-solid fa-user i-item"></i>
+                    <a class="sidebar-item-a" href="{%url 'company'%}">Company Info</a>
+                </li>
+
+                <li class="sidebar-item" >
+                    <i class="fa-solid fa-wallet i-item"></i>
+                    <a class="sidebar-item-a" id="personal-asset" href="{%url 'companyAsset'%}">Company Asset</a>
+                </li>
+
+                <li class="sidebar-item" >
+                    <i class="fa-solid fa-ticket i-item"></i>
+                    <a class="sidebar-item-a" href="{%url 'eventcreatform'%}">Create Events</a>
+                </li>
+
+                <li class="sidebar-item" >
+                    <i class="fa-solid fa-circle-question i-item"></i>
+                    <a class="sidebar-item-a" href="{%url 'salesstatus'%}">Sale Status</a>
+                </li>
+
+                <li class="sidebar-item" >
+                    <i class="fa-solid fa-circle-question i-item"></i>
+                    <a class="sidebar-item-a" href="{%url 'companyhelpcenter'%}">Help Center</a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- end sidebar -->
+        <!-- 遠謀有改end -->
+
+        <div class="content-container container">
+
+            <div class="row" id="content-row">
+
+
+
+                <div class="col-12 p-0 border p-3 my-shadow" id="pane-activity">
+                    <h1>Create Your Event!</h1>
+                    <form action="createevent" method="POST" enctype ="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="form-group">
+                            <label>Event Type :</label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {{eventform.category}}
+
+                                    {% comment %} <input type="radio" class="form-check-input" name="activity-type" required> {% endcomment %}
+                                    {% comment %} 展覽 {% endcomment %}
+                                </label>
                             </div>
-                            <div class="form-group">
-                                <label for="activity-name">活動名稱:</label>
-                                {{eventform.eventname}}
-
-                            </div>
-                            <div class="form-group">
-                                <label for="activity-content">活動內容:</label>
-                                {{eventform.eventdescription}}
-
-                            </div>
-                            <div class="form-group">
-                                <label for="ticket-amount">票券數量:</label>
-                                {{eventform.eventticketnumber}}
-
-                            </div>
-                            <div class="form-group">
-                                <label for="ticket-price">票券價格:</label>
-                                {{eventform.eventprice}}
-
-                            </div>
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="activity-start-datetime">活動開始日期時間:</label>
-                                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                            {{eventform.date_StartTime}}
-                                            {% comment %} <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div> {% endcomment %}
-                                        </div>
-                                        <script>
-                                            $(function () {
-                                                $("#datetimepicker1").datetimepicker({
-                                                    format: 'DD/MM/YYYY HH:mm',
-                                                });
-                                            });
-                                        </script>
-
+                            {% comment %} <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="activity-type" required>
+                                    表演活動
+                                </label>
+                            </div> {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label for="activity-name">Event Name :</label>
+                            {{eventform.eventname}}
+                            {% comment %} <input type="text" class="form-control rounded-pill" name="activity-name" id="activity-name"
+                                required> {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label for="activity-content">Event Info :</label>
+                            {{eventform.eventdescription}}
+                            {% comment %} <input type="text" class="form-control rounded-pill" name="activity-content"
+                                id="activity-content" required> {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-amount">Issued Number :</label>
+                            {{eventform.eventticketnumber}}
+                            {% comment %} <input type="number" class="form-control rounded-pill" name="ticket-amount"
+                                id="ticket-amount" required> {% endcomment %}
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-price">Ticket Price :</label>
+                            {{eventform.eventprice}}
+                            {% comment %} <input type="number" class="form-control rounded-pill" name="ticket-price" id="ticket-price"
+                                required> {% endcomment %}
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="activity-start-datetime">Starting Time :</label>
+                                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                    {{eventform.date_StartTime}}
+                                    {% comment %} <input type="datetime-local" class="form-control" name="activity-start-datetime"
+                                        id="activity-start-datetime" required> {% endcomment %}
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="activity-end-datetime">活動結束日期時間:</label>
-                                        <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                            <!-- <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/> -->
-                                            {{eventform.date_EndTime}}
-                                            {% comment %} <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div> {% endcomment %}
-                                        </div>
-                                        <script>
-                                            $(function () {
-                                                $("#datetimepicker2").datetimepicker({
-                                                    format: 'DD/MM/YYYY HH:mm',
-                                                });
-                                            });
-                                        </script>
-
-
+                                <script>
+                                    $(function () {
+                                        $("#datetimepicker1").datetimepicker({
+                                            format: 'DD/MM/YYYY HH:mm',
+                                        });
+                                    });
+                                </script>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="activity-end-datetime">Ending Time :</label>
+                                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                                        {{eventform.date_EndTime}}
+                                        {% comment %} <input type="datetime-local" class="form-control" name="activity-end-datetime"
+                                        id="activity-end-datetime" required> {% endcomment %}
                                     </div>
-
+                                    <script>
+                                        $(function () {
+                                            $("#datetimepicker2").datetimepicker({
+                                                format: 'DD/MM/YYYY HH:mm',
+                                            });
+                                        });
+                                    </script>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="activity-image">活動圖片</label>
-                                {{eventform.event_pic}}
+                        </div>
+                        <div class="form-group">
+                            <label for="activity-image">Event Picture</label>
+                            {{eventform.event_pic}}
+                            {% comment %} <input type="file" class="form-control rounded-pill" name="activity-image"
+                                id="activity-image" required> {% endcomment %}
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <input type="reset" class="btn btn-secondary btn-lg rounded-pill" value="Reset">
+                            <input type="submit" class="btn btn-primary btn-lg rounded-pill" value="Submit">
 
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <input type="reset" class="btn btn-outline-secondary btn-lg" value="重設">
-                                <input type="submit" class="btn btn-outline-primary btn-lg" value="送出">
-                            </div>
-                        </form>
+                        </div>
                         {{eventform.errors}}
-                    </div>
-
-
-
+                    </form>
                 </div>
 
-            </div>
 
+
+            </div>
 
         </div>
-        <!-- end sidebar + content -->
 
-        <!-- --------------------------------------------------------------------------------------------------------------------- -->
-
-
-        <!-- --------------------------------------------------------------------------------------------------------------------- -->
-
-        <!-- footer -->
-        <div class="card text-center">
-            <div class="card-header">
-                Footer
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Contact Us with</h5>
-                <div class="social-btns">
-                    <a href="https://facebook.com/">
-                        <i class="fa-brands fa-facebook-square fa-3x" style="margin-right: 2%;cursor: pointer;"></i>
-                    </a>
-                    <a href="https://instagram.com/">
-                        <i class="fa-brands fa-instagram-square fa-3x" style="margin-right: 2%;cursor: pointer;"></i>
-                    </a>
-                    <a href="https://gmail.com/">
-                        <i class="fa fa-envelope fa-3x" style="margin-right: 2%;cursor: pointer;"></i>
-                    </a>
-                </div>
-                <a href="#" class="btn btn-primary">Go Top</a>
-            </div>
-        </div>
-        <!-- end footer -->
 
     </div>
-    <!-- end container -->
+    <!-- end sidebar + content -->
 
     <!-- --------------------------------------------------------------------------------------------------------------------- -->
 
 
+
+
     <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    {% comment %} <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-        </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+        </script> {% endcomment %}
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
         </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-        </script>
+        </script> {% endcomment %}
     <script src="{% static 'js/company.js'%}"></script>
 
+</body>
+
+</html>
 
 {%endblock%}

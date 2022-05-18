@@ -1,12 +1,85 @@
+/* 遠謀有改start */
 body {
-    font-family: 'Source Sans Pro', sans-serif;
-    background: rgb(231, 231, 231);
+    font-family: 'Barlow', sans-serif;
 }
 
+:root {
+    --clr-ganache-brown: #5d464c;
+    --clr-ganache-orange: #d89e5e;
+    --clr-ganache-dark: #32262a;
+    --clr-ganache-light: #f6f5f0;
+    --clr-dark: #252525;
+}
 
-/* ------------------------- navbar ------------------------- */
+.darkmode {
+    --clr-dark: #252525;
 
-.navbar #brand {
+    --dark-bg-clr: var(--clr-dark);
+    --dark-font-clr: var(--clr-ganache-light);
+
+    background-color: var(--dark-bg-clr);
+    /* color: var(--dark-font-clr); */
+    color: white;
+}
+
+.my-shadow {
+    border-radius: 24px;
+    box-shadow: 1px 1px 15px 5px rgba(0, 0, 0, 0.7);
+}
+/* ------------------------- old-NAVBAR ------------------------- */
+
+/* .navbar #brand {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--clr-ganache-brown);
+    transition: 0.5s;
+}
+
+.navbar #brand:hover {
+    transition: 0.5s;
+}
+
+.navbar-custom {
+    background-color: var(--clr-ganache-light);
+}
+
+.navbar .nav-link {
+    font-size: 20px;
+    color: var(--clr-ganache-brown);
+    font-weight: 600;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.navbar .nav-link:hover {
+    transition: 0.5s;
+    opacity: 1;
+    color: var(--clr-ganache-brown);
+}
+
+.navbar .nav-item .dropdown-menu>a {
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.navbar .nav-item .dropdown-menu>a:hover {
+    background-color: #7171c7;
+    color: white;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.container-fluid .navbar .navbar-toggler {
+    color: white;
+} */
+
+/* ------------------------- end old navbar ------------------------- */
+
+/* ------------------------- old-navbar ------------------------- */
+/* .navbar #brand {
     font-size: 30px;
     font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -48,9 +121,8 @@ body {
     color: white;
     border-radius: 6px;
     transition: all 0.5s;
-}
-
-/* ------------------------- end navbar ------------------------- */
+} */
+/* ------------------------- end old-navbar ------------------------- */
 
 /*------------------------- Sidebar -------------------------*/
 
@@ -59,20 +131,38 @@ body {
     display: flex;
     text-decoration: none;
     transition: 0.5s;
+    color: white;
 
+    background-image: linear-gradient(to left bottom, #1ab6e4, #00a0da, #008acd, #1774bd, #2e5dab, #3c5baa, #485aa8, #5258a6, #606cb8, #6e80ca, #7e94dc, #8ea9ee);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
 
 .wrapper .sidebar {
-    /* border: 3px solid blue; */
-    min-width: 250px;
-    max-width: 250px;
-    background: #8c98e4;
     color: white;
-    font-weight: 600;
+    font-weight: bold;
+
     /* Apply to all changed properties */
+    /* transition -> close sidebar transition */
     transition: all 0.5s;
 }
+.sidebar-item:hover .sidebar-item-a {
+    color:black !important;
+}
 
+.sidebar-item {
+    padding: 10px;
+    display: inline-block;
+
+}
+
+.sidebar-item-a {
+    display: none;
+    color: white;
+    font-size: 19px;
+}
 
 .sidebar-item-a:hover {
     text-decoration: none;
@@ -81,15 +171,13 @@ body {
 }
 
 .sidebar-item-a:not(:hover) {
-    color: black;
     transition: 0.5s;
+    color: white;
 }
 
-#sidebar .sidebar-header-div {
-    padding: 20px;
-    background: rgb(228, 227, 157);
-    /* border: 5px solid navy; */
-}
+/* .sidebar-item:hover .sidebar-item-a {
+    display: inline;
+} */
 
 #sidebar-header {
     margin: 30px 0;
@@ -97,21 +185,20 @@ body {
 }
 
 #sidebar .sidebar-compos {
+    height: 95%;
+    display: flex;
+    flex-direction: column;
     padding: 20px 0;
-    border-bottom: 3px solid #d6d291;
     margin-top: 10px;
-    /* border: 3px solid purple; */
+    border-right: 3px solid white;
 }
 
-.sidebar-item {
-    padding: 10px;
+#sidebar .sidebar-compos:hover .sidebar-item-a {
+    display: inline-flex;
+
 }
 
-.sidebar-item-a {
-    color: black;
-    font-size: 19px;
-    display: block;
-}
+
 
 .sidebar ul li a.active>a,
 a[aria-expnaded="true"] {
@@ -133,15 +220,10 @@ a[data-toggle="collapse"] {
 
 .sidebar-item:hover {
     transition: all 0.3s;
-    background-color: #fff;
-    color: #7d67df;
+    background-color: white;
+    color: #1AB6E4;
     font-weight: 600;
     cursor: pointer;
-}
-
-.sidebar-item-a:hover {
-    color: black;
-    transition: 0.5s;
 }
 
 .sidebar-item:not(:hover) {
@@ -150,41 +232,12 @@ a[data-toggle="collapse"] {
     border-radius: 50px;
 }
 
-.sidebar-item-a:not(:hover) {
-    color: white;
-    transition: 0.5s;
-}
-
-.i-item {
-    /* float: right; */
-    margin-left: 50%;
-}
-
-.sublist-item {
-    padding: 10px;
-    margin: 10px 0px;
-}
-
-.sublist-item:not(:hover) {
-    transition: 0.5s;
-}
-
-.sublist-item-a {
-    text-decoration: none;
-    color: black;
-}
-
-.sublist-item-a:hover,
-.sublist-item-a:not(:hover) {
-    text-decoration: none;
-    transition: 0.5s;
-}
 
 /*------------------------- end Sidebar -------------------------*/
 
 /*------------------------- content pane -------------------------*/
 
-.row{
+.row {
     padding: 20px;
 }
 
@@ -217,7 +270,7 @@ a[data-toggle="collapse"] {
     transition: all 0.3s;
 }
 
-.row .links:hover{
+.row .links:hover {
     text-align: center;
     text-decoration: none;
     color: #7d67df;
@@ -226,34 +279,49 @@ a[data-toggle="collapse"] {
 }
 
 /*------------------------- amazing-colorful-card-columns -------------------------*/
-#amazing-colorful-card-columns > .card{
+/* #amazing-colorful-card-columns .card {
     transition: 1.5s;
 }
-#amazing-colorful-card-columns > .card:hover{
+
+#amazing-colorful-card-columns .card:hover {
     transition: 0.5s;
     transform: scale(1.1);
-}
+} */
 
 /*------------------------- amazing-colorful-card-columns -------------------------*/
 
 
 /*------------------------- center card -------------------------*/
-.activity-card{
+.card {
+    background-color: transparent !important;
+    color: black;
+}
+
+.card-header {
+    height: 80px;
+}
+
+.activity-card .list-group .list-group-item {
+    background-color: transparent;
+}
+
+.activity-card {
     transition: 0.5s;
 }
 
 .activity-card:hover {
-    background-color: hsl(39, 100%, 50%);
+    background-color: #8EA9EE !important;
     color: white;
     font-weight: bold;
     transition: 0.5s;
     transform: scale(1.1);
 }
 
-.activity-card:hover .list-group{
-    background-color: white;
-    color: black;
+.activity-card:hover .list-group {
+    background-color: #8EA9EE !important;
+    color: white;
     font-weight: bold;
+    transition: 0.5s;
 }
 
 /*------------------------- end center card -------------------------*/
@@ -263,32 +331,106 @@ a[data-toggle="collapse"] {
 /*------------------------- footer -------------------------*/
 
 
-.card .card-body .social-btns {
-    padding: 10px;
+.container-fluid .footer {
+    background: #000;
 }
 
-.container-fluid .card .social-btns {
-    padding: 20px;
+.container-fluid .footer .links-div {
+    color: azure;
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+/* this means styles are apply to all descendants (childrens) */
+.container-fluid .footer .links-div .sub {
+    /* border: 2px solid cyan; */
+    border-radius: 5px;
+    width: 50%;
+    height: auto;
+    margin: 20px auto;
+}
+
+.container-fluid .footer .sub-header {
+    /* border: 2px solid gray; */
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.container-fluid .footer .links-div .sub ul {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 30%;
+    /* border: 2px solid gray; */
+}
+
+.container-fluid .footer .links-div .sub ul li {
+    list-style-type: none;
+    width: 100%;
+    margin: 5px auto;
+    /* border: 2px solid white; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+}
+
+.container-fluid .footer .links-div .sub ul li a {
+    /* border: 2px solid lightcoral; */
+    color: white;
+    margin: 20px auto;
+}
+
+#myBtn {
+    display: none;
+    position: fixed;
+    height: 50px;
+    text-align: center;
+    bottom: 20px;
+    right: 30px;
+    z-index: 4;
+    font-size: 18px;
+    border-radius: 6px;
+    outline: none;
+    background-color: #183052;
+    color: white;
+    cursor: pointer;
+    padding: 15px 15px 30px 15px;
+    transition: 0.3s;
+}
+
+#myBtn:hover {
+    background-color: white;
+    color: #183052;
+    transition: 0.3s;
 }
 
 
 /*------------------------- end footer -------------------------*/
 
 @media screen and (max-width: 576px) {
-    .row .btn{
+    .row .btn {
         color: black;
     }
+
     .row .links-div {
         margin: 10% 0;
         display: block;
         /* overflow: auto; */
     }
+
     .row .links-div .links {
         font-size: 17px;
         text-align: center;
         display: flex;
         flex-direction: column;
     }
+
     .row .links-div .links:hover {
         /* font-size: 16px; */
         text-align: center;
@@ -301,7 +443,7 @@ a[data-toggle="collapse"] {
         overflow: auto;
     }
 
-    .navbar-toggler{
+    .navbar-toggler {
         color: black;
     }
 
@@ -318,8 +460,5 @@ a[data-toggle="collapse"] {
     }
 
 }
-#popup {
-    display: none;
- }
 
-
+/* 遠謀有改end */

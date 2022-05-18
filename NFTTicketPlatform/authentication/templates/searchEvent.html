@@ -25,38 +25,40 @@
         <!-- ticket container -->
         <div class="container">
 
-            <h1 id="top-title">Welcome to one-stop NFT ticket site</h1>
+            {% comment %} <h1 id="top-title">Welcome to one-stop NFT ticket site</h1> {% endcomment %}
             <div class="row justify-content-center m-4">
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
 
                     {%if exhibitionEvents %}
                         {%for exhibitionEvent in exhibitionEvents%}
-                        <div class="col">
-                            <div class="card">
-                                <img src="{{exhibitionEvent.event_pic.url}}"  style="height: ２00px; width: ３00px;"  class="card-img-top" alt="city-at-home.jpg">
+                        <div class="col d-flex">
+                            <div class="card flex-fill my-shadow">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                  <img src="{{exhibitionEvent.event_pic.url}}"  style="height: ２00px; width: ３00px;"  class="card-img-top embed-responsive-item" alt="city-at-home.jpg">
+                                </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{exhibitionEvent.eventname}}</h5>
+                                    <h5 class="card-title" style="font-weight:bold;">{{exhibitionEvent.eventname}}</h5>
                                     <h4 class="card-title">${{exhibitionEvent.eventprice}}</h5>
                                     {% comment %} <p class="card-text"></p> {% endcomment %}
                                     {% comment %} <p class="card-text">Starting Time：{{exhibitionEvent.pk}}</p> {% endcomment %}
                                     <p class="card-text">Starting Time：{{exhibitionEvent.date_StartTime}}</p>
                                     <p class="card-text">Ending Time：{{exhibitionEvent.date_EndTime}}</p>
-                                    <a href="{%url 'exhibitionDetail' exhibitionEvent.id %}" class="btn btn-primary">展覽內容</a>
-                                    <a href="#" class="btn btn-primary">購買票券</a>
+                                    <a href="{%url 'exhibitionDetail' exhibitionEvent.id %}" class="btn btn-primary rounded-pill">展覽內容</a>
+                                    <a href="{% url 'exhibitionOrder' exhibitionEvent.id%}" class="btn btn-primary rounded-pill">購買票券</a>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <p>There is no exhibition!.....</p>
+                        <h1>There is no exhibition!.....</h1>
                     {% endif %}
 
 
 
                 </div>
-                <h4>Pagination</h4>
-                <div class="row m-5">
+                <h4 class="col-12 text-center mt-5">Pagination</h4>
+                <div class="row">
                     <div class="col-md-12 m-2">
 
                       {% if exhibitionEvents.has_other_pages %}

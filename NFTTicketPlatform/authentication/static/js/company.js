@@ -1,27 +1,8 @@
 $(document).ready(function () {
     // jQuery methods go here...\
 
-    // open sidebar
-    $('#open-btn').click(function (e) {
-        e.preventDefault();
-        $('#sidebar').css('margin-left', '0px');
-        $('#open-btn').css('display', 'none');
-        $('#open-btn').text('Close Sidebar');
-        $('#close-btn').css('display', 'block');
-    });
 
-    // close sidebar
-    $('#close-btn').click(function (e) {
-        e.preventDefault();
-        $('#sidebar').css('margin-left', '-250px');
-        $('#close-btn').css('display', 'none');
-        $('#open-btn').css('display', 'block');
-        $('#open-btn').text('Open Sidebar');
-        $('#open-btn').html(`<i class="fas fa-align-left"></i>
-        <span>Open Sidebar</span>`);
-    });
-
-    // // 顯示公司資訊
+    // //顯示公司資訊
     // $('#tab-info').click(function (e) {
     //     e.preventDefault();//阻止此元素預設動作
     //     $('#pane-info').show();
@@ -73,56 +54,56 @@ $(document).ready(function () {
     // });
 
     // 銷售狀況x軸票名，y軸銷售票數
-    var xValues = ["A票", "B票", "C票", "D票", "E票"];//票名
-    var yValues = [55, 49, 44, 24, 20];//票名對應的銷售票數
-    var barColors = new Array();
+    // var xValues = ["A票", "B票", "C票", "D票", "E票"];//票名
+    // var yValues = [55, 49, 44, 24, 20];//票名對應的銷售票數
+    // var barColors = new Array();
 
-    for (let index = 0; index < xValues.length; index++) {
-        barColors.push(getRandomColor());
-    }
+    // for (let index = 0; index < xValues.length; index++) {
+    //     barColors.push(getRandomColor());
+    // }
 
-    new Chart("myChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-                backgroundColor: barColors,
-                data: yValues
-            }]
-        },
-        options: {
-            legend: { display: false },
-            title: {
-                display: true,
-                text: "World Wine Production 2018"
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
+    // new Chart("myChart", {
+    //     type: "bar",
+    //     data: {
+    //         labels: xValues,
+    //         datasets: [{
+    //             backgroundColor: barColors,
+    //             data: yValues
+    //         }]
+    //     },
+    //     options: {
+    //         legend: { display: false },
+    //         title: {
+    //             display: true,
+    //             text: "World Wine Production 2018"
+    //         },
+    //         scales: {
+    //             yAxes: [{
+    //                 ticks: {
+    //                     beginAtZero: true
+    //                 }
+    //             }]
+    //         }
+    //     }
+    // });
 
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF'.split('');
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
+    // function getRandomColor() {
+    //     var letters = '0123456789ABCDEF'.split('');
+    //     var color = '#';
+    //     for (var i = 0; i < 6; i++) {
+    //         color += letters[Math.floor(Math.random() * 16)];
+    //     }
+    //     return color;
+    // }
 
-    $('#amazing-colorful-card-columns > .card').each(function (index, element) {
+    $('#amazing-colorful-card-columns .card').each(function (index, element) {
         // element == this
         $(element).css({
-            'background-color': getRandomColor(),
+            'background-color': '#5d464c',
             'color': 'white'
         });
     });
-    $('#amazing-colorful-card-columns > .card').hover(function () {
+    $('#amazing-colorful-card-columns .card').hover(function () {
         // over
         $(this).css({
             'background-color': 'white',
@@ -131,15 +112,33 @@ $(document).ready(function () {
     }, function () {
         // out
         $(this).css({
-            'background-color': getRandomColor(),
+            'background-color': '#5d464c',
             'color': 'white'
         });
     }
     );
 });
+//--------------------------------------- to top btn -----------------------------------------------
 
+// tp top btn
+let mybutton = document.getElementById("myBtn");
 
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () { scrollFunction() };
 
+function scrollFunction() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        mybutton.style.display = "block";
+    } else {
+        mybutton.style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
 
 // open sidebar btn
 // const openBtn = document.querySelector("#open-btn");

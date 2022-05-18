@@ -1,66 +1,45 @@
-body {
-    font-family: 'Source Sans Pro', sans-serif;
-    background: rgb(231, 231, 231);
+:root {
+    --clr-ganache-brown: #5d464c;
+    --clr-ganache-orange: #d89e5e;
+    --clr-ganache-dark: #32262a;
+    --clr-ganache-light: #f6f5f0;
+    --clr-dark: #252525;
 }
 
-/* ------------------------- navbar ------------------------- */
+.container-fluid {
+    color: white;
+    background-image: linear-gradient(to left bottom, #1ab6e4, #00a0da, #008acd, #1774bd, #2e5dab, #3c5baa, #485aa8, #5258a6, #606cb8, #6e80ca, #7e94dc, #8ea9ee);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
 
-.navbar #brand {
+#brand {
     font-size: 30px;
     font-weight: bold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: black;
 }
 
-.navbar #brand:hover {
-    color: white;
-    transition: 0.5s;
+.my-shadow {
+    border-radius: 24px;
+    box-shadow: 1px 1px 15px 5px rgba(0, 0, 0, 0.7);
 }
 
-.navbar-custom {
-    background: linear-gradient(90deg, #a8c0ff 0%, #3f2b96 100%);
-}
-
-.navbar .nav-link {
-    font-size: 18px;
-    color: black;
-    transition: all 0.5s;
-    font-weight: 600;
-}
-
-.navbar .nav-link:hover {
-    transition: all 0.5s;
-    color: white;
-    font-weight: 600;
-}
-
-.navbar .nav-item .dropdown-menu>a {
-    margin-bottom: 5px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 6px;
-    transition: all 0.3s;
-}
-
-.navbar .nav-item .dropdown-menu>a:hover {
-    background-color: #7171c7;
-    color: white;
-    border-radius: 6px;
-    transition: all 0.5s;
-}
-
-/* ------------------------- end navbar ------------------------- */
 
 .card {
     margin: 10px 0px 10px 0px;
-    transition: 0.5s;
     /* 上右下左 */
+    background-color: transparent !important;
+    color: black;
+    transition: 0.5s;
 }
 
 .card:hover {
-    background-color: hsl(39, 100%, 50%);
+    background-color: #8EA9EE !important;
     color: white;
     font-weight: bold;
     transition: 0.5s;
-    transform:scale(1.1);
+    transform: scale(1.1);
 }
+

@@ -83,41 +83,30 @@
 
             <!-- sidebar -->
             <nav class="sidebar" id="sidebar">
-
-                <div class="sidebar-header-div">
-                    <h3 id="sidebar-header">BootStrap Sidebar</h3>
-                </div>
-
                 <ul class="list-unstyled sidebar-compos">
-
-                    <li class="sidebar-item" id="tab-info" >
-                        <a class="sidebar-item-a" href="{%url 'company'%}" >公司資訊 <i class="fa-solid fa-user i-item"></i>
-                        </a>
+                    <li class="sidebar-item" id="tab-info">
+                        <i class="fa-solid fa-user i-item"></i>
+                        <a class="sidebar-item-a" href="{%url 'company'%}">公司資訊</a>
                     </li>
 
-                    <li class="sidebar-item" id="tab-asset" >
-                        <a class="sidebar-item-a"  href="{%url 'companyAsset'%}" id="personal-asset">公司資產
-                            <i class="fa-solid fa-wallet i-item"></i>
-                        </a>
+                    <li class="sidebar-item" id="tab-asset">
+                        <i class="fa-solid fa-wallet i-item"></i>
+                        <a class="sidebar-item-a"  href="{%url 'companyAsset'%}" id="personal-asset">公司資產</a>
                     </li>
 
-                    <li class="sidebar-item" id="tab-activity" >
-                        <a class="sidebar-item-a" href="{%url 'eventcreatform'%}" >新增活動
-                            <i class="fa-solid fa-ticket i-item"></i>
-                        </a>
+                    <li class="sidebar-item" id="tab-activity">
+                        <i class="fa-solid fa-ticket i-item"></i>
+                        <a class="sidebar-item-a"  href="{%url 'eventcreatform'%}" >新增活動</a>
                     </li>
-
 
                     <li class="sidebar-item" id="tab-sell">
-                        <a class="sidebar-item-a"  href="{%url 'salesstatus'%}">銷售狀況
-                            <i class="fa-solid fa-circle-question i-item"></i>
-                        </a>
+                        <i class="fa-solid fa-circle-question i-item"></i>
+                        <a class="sidebar-item-a" href="{%url 'salesstatus'%}">銷售狀況</a>
                     </li>
 
                     <li class="sidebar-item" id="tab-help">
-                        <a class="sidebar-item-a" href="{%url 'companyhelpcenter'%}">詢問中心
-                            <i class="fa-solid fa-circle-question i-item"></i>
-                        </a>
+                        <i class="fa-solid fa-circle-question i-item"></i>
+                        <a class="sidebar-item-a" href="{%url 'companyhelpcenter'%}">詢問中心</a>
                     </li>
 
                 </ul>

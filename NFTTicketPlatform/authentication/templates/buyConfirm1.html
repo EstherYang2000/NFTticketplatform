@@ -1,293 +1,101 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+{%block content%}
+{% load static %}
 
-<head>
-	{% load static %}
+<link rel="stylesheet" href="{%static 'css/buyConfirm.css'%}">
 
-	<meta charset="utf-8">
-	<title>NFT Platform</title>
-	<link rel="stylesheet" href="{% static 'css/index.css' %}">
-  	<link rel="shortcut icon" href="{%static 'imgs/ape.jpeg' %}">
-
-	<!-- Mobile Specific Metas -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<!-- Font-->
-	<link rel="stylesheet" type="text/css" href="{%static 'css/buyConfirm/opensans-font.css' %} ">
-	<!-- datepicker -->
-	<link rel="stylesheet" type="text/css" href="{%static 'css/buyConfirm/jquery-ui.min.css'%}">
-	<!-- Main Style Css -->
-	<link rel="stylesheet" href="{%static 'css/buyConfirm/style.css'%}">
-
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-		integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-
-	<!-- font awesome link  -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-		integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-</head>
-
-<body>
-	<!-- navbar -->
-	<nav class="navbar navbar-expand-lg navbar-custom sticky-top shadow p-2">
-		<div class="btn-div">
-			<button type="button" class="btn" id="close-btn">
-				<img
-					src="https://img.icons8.com/external-flat-icons-inmotus-design/30/000000/external-bar-messenger-flat-icons-inmotus-design.png" />
-				<!-- <i class="fa-solid fa-bars"></i> -->
-			</button>
-			<button type="button" class="btn" id="open-btn" style="display: none;">
-				<img
-					src="https://img.icons8.com/external-flat-icons-inmotus-design/30/000000/external-bar-messenger-flat-icons-inmotus-design.png" />
-				<!-- <i class="fa-solid fa-bars"></i> -->
-			</button>
-		</div>
-
-		<a class="navbar-brand" id="brand" href="{%url 'home'%}">Minterlake</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="{%url 'home'%}">主頁</a>
-				</li>
-				{%if user.is_authenticated%}
-				<li class="nav-item">
-				  <a class="nav-link" href="{%url 'signout_user'%}">登出</a>
-				</li>
-				{% else %}
-				<li class="nav-item">
-					<a class="nav-link" href="{%url 'login_user'%}">登入</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="{%url 'register'%}">註冊</a>
-				</li>
-				{%endif%}
-				{%if user.is_authenticated%}
-				  {%if user.is_staff == True%}
-					<li class="nav-item">
-					  <a class="nav-link active" href="{%url 'company'%}">公司專區 <span class="sr-only">(current)</span></a>
-				  </li>
-				  {% else %}
-					<li class="nav-item">
-						<a class="nav-link active" href="{%url 'personal'%}">個人專區 <span class="sr-only">(current)</span></a>
-					</li>
-				  {%endif%}
-				{%endif%}
-				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-					  data-toggle="dropdown" aria-expanded="false">
-					  所有活動
-				  </a>
-				  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					  <a class="dropdown-item" href="{%url 'exhibition'%}"><i class="fa-solid fa-paintbrush"
-							  style="margin-right: 10px;font-size:25px;"></i>展覽
-					  </a>
-					  <div class="dropdown-divider"></div>
-					  <a class="dropdown-item" href="{%url 'performance'%}"><i class="fa-solid fa-masks-theater"
-							  style="margin-right: 10px;font-size:25px;"></i>表演活動
-					  </a>
-				  </div>
-				</li>
-
-
-			</ul>
-			{%if user.is_authenticated%}
-			<span class ="hello-msg111" >Hello,{{request.user}}</span>
-			{% endif %}
-		  <form action="{% url 'searchEvent' %}" method="GET" class="d-flex">
-			<input class="form-control me-2" name="query" type="text" placeholder="Search">
-			<button class="btn btn-primary" type="submit">Search</button>
-		  </form>
-		</nav>
-		<div class="container">
-		  {%if messages%}
-			{%for message in messages%}
-			  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-				{{message}}
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>
-		   {% endfor %}
-		  {%endif%}
-
-		  {% if form.errors%}
-			{%for error in errors%}
-			<div class="alert alert-warning alert-dismissible fade show" role="alert">
-			  {{error}}
-			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
+<!-- start form -->
+<div class="wrapper p-4" id="form-container">
+	<form class="form-register" id="form-register" action="exhibitionOrder" method="POST">
+		{%csrf_token%}
+		<div class="container border w-75 p-4 m-3 mx-auto my-shadow">
+			<h2>Personal Info Confrimation</h2>
+			<div class="form-group">
+				<label for="user-name">User Name:</label>
+				<input type="text" id="user-name" class="form-control rounded-pill" name="user_name" value="{{customerProfile.customeruser.username}}" required
+					readonly>
 			</div>
-			{% endfor %}
-		  {%endif%}
-
-		</div>
-	</nav>
-	<!-- end navbar -->
-	<div class="page-content">
-		<a href="{%url 'home'%}" id="btn-back">返回</a>
-		<div class="wizard-heading">訂單確認</div>
-		<div class="wizard-v6-content">
-			<div class="wizard-form">
-				<form class="form-register" id="form-register" action='exhibitionOrder' method="POST" >
-					{%csrf_token%}
-
-					<div id="form-total">
-						<!-- SECTION 1 -->
-						<h2>
-							<p class="step-icon"><span>1</span></p>
-							<span class="step-text">個人資訊確認</span>
-						</h2>
-						<section>
-							<div class="inner">
-								<div class="form-heading">
-									<h3>個人資訊確認</h3>
-									<span>1/3</span>
-								</div>
-								<div class="form-row">
-									<div class="form-holder">
-										<label class="form-row-inner">
-											<input type="text" class="form-control disabled" id="first_name"
-												name="user_name" value="{{customerProfile.customeruser.username}}" required disabled>
-											<span class="label">user_name</span>
-										</label>
-									</div>
-									<div class="form-holder">
-										<label class="form-row-inner">
-											<input type="email" name="email" value="{{customerProfile.personal_email}}" id="your_email_1"
-												class="form-control disabled" required disabled>
-											<span class="label">E-Mail</span>
-										</label>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-holder form-holder-2">
-										<label class="form-row-inner">
-											<input type="text" class="form-control disabled" id="address"
-												name="wallet_ID"
-												value="{{customerProfile.personal_walletId}}"
-												required disabled>
-											<span class="label">wallet_ID</span>
-										</label>
-									</div>
-								</div>
-
-							</div>
-						</section>
-						<!-- SECTION 2 -->
-						<h2>
-							<p class="step-icon"><span>2</span></p>
-							<span class="step-text">票券資訊確認</span>
-						</h2>
-						<section>
-							<div class="inner">
-								<div class="form-heading">
-									<h3>票券資訊確認</h3>
-									<span>2/3</span>
-								</div>
-								<!-- <div class="form-images">
-									<img src="images/wizard_v6.jpg" alt="wizard_v6">
-								</div> -->
-								<div class="form-row">
-									<div class="form-holder form-holder-2">
-										<label class="form-row-inner">
-											<input type="text" class="form-control disabled" id="ticket_name"
-												name="ticket_name" value="{{eachExhibition.eventname}}" required disabled>
-											<span class="label">票券名稱</span>
-										</label>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-holder form-holder-2">
-										<label class="form-row-inner">
-											<select class="form-control disabled" name="ticket_type"
-												disabled="disabled">
-												<!-- selected是預設被選起來的選項 -->
-												<option value="{{eachExhibition.category}}" selected>展覽</option>
-												{% comment %} <option value="show">表演活動</option> {% endcomment %}
-											</select>
-											<span class="label">票券類型</span>
-										</label>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-holder form-holder-2">
-										<label class="form-row-inner">
-											<input type="number" class="form-control disabled" id="ticket_num"
-												name="ticket_num" value="1" required disabled>
-											<span class="label">票券張數</span>
-										</label>
-									</div>
-								</div>
-
-							</div>
-						</section>
-						<!-- SECTION 3 -->
-						<h2>
-							<p class="step-icon"><span>3</span></p>
-							<span class="step-text">金額資訊確認</span>
-						</h2>
-						<section>
-							<div class="inner">
-								<div class="form-heading">
-									<h3>金額資訊確認</h3>
-									<span>3/3</span>
-								</div>
-								<div class="form-row">
-									<div class="form-holder form-holder-2">
-										<label class="form-row-inner">
-											<input type="number" class="form-control disabled" id="ticket_cost"
-												name="ticket_cost" value="{{eachExhibition.eventprice}}" required disabled>
-											<span class="label">票券花費</span>
-										</label>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-holder form-holder-2">
-										<label class="form-row-inner">
-											<input type="number" class="form-control disabled" id="fee" name="fee"
-												value="0.01" required disabled>
-											<span class="label">手續費</span>
-										</label>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="form-holder form-holder-2">
-										<label class="form-row-inner">
-											<input type="number" class="form-control disabled" id="total_cost"
-												name="total_cost" required disabled>
-											<span class="label">總花費</span>
-										</label>
-									</div>
-
-								</div>
-
-							</div>
-						</section>
-					</div>
-				</form>
+			<div class="form-group">
+				<label for="email">E-Mail:</label>
+				<input type="email" id="email" class="form-control rounded-pill" name="email" value="{{customerProfile.personal_email}}" required
+					readonly>
+			</div>
+			<div class="form-group">
+				<label for="wallet_ID">Wallet Address:</label>
+				<input type="text" id="wallet_ID" class="form-control rounded-pill" name="wallet_ID"
+				value="{{customerProfile.personal_walletId}}" required readonly>
 			</div>
 		</div>
-	</div>
 
-	<!-- Bootstrap Bundle -->
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+		<div class="container border w-75 p-4 m-3 mx-auto my-shadow">
+			<h2>Ticket Info Confrimation</h2>
+			<div class="form-group">
+				<label for="ticket_name">Event Name : </label>
+				<input type="text" id="ticket_name" class="form-control rounded-pill" name="ticket_name" value="{{eachExhibition.eventname}}"
+					required readonly>
+			</div>
+			<div class="form-group">
+				<label for="ticket_type">Event Type : </label>
+				<select class="form-control rounded-pill" name="ticket_type" disabled="disabled">
+					<!-- selected是預設被選起來的選項 -->
+					<option value="exhibition" selected>{{eachExhibition.category}}</option>
+					{% comment %} <option value="show">表演活動</option> {% endcomment %}
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="ticket_num">Ticket Number:</label>
+				<input type="number" id="ticket_num" class="form-control rounded-pill" name="ticket_num" value="1" required
+					readonly>
+			</div>
+		</div>
+
+		<div class="container border w-75 p-4 m-3 mx-auto my-shadow">
+			<h2>Cost Confirmation</h2>
+			<div class="form-group">
+				<label for="ticket_cost">Ticket Cost</label>
+				<input type="number" class="form-control rounded-pill" id="ticket_cost" name="ticket_cost" value="{{eachExhibition.eventprice}}"
+					required readonly>
+			</div>
+			<div class="form-group">
+				<label for="fee">Handling Cost</label>
+				<input type="number" class="form-control rounded-pill" id="fee" name="fee" value="0.01" required readonly>
+			</div>
+			<div class="form-group">
+				<label for="total_cost">Total Cost</label>
+				<input type="number" class="form-control disabled rounded-pill" id="total_cost" name="total_cost" required
+					readonly>
+			</div>
+		</div>
+
+		<div class="container w-75 mx-auto">
+			<div class="d-flex justify-content-between">
+				{% if catenum == 1 %}
+					<a href="{% url 'exhibition' %}" class="btn btn-secondary btn-lg rounded-pill">Back</a>
+				{%else %}
+                	<a href="{% url 'performance' %}" class="btn btn-secondary btn-lg rounded-pill">Back</a>
+            	{%endif%}
+				<input type="submit" class="btn btn-primary btn-lg rounded-pill" value="Submit">
+			</div>
+		</div>
+
+	</form>
+</div>
+<!-- end form -->
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-		crossorigin="anonymous"></script>
-	<script src="{%static 'js/buyConfirm/jquery-3.3.1.min.js' %}"></script>
-	<script src="{%static 'js/buyConfirm/jquery.steps.js' %}"></script>
-	<script src="{%static 'js/buyConfirm/jquery-ui.min.js' %}"></script>
-	<script src="{%static 'js/buyConfirm/main.js' %}"></script>
-</body>
+		crossorigin="anonymous"></script> {% endcomment %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#feee').val(parseFloat(($('#ticket_cost').val()*0.03)));
 
-</html>
+		$('#total_cost').val((parseFloat($('#ticket_cost').val())+parseFloat($('#fee').val())).toFixed(3));
+
+	});
+
+</script>
+
+
+{%endblock%}

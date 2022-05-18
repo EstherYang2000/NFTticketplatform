@@ -1,42 +1,101 @@
 {% extends 'base.html' %}
 {%block content%}
 {% load static %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!doctype html>
+<html lang="en">
 
-    <link rel="stylesheet" href="{% static 'css/exhibition.css' %}">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- font awesome link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/exhibition.css' %}">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+<!-- font awesome link  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<style>
+    .container-fluid {
+        color: white;
+        background-image: linear-gradient(to left bottom, #1ab6e4, #00a0da, #008acd, #1774bd, #2e5dab, #3c5baa, #485aa8, #5258a6, #606cb8, #6e80ca, #7e94dc, #8ea9ee);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+    }
+
+    #brand {
+        font-size: 30px;
+        font-weight: bold;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .my-shadow {
+        border-radius: 24px;
+        box-shadow: 1px 1px 15px 5px rgba(0, 0, 0, 0.7);
+    }
 
 
+    .card {
+        margin: 10px 0px 10px 0px;
+        /* 上右下左 */
+        background-color: transparent !important;
+        color: black;
+        transition: 0.5s;
+    }
 
+    .card:hover {
+        background-color: #8EA9EE !important;
+        color: white;
+        font-weight: bold;
+        transition: 0.5s;
+        transform: scale(1.1);
+    }
+</style>
 
+</head>
+
+<body>
+<!-- fixed container -->
+<div class="container-fluid p-0">
     <div class="container">
-
         <div class="row justify-content-center">
-            <div class="col-md-8">
-              <a href="{% url 'exhibition' %}" class="btn btn-primary mt-2">Back</a>
-                <div class="card m-5 p-2" style="width: 25rem;">
-                    <img src="{{ eachExhibition.event_pic.url }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title m-1"><b>Name:</b> {{ eachExhibition.eventname }}</h5>
-                        <h4 class="card-subtitle m-1"><b>Price:</b> ${{ eachExhibition.eventprice }}</h4>
-                        <p style="font-size: 14px;" class="btn btn-warning m-1 p-1"><b>Category:</b>{{ eachExhibition.category}}</p>
-                        <hr>
-                        <p style="font-size: 15px;" class="card-text mt-1">Description: {{ eachExhibition.eventdescription }}</p>
-                        <p style="font-size: 13px;" class="cart-text mt-1">Event Created - {{ eachExhibition.date_created }}</p>
-                        <p style="font-size: 13px;" class="cart-text mt-1">Event Starts - {{ eachExhibition.date_StartTime }}</p>
-                        <p style="font-size: 13px;" class="cart-text mt-1">Event Ends - {{ eachExhibition.date_EndTime }}</p>
+            {% if catenum == 1 %}
+                <a href="{% url 'exhibition' %}" class="btn btn-primary mt-2 rounded-pill">Back</a>
 
-                        {% comment %} <a href="{% url 'deleteProduct' eachProduct.id %}" class="btn btn-danger m-1"> Delete </a>
-                        <a href="{% url 'updateProduct' eachProduct.id %}" class="btn btn-primary m-1"> Update </a> {% endcomment %}
+            {%else %}
+                <a href="{% url 'performance' %}" class="btn btn-primary mt-2 rounded-pill">Back</a>
+            {%endif%}
+            <div class="card m-5 my-shadow" style="width: 100%;">
+                <div class="row no-gutters">
+                    <div class="col-md-4 embed-responsive embed-responsive-16by9">
+                        <!-- style="object-fit: contain;" contain原圖，可改成cover填滿(超出會切掉) -->
+                        <img src="{{eachExhibition.event_pic.url}}" class="card-img-top embed-responsive-item" alt="..."
+                            style="object-fit: contain;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body" style="font-weight: bold;">
+                            <div class="row">
+                                <h5 class="col card-title m-1"><b>Name:</b> {{ eachExhibition.eventname }}</h5>
+                                <h4 class="col card-subtitle m-1" style="text-align:right;"><b>Price:</b> ${{ eachExhibition.eventprice }}</h4>
+                            </div>
+                            <p style="font-size: 18px;" class="btn btn-primary m-1 p-1 rounded-pill"><b>Category:</b>
+                                {{eachExhibition.category}}</p>
+                            <hr>
+                            <p style="font-size: 18px;" class="card-text mt-1">Description: {{ eachExhibition.eventdescription }}</p>
+                            <p style="font-size: 18px;" class="cart-text mt-1">🕛Event Created - {{eachExhibition.date_created }}</p>
+                            <p style="font-size: 18px;" class="cart-text mt-1">🕛Event Starts - {{eachExhibition.date_StartTime }}</p>
+                            <p style="font-size: 18px;" class="cart-text mt-1">🕛Event Ends - {{ eachExhibition.date_EndTime}}</p>
+
+                            {% comment %} <a href="{% url 'deleteProduct' eachProduct.id %}" class="btn btn-danger m-1">
+                                Delete </a>
+                            <a href="{% url 'updateProduct' eachProduct.id %}" class="btn btn-primary m-1"> Update </a>
+                            {% endcomment %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,15 +104,16 @@
 
 
         </div>
-
-
+    </div>
+</div>
 
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-        crossorigin="anonymous"></script>
-{%endblock%}
+        crossorigin="anonymous"></script> {% endcomment %}
+</body>
+    {%endblock%}

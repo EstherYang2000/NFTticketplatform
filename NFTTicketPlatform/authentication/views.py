@@ -186,7 +186,7 @@ def register(request):
                                 p.commit()
 
                                 messages.success(
-                                    request, "Successfully Insert the data into company database !!")
+                                    request, "Sign up successfully for Company Funcket !!")
                                 print(
                                     "Successfully Insert the data into company database !!")
 
@@ -201,7 +201,7 @@ def register(request):
                                 pcursor.execute(person, val)
                                 p.commit()
                                 messages.success(
-                                    request, "Successfully Insert the data into customer database !!")
+                                    request, "Sign up successfully for Your Funcket !!")
                                 print(
                                     "Successfully Insert the data into customer database !!")
 
@@ -236,6 +236,7 @@ pass
 
 
 #搜尋活動
+@login_required(login_url='login_user')
 def searchEvent(request):
     print("search!!!!")
     if request.method == 'GET':
@@ -244,7 +245,7 @@ def searchEvent(request):
             exhibitionEvents = Events.objects.filter(
                 eventname__icontains=query)
             page_num = request.GET.get("page")
-            paginator = Paginator(exhibitionEvents, 3)
+            paginator = Paginator(exhibitionEvents, 6)
             try:
                 exhibitionEvents = paginator.page(page_num)
             except PageNotAnInteger:
@@ -342,7 +343,7 @@ def personalInfowallet(request):
                 pcursor.execute(person, val)
                 p.commit()
                 messages.success(
-                    request, "insert wallet into database succesfully")
+                    request, "Update your walletAddress succesfully!!")
                 print("insert wallet succesfully")
             else:
                 print("連接失敗")
@@ -428,10 +429,13 @@ def personalasset(request):
     lastUSDTWRate = getUSDTW()
     lastUSDTWRate = Decimal(lastUSDTWRate)
     etherToTWD = etherToUSD*lastUSDTWRate
+    locale.setlocale(locale.LC_ALL, 'en_US')
 
-    locale.setlocale(locale.LC_ALL, '')
     etherToUSD = locale.currency(etherToUSD, grouping=True)
     etherAsset['etherToUSD'] = etherToUSD
+    print("------------------------------------------------------------------------")
+    print(etherAsset['etherToUSD'])
+    locale.setlocale(locale.LC_ALL, '')
     etherToTWD = locale.currency(etherToTWD, grouping=True)
     print("etherToTWD"+str(etherToTWD))
     etherAsset['etherToTWD'] = etherToTWD
@@ -533,22 +537,21 @@ def Accept(request):
                             orderValue = (cusID,strTransfer,tokenID)
                             pcursor.execute(UpdateOrder, orderValue)
                             p.commit()
+                            transferEventID = transferOrder.events.id
+                            transferSenderWalletID = transferAccpeted.Sender.personal_walletId
+                            transferRecWalletID = transferAccpeted.Receiver.personal_walletId
+                            transfereventprice=transferOrder.orderPrice
+                            print(transferEventID)
+                            print(transferRecWalletID)
+                            print(tokenID)
+                            print(transfereventprice)
+                            print(Web3CustomSafeTransferFrom(str(transferEventID),transferSenderWalletID,transferRecWalletID,int(tokenID),float(transfereventprice),transferRecWalletID))
+                            messages.success(
+                                request, "Successfully Call Remix !!")
                             messages.success(
                                 request, "Successfully Insert the data into orderevent database !!")
 
-                            # eventID = "SELECT eventID FROM event WHERE eventname = %s"
-                            # value = (Geteventname,)
-                            # print(value)
-                            # pcursor.execute(eventID, value)
-                            # eventpk = pcursor.fetchall()
 
-                            # eventpk = eventpk[0][0]
-                            # cmpWallet = companyuserProfile.company_walletId
-                            # print(cmpWallet)
-                            # print(Web3SetActivity(str(eventpk),cmpWallet,int(Geteventticketnumber),int(Geteventprice)))
-                            # print('活動ID:'+eventID)
-
-                            # Web3SetActivity()
 
                             return redirect('personalasset')
                         #     print("Successfully Insert the data into company database !!")
@@ -576,15 +579,15 @@ def Accept(request):
 pass
 
 
-
-def Auth(request,pk):
+@login_required(login_url='login_user')
+def Auth(request):
 
     print("-----------Auth-----------")
 
     user = request.user
     customerProfile = CustomerProfile.objects.get(customeruser=user)
-    thisorder =Order.objects.get(id=pk)
-    print(thisorder)
+    # thisorder =Order.objects.get(id=pk)
+    # print(thisorder)
     if request.method == "POST":
 
         print("-----------form-----------")
@@ -619,6 +622,11 @@ def Auth(request,pk):
                         val = (authStatus,authID)
                         pcursor.execute(UpdateTransfer, val)
                         p.commit()
+                        walletID = customerProfile.personal_walletId
+                        print(walletID)
+                        print(Web3WebUserVerify(tokenId,walletID))
+                        messages.success(
+                                request, "Successfully Call Remix !!")
                         messages.success(
                                 request, "Successfully Update the data into order database !!")
 
@@ -655,7 +663,7 @@ def Auth(request,pk):
     else:
         messages.info(request, 'Authform was invalid !!')
         return redirect('personalasset')
-    context ={'customerProfile':customerProfile,'authStatus':authStatus,"strValid":strValid,'thisorder':thisorder}
+    context ={'customerProfile':customerProfile,'authStatus':authStatus,"strValid":strValid}
 
     return render(request, 'personal/authform.html', context)
 
@@ -710,7 +718,8 @@ def personaltransfer(request):
             print(wantToTransferOrder)
             wantToTransferOrder.status = "transferring"
             wantToTransferOrder.save()
-            messages.success(request, "'TransferEvent was created for ' + customerProfile.customeruser.username＋'Status:' + wantToTransfer.status")
+            messages.success(request, "TransferEvent was created for" + str(customerProfile.customeruser.username))
+
             try:
 
                 p = sql.connect(host=changehost, user=changeuser,
@@ -751,6 +760,8 @@ def personaltransfer(request):
                         p.commit()
                         messages.success(
                                 request, "Successfully Update the data into orderevent database !!")
+
+                        print(Web3Approve(getReceiverWallet,getTokenID,getSenderWallet))
                         # eventID = "SELECT eventID FROM event WHERE eventname = %s"
                         # value = (Geteventname,)
                         # print(value)
@@ -807,145 +818,145 @@ pass
 
 # 剩連接 TOKENORDER
 #購買活動
+@login_required(login_url='login_user')
 def exhibitionOrder(request, pk):
+    userA = request.user
+    is_company = userA.is_staff
+    if (is_company !=True):
 
-    eachExhibition = Events.objects.get(id=pk)
-    customerProfile = CustomerProfile.objects.get(
-        customeruser=request.user)
-    print("--------------------------------------------------------------------")
-
-    # print(exhibitionOrderForm)
-    # messages.info(
-    #     request, "Please confirm and fill the eventorderform again!!")
-    print("id值"+str(eachExhibition.id))
-    print(customerProfile)
-    orderfee = {}
-    orderprice = eachExhibition.eventprice
-
-    print(orderprice)
-    if request.method == "POST":
-
-        print("-------------------------orderfee-------------------------")
-        # orderNumber = request.POST.get('ticket_num')
-        # print('orderNumber'+str(orderNumber))
-        # orderPrice = request.POST.get('ticket_cost')
-        # print('orderPrice'+str(orderPrice))
-        # orderHandlingfee = request.POST.get('fee')
-        # print('orderHandlingfee'+str(orderHandlingfee))
-        # orderTotalPrice = request.POST.get('total_cost')
-        # print('orderTotalPrice'+str(orderTotalPrice))
-        orderNumber = 1
-        print('orderNumber'+str(orderNumber))
-        orderPrice = format(eachExhibition.eventprice, '0.2f')
-        print('orderPrice'+str(orderPrice))
-        a = Decimal(orderPrice)
-        orderHandlingfee = (a*3/100)
-        print('orderHandlingfee'+str(orderHandlingfee))
-        orderTotalPrice = (a*103/100)
-        print('orderTotalPrice'+str(orderTotalPrice))
-
-        GetEvent = Events.objects.get(eventname=eachExhibition.eventname)
-        remainticket = eachExhibition.remainedTicketNum
-        if(remainticket >= orderNumber):
-            # 取TOKEID
-            # tokenID =
-            orderlist = Web3safeMint(str(eachExhibition.id),customerProfile.personal_walletId,customerProfile.personal_walletId,float(eachExhibition.eventprice))
-            print(orderlist)
-            tokenID = orderlist[1]
-            print(tokenID)
-            thisOrder = Order.objects.create(customer=customerProfile, events=GetEvent, orderNumber=orderNumber, orderPrice=orderPrice, tokenID = tokenID,
-                                             orderHandlingfee=orderHandlingfee, orderTotalPrice=orderTotalPrice)
-            thisOrder.save()
-
-            OrderID = thisOrder.id
-            messages.success(
-                request,  'Order was created for ' + str(customerProfile.customeruser.username))
-            eachExhibition.totalorderedTicket += orderNumber
-            eachExhibition.remainedTicketNum = remainticket-orderNumber
-            print("totalorderedTicket:"+str(eachExhibition.totalorderedTicket))
-            print("remainedTicketNum:" + str(eachExhibition.remainedTicketNum))
-            eachExhibition.save()
-            try:
-
-                p = sql.connect(host=changehost, user=changeuser,
-                                        password=changepassword, database='nftticketwebsite')
-                if p.is_connected():
-                    # 顯示資料庫版本
-                    db_Info = p.get_server_info()
-                    print("資料庫版本：", db_Info)
-
-                    pcursor = p.cursor()
-                    print("連資料庫成功")
-                    GetOrder = Order.objects.get(
-                        id=OrderID, customer=customerProfile)
-
-                    if GetOrder:
-                     # 取TOKEID
-                        # tokenID =
-                        getOrderEventID = GetOrder.id
-                        getOrdercustomer = GetOrder.customer
-                        getevent = GetOrder.events
-                        getOrderNumber = GetOrder.orderNumber
-                        getTokenID = GetOrder.tokenID
-                        getDate_created = GetOrder.date_created
-                        getOrderPrice = GetOrder.orderPrice
-                        getOrderHandlingfee = GetOrder.orderHandlingfee
-                        getOrderTotalPrice = GetOrder.orderTotalPrice
-                        getOrderStatus = GetOrder.status
-                        print(GetOrder)
-                        print("取得訂購各資料成功")
-                        eventorder = "INSERT INTO orderevent SET orderEventID=%s,CustomerID = (SELECT CustomerID FROM customerprofile WHERE CustomerName = %s),\
-                            eventID= (SELECT eventID FROM event WHERE eventname = %s),OrderNumber = %s,tokenID=%s,orderDate_created=%s,OrderPrice=%s ,\
-                                 OrderHandlingfee=%s ,OrderTotalPrice=%s,ticketStatus=%s;"
-
-                        val = (getOrderEventID, getOrdercustomer.customeruser.username, getevent.eventname, getOrderNumber, getTokenID, getDate_created, getOrderPrice,
-                               getOrderHandlingfee, getOrderTotalPrice,getOrderStatus)
-                        pcursor.execute(eventorder, val)
-                        p.commit()
-                        # eventID = "SELECT orderID FROM event WHERE orderEventID = %s"
-                        # value = (getOrderEventID)
-                        # print(value)
-                        # pcursor.execute(eventID, value)
-                        # eventpk = pcursor.fetchall()
-
-                        # eventpk = eventpk[0][0]
-                        # cmpWallet = companyuserProfile.company_walletId
-                        # print(cmpWallet)
-                        # print(Web3SetActivity(str(eventpk),cmpWallet,int(Geteventticketnumber),int(Geteventprice)))
-                        # print('活動ID:'+eventID)
-
-                        # Web3SetActivity()
-                        messages.success(
-                            request, "Successfully Insert the data into order database !!")
-
-                        event = "UPDATE event SET totalOrderTicketNum = %s,remainedTicketNum = %s WHERE eventID = %s;"
-
-                        val = (getevent.totalorderedTicket,
-                               getevent.remainedTicketNum, getevent.id)
-                        pcursor.execute(event, val)
-                        p.commit()
-                        messages.success(
-                            request, "Update the ticket number of event into database succesfully")
-                        return redirect('exhibition')
-                    else:
-
-                        print("取得資料不成功")
-
-            except Error as e:
-                print("資料庫連接失敗：", e)
-
-            finally:
-                if (p.is_connected()):
-                    pcursor.close()
-                    p.close()
-                    print("資料庫連線已關閉")
-                return redirect('exhibition')
+        eachExhibition = Events.objects.get(id=pk)
+        customerProfile = CustomerProfile.objects.get(
+            customeruser=request.user)
+        print("--------------------------------------------------------------------")
+        catenum =0
+        category1 = eachExhibition.category
+        if category1 == 'exhibition':
+            catenum =1
         else:
-            messages.warning(request, "No enoungh ticket")
-            return redirect('exhibition')
+            catenum =2
+
+        # print(exhibitionOrderForm)
+        # messages.info(
+        #     request, "Please confirm and fill the eventorderform again!!")
+        print("id值"+str(eachExhibition.id))
+        print(customerProfile)
+        orderfee = {}
+        orderprice = eachExhibition.eventprice
+
+        print(orderprice)
+        if request.method == "POST":
+
+            print("-------------------------orderfee-------------------------")
+            # orderNumber = request.POST.get('ticket_num')
+            # print('orderNumber'+str(orderNumber))
+            # orderPrice = request.POST.get('ticket_cost')
+            # print('orderPrice'+str(orderPrice))
+            # orderHandlingfee = request.POST.get('fee')
+            # print('orderHandlingfee'+str(orderHandlingfee))
+            # orderTotalPrice = request.POST.get('total_cost')
+            # print('orderTotalPrice'+str(orderTotalPrice))
+            orderNumber = 1
+            print('orderNumber'+str(orderNumber))
+            orderPrice = format(eachExhibition.eventprice, '0.2f')
+            print('orderPrice'+str(orderPrice))
+            a = Decimal(orderPrice)
+            orderHandlingfee = (a*3/100)
+            print('orderHandlingfee'+str(orderHandlingfee))
+            orderTotalPrice = (a*103/100)
+            print('orderTotalPrice'+str(orderTotalPrice))
+
+            GetEvent = Events.objects.get(eventname=eachExhibition.eventname)
+            remainticket = eachExhibition.remainedTicketNum
+            if(remainticket >= orderNumber):
+                # 取TOKEID
+                # tokenID =
+                orderlist = Web3safeMint(str(eachExhibition.id),customerProfile.personal_walletId,customerProfile.personal_walletId,float(eachExhibition.eventprice))
+                print(orderlist)
+                tokenID = orderlist[1]
+                print(tokenID)
+                thisOrder = Order.objects.create(customer=customerProfile, events=GetEvent, orderNumber=orderNumber, orderPrice=orderPrice, tokenID = tokenID,
+                                                orderHandlingfee=orderHandlingfee, orderTotalPrice=orderTotalPrice)
+                thisOrder.save()
+
+                OrderID = thisOrder.id
+                messages.success(
+                    request,  'Order was created for ' + str(customerProfile.customeruser.username))
+                eachExhibition.totalorderedTicket += orderNumber
+                eachExhibition.remainedTicketNum = remainticket-orderNumber
+                print("totalorderedTicket:"+str(eachExhibition.totalorderedTicket))
+                print("remainedTicketNum:" + str(eachExhibition.remainedTicketNum))
+                eachExhibition.save()
+                try:
+
+                    p = sql.connect(host=changehost, user=changeuser,
+                                            password=changepassword, database='nftticketwebsite')
+                    if p.is_connected():
+                        # 顯示資料庫版本
+                        db_Info = p.get_server_info()
+                        print("資料庫版本：", db_Info)
+
+                        pcursor = p.cursor()
+                        print("連資料庫成功")
+                        GetOrder = Order.objects.get(
+                            id=OrderID, customer=customerProfile)
+
+                        if GetOrder:
+                        # 取TOKEID
+                            # tokenID =
+                            getOrderEventID = GetOrder.id
+                            getOrdercustomer = GetOrder.customer
+                            getevent = GetOrder.events
+                            getOrderNumber = GetOrder.orderNumber
+                            getTokenID = GetOrder.tokenID
+                            getDate_created = GetOrder.date_created
+                            getOrderPrice = GetOrder.orderPrice
+                            getOrderHandlingfee = GetOrder.orderHandlingfee
+                            getOrderTotalPrice = GetOrder.orderTotalPrice
+                            getOrderStatus = GetOrder.status
+                            print(GetOrder)
+                            print("取得訂購各資料成功")
+                            eventorder = "INSERT INTO orderevent SET orderEventID=%s,CustomerID = (SELECT CustomerID FROM customerprofile WHERE CustomerName = %s),\
+                                eventID= (SELECT eventID FROM event WHERE eventname = %s),OrderNumber = %s,tokenID=%s,orderDate_created=%s,OrderPrice=%s ,\
+                                    OrderHandlingfee=%s ,OrderTotalPrice=%s,ticketStatus=%s;"
+
+                            val = (getOrderEventID, getOrdercustomer.customeruser.username, getevent.eventname, getOrderNumber, getTokenID, getDate_created, getOrderPrice,
+                                getOrderHandlingfee, getOrderTotalPrice,getOrderStatus)
+                            pcursor.execute(eventorder, val)
+                            p.commit()
+                            # messages.success(
+                            #     request, "Successfully Insert the data into order database !!")
+
+                            event = "UPDATE event SET totalOrderTicketNum = %s,remainedTicketNum = %s WHERE eventID = %s;"
+
+                            val = (getevent.totalorderedTicket,
+                                getevent.remainedTicketNum, getevent.id)
+                            pcursor.execute(event, val)
+                            p.commit()
+                            messages.success(
+                                request, "Successfully book the ticket !!")
+                            return redirect('exhibition')
+                        else:
+
+                            print("取得資料不成功")
+
+                except Error as e:
+                    print("資料庫連接失敗：", e)
+
+                finally:
+                    if (p.is_connected()):
+                        pcursor.close()
+                        p.close()
+                        print("資料庫連線已關閉")
+                    return redirect('exhibition')
+            else:
+                messages.warning(request, "No enoungh ticket")
+                return redirect('exhibition')
+    else:
+        messages.warning(request, "Companies are not allowed to buy tickets.")
+        return redirect('exhibition')
 
     context = {'customerProfile': customerProfile,
-               'eachExhibition': eachExhibition}
+               'eachExhibition': eachExhibition,'catenum':catenum}
 
     return render(request, 'buyConfirm1.html', context)
 
@@ -966,9 +977,10 @@ def company(request):
         eventstatus = (Web3GetCompanyActNumber(companyuserProfile.company_walletId))
         print("------------------------------------")
         print(eventstatus)
-        del eventstatus[0]
+        # if(eventstatus[0]):
+        #     del eventstatus[0]
         print(eventstatus)
-        num = [0, 1, 2]
+        num = [1, 2, 3]
         context = {'companyuserProfile': companyuserProfile,
                    'eventstatus': eventstatus, 'num': num}
         print(context)
@@ -1191,12 +1203,17 @@ def updateevent(request, pk):
 pass
 
 #公司刪除活動
+@login_required(login_url='login_user')
 def deleteevent(request, pk):
 
     deleteevent = Events.objects.get(id=pk)
     deleteevent.delete()
     messages.info(request, "Delete the data from model succeefully!!")
 
+    print(pk)
+    print(Web3DeleteActivity(str(pk)))
+    messages.success(
+                    request, "Delete data from blockchain succesfully")
     try:
 
         p = sql.connect(host=changehost, user=changeuser,
@@ -1353,7 +1370,7 @@ def exhibition(request):
     exhibitionEvents = Events.objects.filter(
         category="exhibition", status="Not Started" or "Ongoing").order_by('date_StartTime')
     page_num = request.GET.get("page")
-    paginator = Paginator(exhibitionEvents, 3)
+    paginator = Paginator(exhibitionEvents, 6)
     try:
         exhibitionEvents = paginator.page(page_num)
     except PageNotAnInteger:
@@ -1371,11 +1388,16 @@ pass
 def exhibitionDetail(request, pk):
     # print(eachExhibition.pk)
     eachExhibition = Events.objects.get(id=pk)
+    category1 = eachExhibition.category
+    catenum =0
+    if category1 == 'exhibition':
+        catenum =1
+    else:
+        catenum =2
+
     print(eachExhibition.id)
     context = {
-        'eachExhibition': eachExhibition
-
-    }
+        'eachExhibition': eachExhibition,'category1':category1,'catenum':catenum,}
     return render(request, 'exhibitionDetail.html', context)
 pass
 
@@ -1385,15 +1407,27 @@ def performance(request):
     performanceEvents = Events.objects.filter(
         category="Performance", status="Not Started" or "Ongoing").order_by('date_StartTime')
     print(performanceEvents)
-    context = {"exhibitionEvents": performanceEvents}
+    page_num = request.GET.get("page")
+    paginator = Paginator(performanceEvents, 6)
+    try:
+        performanceEvents = paginator.page(page_num)
+    except PageNotAnInteger:
+        performanceEvents = paginator.page(1)
+    except EmptyPage:
+        performanceEvents = paginator.page(paginator.num_pages)
+    context = {"performanceEvents": performanceEvents}
     return render(request, 'show.html', context)
 
 pass
 
 #首頁
 def home(request):
-    AllShows = Events.objects.all()
-    context={"AllShows":AllShows}
+    AllShows = Events.objects.all().order_by('-id')[:4]
+    print("AllShows")
+    print(AllShows)
+    TrendingEvents = Events.objects.filter(status="Not Started" or "Ongoing",category='Performance').order_by('date_StartTime')[:6]
+    LatestEvents = Events.objects.filter(status="Not Started" or "Ongoing",category='exhibition').order_by('date_StartTime')[:6]
+    context={"AllShows":AllShows,"TrendingEvents":TrendingEvents,"LatestEvents":LatestEvents}
 
 
     return render(request, 'index.html',context)

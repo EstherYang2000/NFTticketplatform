@@ -1,6 +1,11 @@
+
 {% extends 'base.html' %}
 {%block content%}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -16,16 +21,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
     <title>NFT Platform</title>
+    <style>
+      .container-fluid {
+          color: white;
+          {% comment %} background-image: linear-gradient(to left bottom, #1ab6e4, #00a0da, #008acd, #1774bd, #2e5dab, #3c5baa, #485aa8, #5258a6, #606cb8, #6e80ca, #7e94dc, #8ea9ee); {% endcomment %}
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-position: center;
+          background-size: cover;
+      }
 
+      #brand {
+          font-size: 30px;
+          font-weight: bold;
+          font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      }
+
+      .my-shadow {
+          border-radius: 4px;
+          box-shadow: 1px 1px 15px 5px rgba(0, 0, 0, 0.7);
+      }
+
+
+      .card {
+          margin: 10px 0px 10px 0px;
+          /* 上右下左 */
+          background-color: transparent !important;
+          color: black;
+          transition: 0.5s;
+          font-weight: 800;
+      }
+
+      .card:hover {
+          background-color: #8EA9EE !important;
+          color: white;
+          font-weight: bold;
+          transition: 0.5s;
+          transform: scale(1.1);
+      }
+  </style>
+</head>
+
+<body>
+
+
+
+
+    <!----------------------------------------------------------------------------------------------------------------------- -->
 
     <!-- fixed container -->
     <div class="container-fluid p-0">
-
-
         <!-- ticket container -->
-        <div class="container">
+        <div class="container p-3">
 
-            <h1 id="top-title">Welcome to one-stop NFT ticket site</h1>
+            {% comment %} <h1 id="top-title">Welcome to one-stop NFT ticket site</h1> {% endcomment %}
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-3">
                 <!--
@@ -36,85 +85,118 @@
                     Extra large≥1200px 一行3欄
                 -->
                 {%if exhibitionEvents %}
-                    {%for exhibitionEvent in exhibitionEvents%}
-                    <div class="col">
-                        <div class="card">
-                            <img src="{{exhibitionEvent.event_pic.url}}"  style="height: ２00px; width: ３00px;"  class="card-img-top" alt="city-at-home.jpg">
-                            <div class="card-body">
-                                <h5 class="card-title">{{exhibitionEvent.eventname}}</h5>
-                                <h4 class="card-title">${{exhibitionEvent.eventprice}}</h5>
-                                {% comment %} <p class="card-text"></p> {% endcomment %}
-                                {% comment %} <p class="card-text">Starting Time：{{exhibitionEvent.pk}}</p> {% endcomment %}
-                                <p class="card-text">Starting Time：{{exhibitionEvent.date_StartTime}}</p>
-                                <p class="card-text">Ending Time：{{exhibitionEvent.date_EndTime}}</p>
-                                <a href="{%url 'exhibitionDetail' exhibitionEvent.id %}" class="btn btn-primary">展覽內容</a>
-                                <a href="{% url 'exhibitionOrder' exhibitionEvent.id%}" class="btn btn-primary" >購買票券</a>
-                            </div>
-                        </div>
+                  {%for exhibitionEvent in exhibitionEvents%}
+
+                    <div class="col d-flex">
+                      <div class="card flex-fill my-shadow">
+                          <div class="embed-responsive embed-responsive-16by9">
+                            <img src="{{exhibitionEvent.event_pic.url}}" class="card-img-top embed-responsive-item" alt="city-at-home.jpg" style="object-fit: cover;">
+                          </div>
+                          <div class="card-body">
+                              <h5 class="card-title" style="font-weight:bold;">{{exhibitionEvent.eventname}}</h5>
+                              <h4 class="card-title">${{exhibitionEvent.eventprice}}</h5>
+                              {% comment %} <p class="card-text">票券內容</p> {% endcomment %}
+                              <p class="card-text">🕛{{exhibitionEvent.date_StartTime}}</p>
+                              <div class="d-flex justify-content-between">
+                                <a href="{%url 'exhibitionDetail' exhibitionEvent.id %}" class="btn btn-primary rounded-pill">展覽內容</a>
+                                <a href="{% url 'exhibitionOrder' exhibitionEvent.id%}" class="btn btn-primary rounded-pill">購買票券</a>
+                              </div>
+                              {% comment %} <a href="#myModal" data-toggle="modal" class="btn btn-primary rounded-pill">購買票券</a> {% endcomment %}
+                          </div>
+                      </div>
                     </div>
-                    {% endfor %}
+                  {% endfor %}
+
                 {% else %}
-                    <p>There is no exhibition!.....</p>
+                  <p>There is no exhibition!.....</p>
                 {% endif %}
 
 
-
             </div>
-        </div>
-        <h4>Pagination</h4>
-                <div class="row m-5">
-                    <div class="col-md-12 m-2">
 
-                      {% if exhibitionEvents.has_other_pages %}
-                        <ul class="pagination">
-                              {% if exhibitionEvents.has_previous %}
-                                  <li class="page-item">
-                                    <a href="?page={{ exhibitionEvents.previous_page_number }}" class="page-link">&laquo;
-                                    </a>
-                                  <li>
-                                {% else %}
-                                  <li class="page-item disabled">
-                                    <a class="page-link" href="?page=1">&laquo;</a>
-                                  </li>
-                               {% endif %}
 
-                            {% for i in exhibitionEvents.paginator.page_range %}
-                                  {% if exhibitionEvents.number == i %}
-                                    <li class="page-item active">
-                                      <a class="page-link">{{ i }}</a>
-                                    </li>
-                                  {% else %}
-                                  <li class="page-item">
-                                    <a href="?page={{ i }}" class="page-link">{{ i }}</a>
-                                  </li>
-                                  {% endif %}
-                            {% endfor %}
-                            {% if exhibitionEvents.has_next %}
-                            <li class="page-item">
-                              <a href="?page={{ exhibitionEvents.next_page_number }}" class="page-link">&raquo;
-                              </a>
-                            <li>
-                            {% else %}
-                            <li class="page-item disabled">
-                              <a class="page-link" href="?page={{ exhibitionEvents.paginator.num_pages }}">&raquo;</a>
-                            </li>
-                            {% endif %}
-
-                        </ul>
-                      {% endif %}
-
+            {% comment %} <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">確認購買</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            票券名稱
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-primary confirm rounded-pill"
+                                data-dismiss="modal">確認</button>
+                            <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal">取消</button>
+                        </div>
                     </div>
-                  </div>
+                </div>
+            </div> {% endcomment %}
 
-        <!-- end ticket container -->
 
+        </div>
+        <h4 class="col-12 text-center mt-5" style="text-align: center;">Pagination</h4>
+        <div class="row">
+          <div class="col-md-12 m-2">
+
+            {% if exhibitionEvents.has_other_pages %}
+            <ul class="pagination">
+              {% if exhibitionEvents.has_previous %}
+              <li class="page-item">
+                <a href="?page={{ exhibitionEvents.previous_page_number }}" class="page-link">&laquo;
+                </a>
+              <li>
+                {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="?page=1">&laquo;</a>
+              </li>
+              {% endif %}
+
+              {% for i in exhibitionEvents.paginator.page_range %}
+              {% if exhibitionEvents.number == i %}
+              <li class="page-item active">
+                <a class="page-link">{{ i }}</a>
+              </li>
+              {% else %}
+              <li class="page-item">
+                <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+              </li>
+              {% endif %}
+              {% endfor %}
+              {% if exhibitionEvents.has_next %}
+              <li class="page-item">
+                <a href="?page={{ exhibitionEvents.next_page_number }}" class="page-link">&raquo;
+                </a>
+              <li>
+                {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="?page={{ exhibitionEvents.paginator.num_pages }}">&raquo;</a>
+              </li>
+              {% endif %}
+
+            </ul>
+            {% endif %}
+
+          </div>
+        </div>
+
+
+    </div>
     <!-- end of fixed container -->
+    <!-- end ticket container -->
+
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script> {% endcomment %}
     {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
         crossorigin="anonymous"></script> {% endcomment %}
+    {% comment %} <script src="{% static 'js/exhibition.js'%}"></script> {% endcomment %}
+</body>
+
+</html>
+
 {%endblock%}

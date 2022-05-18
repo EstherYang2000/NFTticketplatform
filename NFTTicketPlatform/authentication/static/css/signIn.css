@@ -1,230 +1,152 @@
-/* ------------------------- CSS for navbar ------------------------- */
-
-#brand {
-    font-size: 30px;
-    font-weight: bold;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: black;
+* {
+    font-family: 'Barlow', sans-serif;
 }
 
-#brand:hover {
+.container-fluid {
+    background-image: url(../imgs/bg-img.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+
+/* ------------------------- CSS for navbar ------------------------- */
+
+.navbar #brand-name {
+    font-size: 30px;
+    font-weight: 900;
     color: white;
+    opacity: 0.7;
     transition: 0.5s;
 }
 
-#brand:not(:hover) {
+.navbar #brand-name:hover {
+    color: white;
+    opacity: 1;
     transition: 0.5s;
 }
 
 .navbar-custom {
-    background: linear-gradient(90deg, #a8c0ff 0%, #3f2b96 100%);
+    /* background: linear-gradient(90deg, #524398 0%, #a8c0ff 100%); */
+    background-color: #301451;
 }
 
 .navbar .nav-link {
-    font-size: 18px;
-    color: black;
-    transition: all 0.5s;
+    font-size: 16px;
+    color: white;
     font-weight: 600;
+    opacity: 0.7;
+    transition: 0.5s;
 }
 
 .navbar .nav-link:hover {
-    transition: all 0.5s;
+    transition: 0.5s;
+    opacity: 1;
     color: white;
-    font-weight: 600;
+}
+
+.navbar .nav-item .dropdown-menu {
+    background-color: #301451;
 }
 
 .navbar .nav-item .dropdown-menu>a {
+    color: white;
     margin-bottom: 5px;
     font-size: 18px;
     font-weight: 600;
-    border-radius: 6px;
+    opacity: 0.7;
     transition: all 0.3s;
 }
 
 .navbar .nav-item .dropdown-menu>a:hover {
-    background-color: #7171c7;
+    background-color: #301451;
     color: white;
-    border-radius: 6px;
-    transition: all 0.5s;
+    opacity: 1;
+    transition: all 0.3s;
 }
 
-/* ------------------------- end css for navbar ------------------------- */
-
-
-#round-corner {
-    margin-top: 2%;
-    margin-bottom: 5%;
-    padding: 20px;
-    border: 3px solid grey;
-    border-radius: 20px;
-    box-shadow: 10px 5px 5px grey;
+.navbar .navbar-toggler {
+    background-color: black;
 }
 
-.form-switcher {
-    font-weight: bolder;
+
+/* ------------------------- form ------------------------- */
+
+#form-div h1 {
+    text-align: center;
 }
 
-.form-switcher:hover {
-    color: black;
-    transition: 0.5s;
+#form-div #home {
+    /* outline: 1px solid white; */
+    width: 50%;
+    margin: 0 auto;
+    background-image: linear-gradient(to bottom, #3e1979, #391869, #331659, #2d154a, #26133b);
+    opacity: 0.9;
+    border-radius: 30px;
+    /* box-shadow: 20px 20px 0px #F1EF71; */
+    /* box-shadow: 20px 20px 10px #331659, -20px -20px 10px #e35fe4; */
 }
 
-.form-switcher:not(:hover) {
-    transition: 0.5s;
-}
-
-#signIn-img-div {
-    margin-top: 3%;
-    margin-bottom: 3%;
-}
-
-#signIn-img {
-    width: 100%;
-    height: 100%;
-}
-
-/* .form {
-    margin-top: 5%;
-    padding-left: 5%;
-    margin-bottom: 3%;
-}
-
-#form-div {
-    padding: 20px;
-}
-
-.form-control {
-    width: 70%;
-}
-
-h2 {
-    margin-bottom: 20px;
-    color: #007dfd;
-    font-weight: bolder;
-}
-
-.label-text {
+#form-div #home .form .form-group label {
+    color: #2ccfd6;
     cursor: auto;
-    color: #007dfd;
     font-size: 22px;
-    font-weight: bolder;
+    font-weight: 600;
 }
 
-.form-group {
-    width: 80%;
-}
-*/
-.small {
-    margin-left: 5%;
-}
-
-.small label {
-    font-size: 18px;
-    font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
-    cursor: auto;
-}
-
-.small label a {
-    font-size: 18px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-/*
-form .btn {
-    background-color: #007dfd;
-    border-color: #007dfd;
-    font-size: 18px;
-    font-weight: bolder;
-}
-
-form .btn:hover {
-    transition: 0.5s;
-    color: #007dfd;
-    background-color: white;
-    border-color: #007dfd;
-}
-
-form .btn:not(:hover) {
-    transition: 0.5s;
-}
- */
-
-.form{
-    margin-top: 40px;
-}
-
-.form_container {
-    margin-top: 20px;
-    background: #74cfbf !important;
-}
-
-#form-title{
-    color: #fff;
-
-}
-.login_btn-text {
-
-    color: white ;
-}
-
-.login_btn {
+#form-div #home .form .form-group input {
+    color: #f582f5;
+    background-color: #391869;
     width: 100%;
-    background: #74cfbf ;
+    margin: 0 auto;
+    border: none;
+    box-shadow: none;
+}
+
+#form-div #home .form .form-group input:focus {
+    transition: 0.3s;
+    outline: 1px solid #e35fe4;
+}
+
+#submit-btn {
+    color: #e35fe4;
+    font-size: 18px;
+    background-color: #391869;
+    font-weight: 600;
+    border: none;
+    transition: 0.4s;
+    width: 40%;
+}
+
+#submit-btn:hover {
+    color: #2ccfd6;
+}
+
+#form-div .small {
+    display: block;
+    font-size: 14px;
+}
+
+#form-div .small .under-form {
+    /* outline: 1px solid hotpink; */
     color: white;
-    background-color: #ff735c;
-    display: flex;
-}
-.login_btn:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
-    color: white
-}
-.login_container {
-    padding: 0 2rem;
-}
-.input-group-append{
-    background: #ff735c
-}
-.input-group-text {
-    background: #74cfbf ;
-    color: white !important;
-    border: 0 !important;
-    border-radius: 0.25rem 0 0 0.25rem !important;
-}
-.input_user,
-.input_pass:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
-
+    height: 50px;
 }
 
-#messages{
-    background-color: #ff735c;
-    color: #fff;
-    padding: 10px;
-    margin-top: 10px;
-}
-.input-group-btn{
-    justify-content: center;
+#form-div .small .under-form>* {
+    float: right;
 }
 
-
-
-
-form .btn {
-    width: 100%;
-    background-color: #007dfd;
-    border-color: #007dfd;
-    font-size: 18px;
-    font-weight: bolder;
+#form-div .small label,
+#form-div .small label>a {
+    transition: 0.3s;
+    color: #2ccfd6;
+    opacity: 0.7;
 }
 
-form .btn:hover {
-    transition: 0.5s;
-    color: #007dfd;
-    background-color: white;
-    border-color: #007dfd;
-}
-
-form .btn:not(:hover) {
-    transition: 0.5s;
+#form-div .small label,
+#form-div .small label>a:hover {
+    text-decoration: none;
+    opacity: 1;
 }

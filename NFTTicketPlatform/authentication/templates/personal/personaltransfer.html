@@ -1,253 +1,253 @@
 {% extends 'personal/personal.html'%}
 
-{% load static %}
 {%block personal%}
 {% load static %}
 
-    <!-- <script> //這裡可以用那個部落格的方法做新增 </script> -->
 
 
-<body>
-    <!-- start full screen container -->
-    <div class="container-fluid p-0">
+<head>
 
-        <!-- sidebar + content -->
-        <div class="wrapper p-0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap">
+    <!-- font awesome link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
-            <!-- contnet -->
-            <div class="content-container container p-0" id="content">
-
-                <div class="row" id="content-row">
-
-                    <!-- tab content -->
-                    <div class="tab-content">
+    <!-- jquery CDN(content delivery network) must before my own css as I'm depend on it -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
-                        <!-- transaction content -->
-                        <div class="container tab-pane show active col-12 p-0 " role="tabpanel" id="pane-transfer"
-                            aria-labelledby="tab-transfer">
 
-                            <!-- <div class="navigator" id="content-navigator">
-                                <div id="href-div">
-                                    <a href="#form-div" style="color:navy">Apply</a>
-                                    <a href="#" style="color:navy">Status</a>
-                                    <a href="#" style="color:navy">Third a</a>
-                                </div>
-                            </div> -->
+    <title>NFT Platform</title>
 
-                            <div class="row mb-5 p-0" id="transfer-intro" style="margin-left:0px;">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-5">
-                                    <div>
-                                        <h1 class="content-title mt-4" id="transfer-title">
-                                            <span id="title-cn">轉讓申請</span>
-                                            <br>
-                                            <span id="title-en">Transaction Application</span>
-                                        </h1>
-                                    </div>
-                                </div>
-                                <div class="col-10 col-sm-10 col-md-7 col-lg-7 p-0" id="user-transfer-img-div">
-                                    <img id="transfer-img" src="{%static 'imgs/transfer850.jpg'%}">
-                                </div>
+</head>
+
+
+
+
+
+
+<!-- contnet -->
+<div class="content-container container mb-5 p-3" id="content">
+
+    <!--.mx-auto class for horizontally centering fixed-width block level content -->
+    <div class="row mx-auto mt-4 p-0" id="content-row">
+
+        <!-- tab content -->
+        <div class="tab-content p-0">
+
+
+
+            <!-- transfer content -->
+            <div class="container tab-pane col-12 mb-5 p-0 " id="pane-transfer">
+
+                <div class="row p-0" id="transfer-intro">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-5" style="margin: 0 auto;">
+                        <div>
+                            <h1 class="content-title mt-4" id="transfer-title">
+                                <span id="title-cn">Transfer Application</span>
+                                <!-- <br> -->
+                                <!-- <span id="title-en">Transaction Application</span> -->
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="col-10 col-sm-10 col-md-7 col-lg-7 col-xl-7 p-0" id="transfer-img-div">
+                        <img id="transfer-img" src="{%static '/imgs/transfer-nobg.png'%}">
+                    </div>
+                </div>
+
+                <div class="row mb-5 p-0" style="width:100%;margin: 0 auto;">
+
+                    <div class="col-12 p-5" id="form-div">
+
+                        <label class="mb-4 p-0" id="form-title" style="display:block;align-items:center;">
+                            <span id="span-cn">Transfer Application</span>
+                        </label>
+
+                        <form class="steps" id="step-1" style="border: 2px solid darkgrey;">
+                            {% csrf_token %}
+                            <div>
+                                <label class="labels mb-4">Step 1 -<br>Sender Informations</label>
+                                <br>
+                                <label class="tab-labels" for="sender-username">*Enter User Name</label>
+                                <p>
+                                    <input class="rounded-pill" type="text" id="sender-username" name="sender-username" value="{{customerProfile.customeruser.username}}" placeholder="Enter Sender User Name" required>
+                                </p>
+
+                                <label class="tab-labels" for="sender-wid">*Enter Virtual Wallet Id</label>
+                                <p><input class="rounded-pill" type="text" id="sender-wid" name ="sender-wid"placeholder="Enter Wallet Id" value="{{customerProfile.personal_walletId}}" required>
+                                </p>
+
+                                <label class="tab-labels" for="sender-item">*Choose Item for
+                                    Transfermation</label>
+
+                                <!-- 用p包起來讓他成為一個row, 就不用在那邊display block -->
+                                <p>
+                                    <select id="sender-item" name="sender-item">
+                                        {%for myAsset in myAssets%}
+                                            <option value="{{myAsset.id}}">TokenID:{{myAsset.tokenID}}->{{myAsset.events.eventname}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </p>
+
+                                <label class="tab-labels" for="sender-notes">Notes (optional)</label>
+                                <p><input class="rounded-pill" name="sender-notes" type="text" id="sender-notes" placeholder="notes? (optional)"></p>
                             </div>
 
-                            <div class="row mb-5 p-0" style="width:100%;margin: 0 auto;">
+                            <p>
+                                <button type="button" class="btn btn-outline-success" id="veriBtn1">Verify</button>
+                                <button type="button" class="btn btn-outline-info" id="s1-nextBtn" style="float:right;">Next</button>
+                            </p>
 
-                                <div class="col-12 p-5" id="form-div" style="background-image: url({%static 'imgs/list.jpg' %})" >
+                        </form>
 
-                                    <label class="mb-4 p-0" id="form-title" style="display:block;align-items:center;">
-                                        <span id="span-cn">轉讓申請 </span>
-                                        <span id="span-en"> Application Procedures</span>
-                                    </label>
+                        <form class="steps" id="step-2" style="border: 2px solid darkgrey;">
+                            {% csrf_token %}
+                            <div>
+                                <label class="labels mb-4">Step 2:<br>Recipiant Informations</label>
+                                <br>
 
-                                    <form class="steps" id="step-1" style="border: 2px solid darkgrey;">
-                                        {% csrf_token %}
-                                        <div>
-                                            <label class="labels mb-4">Step 1 -<br>Sender Informations</label>
-                                            <br>
-                                            <label class="tab-labels" for="sender-username">*輸入使用者名稱 Enter User
-                                                Name</label>
-                                            <p>
-                                                <input type="text" id="sender-username" name="sender-username" value="{{customerProfile.customeruser.username}}"placeholder="Enter Sender User Name" required>
+                                <label class="tab-labels" for="recei-wid">*Enter Recipiant Wallet
+                                    Id</label>
+                                <p><input class="rounded-pill" type="text" name ="recei-wid" id="recei-wid" placeholder="Enter Wallet Id" required>
+                                </p>
+
+                                <label class="tab-labels" for="recei-notes">Notes (optional)</label>
+                                <p><input class="rounded-pill" type="text" id="recei-notes" name ="recei-notes" placeholder="notes? (optional)"></p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline-success" id="veriBtn2">Verify</button>
+                            </div>
+
+                            <div id="btn-div">
+                                <div style="float:right;">
+                                    <button type="button" class="btn btn-outline-info" id="s2-prevBtn">Previous</button>
+                                    <button type="button" class="btn btn-outline-info" id="s2-nextBtn">Next</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="steps" id="step-3" style="border: 2px solid darkgrey;">
+                            {% csrf_token %}
+                            <div>
+                                <label class="labels mb-4">Step 3:<br>Validations</label>
+                                <p><input class="rounded-pill" id="veriCode-input" placeholder="Enter verification code" required>
+                                </p>
+                                <p><label id="veri-label">Verification Code: </label><span id="veri-code">0000</span></p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline-success" id="veriBtn3">Verify</button>
+                            </div>
+
+                            <div id="btn-div">
+                                <div style="float:right;">
+                                    <button type="button" class="btn btn-outline-info" id="s3-prevBtn">Previous</button>
+                                    <button type="button" class="btn btn-outline-info" id="s3-nextBtn">Next</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="steps" id="step-4" method="POST"style="border: 2px solid darkgrey;" action="personaltransfer">
+                            {% csrf_token %}
+                            <div>
+                                <p><label class="labels mb-0">Step 4:<br>Confirmation</label></p>
+
+                                <div class="row mt-0">
+
+                                    <div class="col-6 p-0">
+                                        <div style="border-bottom: 3px solid red;">
+                                            <label style="font-size:18px;" for="">Sender
+                                                Informations:</label>
+                                        </div>
+                                        <div class="mt-2 ml-3" style="font-size: 16px;color:black;">
+                                            <p>Username:
+                                                <input type="text" id="s4-sender-username" name="s4-sender-username" required >
+                                                {% comment %} <span id="s4-sender-username">AAA</span> {% endcomment %}
                                             </p>
+                                            <p>Wallet Id: <br>
+                                                <input type="text" id="s4-sender-wid" name="s4-sender-wid" required>
 
-                                            <label class="tab-labels" for="sender-wid">*輸入虛擬錢包ID Enter Virtual Wallet
-                                                Id</label>
-                                            <p><input type="text" id="sender-wid" name ="sender-wid"placeholder="Enter Wallet Id" value="{{customerProfile.personal_walletId}}" required></p>
-
-                                            <label class="tab-labels" for="sender-item">*選擇轉讓物品 Choose Item for
-                                                Transfermation</label>
-
-                                            <!-- 用p包起來讓他成為一個row, 就不用在那邊display block -->
-                                            <p>
-                                                <select id="sender-item" name="sender-item">
-                                                    {%for myAsset in myAssets%}
-                                                        <option value="{{myAsset.id}}">{{myAsset.events.eventname}}</option>
-                                                    {%endfor%}
-                                                </select>
+                                                {% comment %} <span id="s4-sender-wid">BBB</span> {% endcomment %}
                                             </p>
+                                            <p>Selected Item:
+                                                <input type="text" id="s4-sender-itemNum" name="s4-sender-itemNum" required>
 
-                                            <label class="tab-labels" for="sender-notes">備註 Notes (optional)</label>
-                                            <p><input type="text" id="sender-notes" name="sender-notes" placeholder="notes? (optional)"></p>
+                                                {% comment %} <span id="s4-sender-itemNum">CCC</span> {% endcomment %}
+                                            </p>
+                                            <p>Notes:
+                                                <input type="text" id="s4-sender-notes" name="s4-sender-notes" required>
+                                                {% comment %} <span id="s4-sender-notes">DDD</span> {% endcomment %}
+                                            </p>
                                         </div>
 
-                                        <p>
-                                            <button type="button" class="btn btn-outline-success" id="veriBtn1">Verify</button>
-                                            <button type="button" class="btn btn-outline-info" id="s1-nextBtn" style="float:right;">Next</button>
-                                        </p>
-
-                                    </form>
-
-                                    <form class="steps" id="step-2" style="border: 2px solid darkgrey;">
-                                        {% csrf_token %}
-                                        <div>
-                                            <label class="labels mb-4">Step 2:<br>Recipiant Informations</label>
-                                            <br>
-
-                                            <label class="tab-labels" for="recei-wid">*輸入接收者錢包ID Enter Recipiant Wallet Id</label>
-                                            <p><input type="text" id="recei-wid" name ="recei-wid"placeholder="Enter Wallet Id" required></p>
-
-                                            <label class="tab-labels" for="recei-notes">備註 Notes (optional)</label>
-                                            <p><input type="text" id="recei-notes" name ="recei-notes" placeholder="notes? (optional)"></p>
-                                        </div>
-                                        <div>
-                                            <button type="button" class="btn btn-outline-success" id="veriBtn2">Verify</button>
-                                        </div>
-
-                                        <div id="btn-div">
-                                        <div style="float:right;">
-                                            <button type="button" class="btn btn-outline-info" id="s2-prevBtn">Previous</button>
-                                            <button type="button" class="btn btn-outline-info" id="s2-nextBtn">Next</button>
-                                        </div>
-                                    </div>
-                                    </form>
-
-                                    <form class="steps" id="step-3" style="border: 2px solid darkgrey;">
-                                        {% csrf_token %}
-                                        <div>
-                                            <label class="labels mb-4">Step 3:<br>Validations</label>
-                                            <p><input id="veriCode-input" placeholder="Enter verification code" required></p>
-                                            <p><label id="veri-label">Verification Code: </label><span id="veri-code">0000</span></p>
-                                        </div>
-                                        <div>
-                                            <button type="button" class="btn btn-outline-success" id="veriBtn3">Verify</button>
-                                        </div>
-
-                                        <div id="btn-div">
-                                        <div style="float:right;">
-                                            <button type="button" class="btn btn-outline-info" id="s3-prevBtn">Previous</button>
-                                            <button type="button" class="btn btn-outline-info" id="s3-nextBtn">Next</button>
-                                        </div>
-                                    </div>
-                                    </form>
-
-                                    <form class="steps" name="step-4" id="step-4" method="POST" style="border: 2px solid darkgrey;" action="personaltransfer">
-                                        {% csrf_token %}
-                                        <div>
-                                            <p><label class="labels mb-0">Step 4:<br>Confirmation</label></p>
-
-                                            <div class="row mt-0">
-
-                                                <div class="col-6 p-0">
-                                                    <div style="border-bottom: 3px solid red;">
-                                                        <label style="font-size:18px;" for="">Sender Informations:</label>
-                                                    </div>
-                                                    <div class="mt-2 ml-3" style="font-size: 16px;color:black;">
-                                                        <p>Username:
-                                                            <input type="text" id="s4-sender-username" name="s4-sender-username" required >
-                                                            {% comment %} <span id="s4-sender-username" name="s4-sender-username">AAA</span> {% endcomment %}
-                                                        </p>
-                                                        <p>Wallet Id: <br>
-                                                            <input type="text" id="s4-sender-wid" name="s4-sender-wid" required>
-                                                            {% comment %} <span id="s4-sender-wid"name="s4-sender-wid">BBB</span> {% endcomment %}
-                                                        </p>
-                                                        <p>Selected Item:
-                                                            <input type="text" id="s4-sender-itemNum" name="s4-sender-itemNum" required>
-                                                            {% comment %} <span id="s4-sender-itemNum"name="s4-sender-itemNum">CCC</span> {% endcomment %}
-                                                         </p>
-                                                        <p>Notes:
-                                                            <input type="text" id="s4-sender-notes" name="s4-sender-notes" required>
-                                                            {% comment %} <span id="s4-sender-notes" name="s4-sender-notes">DDD</span> {% endcomment %}
-                                                         </p>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-6 p-0">
-                                                    <div style="border-bottom: 3px solid black;">
-                                                        <label style="font-size:18px;" for="">Recipiant Informations:</label>
-                                                    </div>
-                                                    <div class="mt-2 ml-3" style="font-size: 16px;color:black;">
-                                                        <p>Wallet Id: <br>
-                                                            <input type="text" id="s4-recei-wid" name="s4-recei-wid" required>
-                                                            {% comment %} <span id="s4-recei-wid" name="s4-recei-wid">BBB</span> {% endcomment %}
-                                                        </p>
-                                                        <p>Notes:
-                                                            <input type="text" id="s4-recei-notes" name="s4-recei-notes" required>
-                                                            {% comment %} <span id="s4-recei-notes" name="s4-recei-notes">DDD</span> {% endcomment %}
-                                                         </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-
-                                        </div>
-
-                                        <div id="btn-div">
-                                        <div style="float:right;">
-                                            <button type="button" class="btn btn-outline-info" id="s4-prevBtn">Previous</button>
-                                            <button type="submit" class="btn btn-outline-info" id="s4-appBtn">Apply</button>
-                                        </div>
-                                    </div>
-                                    </form>
-
-
-
-
-                                    <!-- Circles which indicates the steps of the form: -->
-                                    <div style="text-align:center;margin-top:40px;">
-                                        <span class="step"></span>
-                                        <span class="step"></span>
-                                        <span class="step"></span>
-                                        <span class="step"></span>
                                     </div>
 
+                                    <div class="col-6 p-0">
+                                        <div style="border-bottom: 3px solid black;">
+                                            <label style="font-size:18px;" for="">Recipiant
+                                                Informations:</label>
+                                        </div>
+                                        <div class="mt-2 ml-3" style="font-size: 16px;color:black;">
+                                            <p>Wallet Id: <br>
+                                                <input type="text" id="s4-recei-wid" name="s4-recei-wid" required>
+
+                                                {% comment %} <span id="s4-recei-wid">BBB</span> {% endcomment %}
+                                            </p>
+                                            <p>Notes:
+                                                <input type="text" id="s4-recei-notes" name="s4-recei-notes" required>
+                                                {% comment %} <span id="s4-recei-notes">DDD</span> {% endcomment %}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- status row -->
-                            <div class="row p-0" style="width:100%;margin: 0 auto;">
+                            <div>
 
-                                <div class="col-12">
-
-                                </div>
                             </div>
 
+                            <div id="btn-div">
+                                <div style="float:right;">
+                                    <button type="button" class="btn btn-outline-info" id="s4-prevBtn">Previous</button>
+                                    <button type="submit" class="btn btn-outline-info" id="s4-appBtn">Apply</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <!-- Circles which indicates the steps of the form: -->
+                        <div style="text-align:center;margin-top:40px;">
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
+                            <span class="step"></span>
                         </div>
 
-
-
                     </div>
-                    <!-- end tab content -->
 
                 </div>
 
             </div>
-            <!-- end contnet -->
+
+
 
 
         </div>
-        <!-- end sidebar + content -->
-
-
+        <!-- end tab content -->
 
     </div>
-    <!-- end container -->
 
+</div>
 
-    <script>
-        // replacing verification code
+<script>
+    // replacing verification code
     $(document).ready(function () {
 
 
@@ -411,7 +411,14 @@
         });
     });
 
-    </script>
-</body>
+</script>
+
+
+
+
+
+
+
+
 
 {% endblock %}

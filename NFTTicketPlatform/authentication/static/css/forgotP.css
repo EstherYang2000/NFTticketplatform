@@ -1,262 +1,230 @@
-/* ------------------------- CSS for navbar ------------------------- */
-
-#brand {
-    font-size: 30px;
-    font-weight: bold;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: black;
+* {
+    font-family: 'Barlow', sans-serif;
 }
 
-#brand:hover {
+.container-fluid {
+    background-image: url(../imgs/bg-img.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+
+/* ------------------------- CSS for navbar ------------------------- */
+
+.navbar #brand-name {
+    font-size: 30px;
+    font-weight: 900;
     color: white;
+    opacity: 0.7;
     transition: 0.5s;
 }
 
-#brand:not(:hover){
+.navbar #brand-name:hover {
+    color: white;
+    opacity: 1;
     transition: 0.5s;
 }
 
 .navbar-custom {
-    background: linear-gradient(90deg, #a8c0ff 0%, #3f2b96 100%);
+    /* background: linear-gradient(90deg, #524398 0%, #a8c0ff 100%); */
+    background-color: #301451;
 }
 
 .navbar .nav-link {
-    font-size: 18px;
-    color: black;
-    transition: all 0.5s;
+    font-size: 16px;
+    color: white;
     font-weight: 600;
+    opacity: 0.7;
+    transition: 0.5s;
 }
 
 .navbar .nav-link:hover {
-    transition: all 0.5s;
+    transition: 0.5s;
+    opacity: 1;
     color: white;
-    font-weight: 600;
+}
+
+.navbar .nav-item .dropdown-menu {
+    background-color: #301451;
 }
 
 .navbar .nav-item .dropdown-menu>a {
+    color: white;
     margin-bottom: 5px;
     font-size: 18px;
     font-weight: 600;
-    border-radius: 6px;
+    opacity: 0.7;
     transition: all 0.3s;
 }
 
 .navbar .nav-item .dropdown-menu>a:hover {
-    background-color: #7171c7;
+    background-color: #301451;
     color: white;
-    border-radius: 6px;
-    transition: all 0.5s;
+    opacity: 1;
+    transition: all 0.3s;
 }
 
-/* ------------------------- end css for navbar ------------------------- */
-
-
-#round-corner {
-    margin-top: 2%;
-    margin-bottom: 5%;
-    padding: 20px;
-    border: 3px solid grey;
-    border-radius: 20px;
-    box-shadow: 10px 5px 5px grey;
+.navbar .navbar-toggler {
+    background-color: black;
 }
 
-.container .h1 {
-    margin-bottom: 5%;
+.container-fluid {
+    height: 100vh;
 }
 
-.container .h1>h1 {
-    color: #ff4f5a;
-    font-weight: 600;
-}
-
-.form-switcher{
-    font-size: 18px;
-    font-weight: 600;
-    color: #ff4f5a;
-}
-
-.form-switcher:hover{
-    color: black;
-    transition: 0.5s;
-}
-
-.form-switcher:not(:hover){
-    transition: 0.5s;
-}
-
-#forgotP-img-div {
-    margin-top: 3%;
-    margin-bottom: 3%;
-}
-
-#forgotP-img {
+.container-fluid .container .row {
     width: 100%;
+    height: 90%;
+    padding: 30px;
+    margin-bottom: 500px;
+    /* outline: 2px solid white; */
+}
+
+.container-fluid .container .row #form-div {
+    width: 100px;
     height: 100%;
+    border-width: 4px;
+    border-style: solid;
+    border-image: linear-gradient(to right, rgb(42, 184, 210), darkorchid) 1;
+    background-image: linear-gradient(to bottom, #3e1979, #391869, #331659, #2d154a, #26133b);
+    opacity: 0.9;
+    /* border-radius: 30px; */
+    /* won't work for border-image */
 }
 
-.form {
-    margin-top: 5%;
-    padding-left: 5%;
-    margin-bottom: 3%;
+.container-fluid .container .row #form-div h1 {
+    text-align: center;
+    color: white;
 }
 
-#form-div {
-    padding: 20px;
-}
 
-.form-control{
-    width: 70%;
-}
+/* ------------------------- reset ------------------------- */
 
-h2 {
-    margin-bottom: 20px;
-    color: #ff4f5a;
-    font-weight: bolder;
-}
-
-.label-text {
-    cursor: auto;
-    color: #ff4f5a;
+.container .row #form-div #reset-div #reset-pw .remind-text {
+    color: white;
     font-size: 22px;
-    font-weight: bolder;
+    text-align: center;
+    padding: 0 10px;
 }
 
-.form-group {
+.container .row #form-div #reset-div #reset-pw #form {
+    /* outline: 2px solid white; */
+    padding: 10px 15px;
+}
+
+.container .row #form-div #reset-div #reset-pw .form-signin input {
+    color: white;
+    background-color: #39165c;
+    box-shadow: none;
+    padding: 0 20px;
+}
+
+.container .row #form-div #reset-div #reset-pw .form-signin button {
+    /* outline: 1px solid white; */
+    color: rgba(255, 255, 255, 0.741);
+    font-size: 22px;
+    font-weight: 600;
+    background-color: #451b63;
+    /* color: linear-gradient(90deg, #d63dd5 0%, #2bd5d5 100%);
+    background: -webkit-linear-gradient(90deg, #d63dd5 0%, #2bd5d5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}
+
+.container .row #form-div #reset-div #reset-pw #form .form-signin button:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #301451;
+}
+
+
+/* ------------------------- complete ------------------------- */
+
+.container-fluid .container #form-div .reset {
+    width: 70%;
+    height: 50%;
+    margin: 0 auto;
+}
+
+.container-fluid .container #form-div .reset .resetpw-done {
+    color: white;
+    text-align: center;
+}
+
+.container-fluid .container #form-div .reset .small {
+    font-size: 25px;
+    text-align: center;
+    color: white;
+}
+
+.container-fluid .container #form-div .reset .small label {
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 10px 15px;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.container-fluid .container #form-div .reset .small label a {
+    font-weight: 600;
+    color: linear-gradient(90deg, #d63dd5 0%, #2bd5d5 100%);
+    background: -webkit-linear-gradient(90deg, #d63dd5 0%, #2bd5d5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.container-fluid .container #form-div .reset .small label:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* ------------------------- reset done ------------------------- */
+
+.container-fluid .container #form-div .reset {
+    width: 90%;
+    /* outline: 1px solid white; */
+}
+
+.container-fluid .container #form-div .reset p {
+    text-indent: 8%;
+    color: white;
+    font-size: 20px;
+}
+
+
+/* ------------------------- reset confirm ------------------------- */
+
+.container-fluid .container #form-div #change-pw {
+    /* outline: 1px solid white; */
     width: 80%;
+    margin: 0 auto;
 }
 
-.tab-pane form .btn {
-    margin-top: 5%;
+.container-fluid .container #form-div #change-pw form {
+    /* outline: 2px solid cyan; */
+    width: 80%;
+    margin: 0 auto;
 }
 
-form .btn{
-    background-color: #ff4f5a;
-    border-color: #ff4f5a;
-    font-size: 18px;
-    font-weight: bolder;
+.container-fluid .container #form-div #change-pw form input {
+    height: 40px;
+    color: white;
+    font-size: 20px;
+    background-color: #39165c;
+    box-shadow: none;
+    padding: 0 20px;
 }
 
-form .btn:hover{
-    transition: 0.5s;
-    color: #ff4f5a;
-    background-color: white;
-    border-color: #ff4f5a;
+.container-fluid .container #form-div #change-pw form button {
+    color: rgba(255, 255, 255, 0.741);
+    font-size: 22px;
+    font-weight: 600;
+    background-color: #451b63;
+    border: none;
 }
 
-form .btn:not(:hover){
-    transition: 0.5s;
+.container-fluid .container #form-div #change-pw form button:hover {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #301451;
 }
-
-
-
-.remindtext{
-    justify-content: center;
-    width: 70%;
-    background-color: #7171c7;
-    display:flex;
-}
-
-/*---------------password_reset_complete.html---------------*/
-.reset{
-    margin:20px;
-    width: 70%;
-    border: dotted;
-    border: radius 3px;
-    border-color: #ff4f5a;
-}
-
-.small {
-    margin-left: 5%;
-}
-
-.small label {
-    font-size: 18px;
-    font-family: 'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
-    cursor: auto;
-}
-
-.small label a {
-    font-size: 18px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*----------------password_reset_form.html-------------------*/
-
-
-
-.form-signin .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-  }
-  .form-signin .form-control:focus {
-    z-index: 2;
-  }
-  .form-signin input[type="email"] {
-    margin-bottom: 10px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .h3{
-    text-align: center;
-  }
-
-
-
-  /*----------------password change----------------------*/
-
-  .form-signin {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-  }
-  .form-signin .checkbox {
-    font-weight: 400;
-  }
-  .form-signin .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-  }
-  .form-signin .form-control:focus {
-    z-index: 2;
-  }
-  .form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .h3{
-    text-align: center;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

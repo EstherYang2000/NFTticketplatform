@@ -13,17 +13,17 @@
 //     closeBtn.style.display = 'block';
 // };
 
-$('#open-btn').click(function () {
-    $('#sidebar').css('margin-left', '0px');
-    $('#open-btn').css('display', 'none');
-    $('#close-btn').css('display', 'block');
-});
+// $('#open-btn').click(function () {
+//     $('#sidebar').css('margin-left', '0px');
+//     $('#open-btn').css('display', 'none');
+//     $('#close-btn').css('display', 'block');
+// });
 
-$('#close-btn').click(function () {
-    $('#sidebar').css('margin-left', '-200px');
-    $('#close-btn').css('display', 'none');
-    $('#open-btn').css('display', 'block');
-});
+// $('#close-btn').click(function () {
+//     $('#sidebar').css('margin-left', '-200px');
+//     $('#close-btn').css('display', 'none');
+//     $('#open-btn').css('display', 'block');
+// });
 
 // closeBtn.onclick = () => {
 //     sidebar.style.marginLeft = "-200px";

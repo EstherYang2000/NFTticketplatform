@@ -2,676 +2,509 @@
 
 {% load static %}
 {%block personal%}
-<html lang="en">
-
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="shortcut icon" href="{% static 'imgs/ape.jpeg' %}">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <!-- Google font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap">
-    <!-- font awesome link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    <!-- step wizard -->
-    <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet"
-        type="text/css" />
-    <!-- jquery CDN(content delivery network) must before my own css as I'm depend on it -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- my css -->
-    <link rel="stylesheet" href="{% static 'css/personal.css' %}">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+ <!-- Google font -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed&display=swap">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap">
+ <!-- font awesome link  -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
+ <!-- jquery CDN(content delivery network) must before my own css as I'm depend on it -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- my css -->
+{% comment %} <link rel="stylesheet" href="{% static 'css/personal.css' %}"> {% endcomment %}
+
+    <style>
+        .upload input {
+            display: right !important;
+            width: 157px !important;
+            height: 57px !important;
+            opacity: 0 !important;
+            overflow: hidden !important;
+        }
+    </style>
 
     <title>NFT Platform</title>
-    <!-- <script> //這裡可以用那個部落格的方法做新增 </script> -->
 
+</head>
+
+{% comment %} <body>
     <!-- start full screen container -->
     <div class="container-fluid p-0">
+
+        <!-- navbar -->
 
 
         <!-- --------------------------------------------------------------------------------------------------------------------- -->
 
-        <!--  + content -->
-        <div class="wrapper p-0">
+        <div class="wrapper"> {% endcomment %}
+
 
 
             <!-- contnet -->
-            <div class="content-container container p-0" id="content">
+            <div class="content-container container mb-5 p-3" id="content">
 
-                <div class="row" id="content-row">
+                <!--.mx-auto class for horizontally centering fixed-width block level content -->
+                <div class="row mx-auto mt-4 p-0" id="content-row">
 
                     <!-- tab content -->
-                    <div class="tab-content">
+                    <div class="tab-content p-0" >
 
-                        <!-- info content -->
-                        <div class="container tab-pane show active col-12 p-0" role="tabpanel" id="pane-info" aria-labelledby="tab-info">
+                        <!-- info content RWD checked -->
+                        <div class="container tab-pane mb-5 col-12 p-0" id="pane-info" style="display:unset;">
 
-                            <div class="row p-0" id="user-info-intro">
+                            <div class="row mb-5 p-3" id="user-info-intro">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
                                     <div>
-                                        <h1 class="content-title" id="user-info-title">
-                                            <span style="font-size:2.5em;font-weight: 600;">個人資訊 </span><br>
-                                            <span style="font-size:1.0649em;font-weight: 600;">Personal
-                                                Informations</span>
+                                        <h1 class="content-title mt-4" id="info-title">
+                                            <span id="info-title-cn">Personal Informations</span>
                                         </h1>
                                     </div>
                                 </div>
-                                <div class="col-10 col-sm-10 col-md-10 col-lg-7 col-xl-7 p-0" id="user-info-img-div">
-                                    <img id="user-info-img" src="{% static 'imgs/user-info850.jpg'%}">
+                                <div class="col-10 col-sm-10 col-md-7 col-lg-7 col-xl-7 p-0" id="user-info-img-div">
+                                    <img id="user-info-img" src="{% static 'imgs/info-nobg.png'%}">
                                 </div>
                             </div>
 
                             <!-- info card -->
-                            <div class="row">
-                                <div class="col-12 col-xl-12">
-                                    <div class="card w-100 shadow rounded mt-5 mb-5">
-                                        <div class="card-body">
-                                            <div style="padding:0;border-bottom: 2px solid darkgrey;">
-                                                <h4 class="card-title" style="font-weight:600;">My Information 我的個人資料
-                                                </h4>
-                                                <p class="card-text" style="margin-bottom:10px;">Check your informations
-                                                    here.
-                                                </p>
+                            <div class="row p-0 info-card" id="info-card">
+
+                                <div class="infos p-3" style="display: none">
+                                    <form class="form-group" method="POST" action="{% url 'personalInfowallet'%}"enctype ="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="mt-2 mb-2 p-2" id="info-card-title" style="width:100%;">
+                                            <div class="row p-0" style="margin: 0 auto;display:block">
+                                                <div class="col-12">
+                                                    <h3 style="text-align:center;font-weight:600;">Personal Informations</h3>
+                                                </div>
+                                                <div class="col-12" style="text-align:center;">
+                                                    <small style="width: fit-content;font-size:14px;">
+                                                        Only the user themselves can see this information
+                                                    </small>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="content-row" id="WalletAddress" style="border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
 
                                             <div class="row">
 
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-2 detail"
-                                                    id="email-part">
-                                                    <label class="info-compo" id="info-email">Email:
-                                                        <span>{{customerProfile.personal_email}}</span>
-                                                    </label>
+                                                <div class="col-3 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                    <div class="mt-0 p-2 left-col-title" style="cursor:auto;"> WalletAddress </div>
                                                 </div>
 
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-2 detail"
-                                                    id="username-part">
-                                                    <label class="info-compo" id="info-userName">User Name:
-                                                        <span>{{customerProfile.customeruser.username}}</span><br>
-                                                        <!-- <small>Click on text to edit</small> -->
-                                                    </label>
+                                                <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                    {{updatecustomerform.personal_walletId}}
+                                                    {% comment %} <div class="mt-0 p-2" style="cursor:auto;"> Gender </div> {% endcomment %}
                                                 </div>
-
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2 detail"
-                                                    id="walletid-part">
-                                                    <div id="dvPassport" style="display: none">
-                                                        <form class="form-group" method="POST" action="{% url 'personalInfowallet'%}"enctype ="multipart/form-data">
-                                                            {% csrf_token %}
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2 detail"
-                                                            id="walletid-part">
-                                                            <label class="info-compo" id="info-userWalletID">User WalletiD:
-                                                                {% comment %} <input type="text" class="form-control" name="peronsalwallet" id="peronsalwallet" placeholder="{{customerProfile.personal_walletId}}"required> {% endcomment %}
-                                                                {{updatecustomerform.personal_walletId}}
-                                                            </label>
-                                                            </div>
-                                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-2 detail"
-                                                            id="walletid-part">
-                                                            <label class="info-compo" id="info-userWalletID">User Avatar:
-                                                                {{updatecustomerform.avatars}}
-                                                                {% comment %} <input type="file" class="form-control" name="peronsalavatar" id="peronsalavatar" required placeholder="{{ customerProfile.avatars.name}}"> {% endcomment %}
-                                                            </label>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-secondary" id="save-wid-btn" style="font-size:small" value="Save" name = "btnPassport">Save</button>
-
-
-                                                        </form>
-                                                    </div>
-                                                    <div id="dvPassport11">
-                                                            <label class="info-compo" id="info-userWalletID">User WalletiD:
-                                                                <span>{{customerProfile.personal_walletId}}</span><br>
-                                                            </label>
-                                                            <div class="container">
-                                                                <label class="info-compo" id="info-userWalletID">User Avatar:
-
-                                                                        {%if customerProfile.avatars%}
-                                                                            <img class="rounded-circle profile-picture111" src="{{ customerProfile.avatars.url}}">
-                                                                        {%else%}
-                                                                            <img class="rounded-circle profile-picture" src="{% static 'imgs/avatar.jpg'%}">
-                                                                        {%endif%}
-
-
-                                                                </label>
-                                                            </div>
-
-                                                        <input type="button" class="btn btn-primary btn-sm" style="font-size:small" value="Revise" name = "btnPassport" />
-
-                                                    </div>
-                                                    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-                                                    <script type="text/javascript">
-                                                        $(function () {
-                                                            $("input[name=btnPassport]").click(function () {
-                                                                if ($(this).val() == "Revise") {
-                                                                    $("#dvPassport11").hide();
-                                                                    $("#dvPassport").show();
-
-                                                                } else {
-                                                                    $("#dvPassport").hide();
-                                                                    $("#dvPassport11").show();
-                                                                }
-                                                            });
-                                                        });
-
-                                                    </script>
-
-                                                </div>
-
+                                                <!--
+                                                <div class="col-2 p-3"
+                                                    style="display:flex;justify-content:flex-start;align-items: center;">
+                                                    <div class="mt-0 p-2" style="margin: 0 auto;"> > </div>
+                                                </div> -->
 
                                             </div>
 
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        <div class="content-row photo" id="photo" style="height:80px">
 
-                            <!-- notices -->
-                            <div class="row p-4" id="notices">
-                                <div class="col-11">
-                                    <p>
-                                        Users can review on their personal data such as email, password. If current data
-                                        are not
-                                        currect, please feel free to contact us by sending email to
-                                        <a href="https://gmail.com/"
-                                            style="font-weight: 500;font-size:22px;font-family: 'Barlow';">minterlake@gmail.com
-                                        </a>.
-                                    </p>
+                                            <div class="row">
+
+                                                <div class="col-3 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                    <div class="mt-4 p-2 left-col-title" style="cursor:auto;"> Avatar </div>
+                                                </div>
+
+                                                {% comment %} <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                    <div class="mt-4 p-2" style="cursor:auto;"> Add photo to make your profile with more personal characteristic </div>
+                                                </div> {% endcomment %}
+
+                                                <div class="col-2 p-3">
+                                                    <div class="profile-imgs p-2">
+                                                        <!-- a method of setting div's bg img to change profile img -->
+                                                        <div class="display-img" id="display-img">
+
+                                                                {% comment %} <input type="file" id="input-file" style="display:none;cursor:pointer;" accept="image/*"> {% endcomment %}
+
+                                                                {{updatecustomerform.avatars}}
+
+                                                                {% comment %} <label id="label-for-input" for="input-file">Edit</label> {% endcomment %}
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-lg rounded-pill" id="save-wid-btn" style="font-size:small;float: right;" value="Save" name = "btnPassport">Save</button>
+
+
+
+                                    </form>
+
                                 </div>
+
+                                <div class="infos11 p-3" style="width:100%;">
+
+                                    <div class="mt-2 mb-2 p-2" id="info-card-title" style="width:100%;">
+                                        <div class="row p-0" style="margin: 0 auto;display:block">
+                                            <div class="col-12">
+                                                <h3 style="text-align:center;font-weight:600;">Personal Informations</h3>
+                                            </div>
+                                            <div class="col-12" style="text-align:center;">
+                                                <small style="width: fit-content;font-size:14px;">
+                                                    Only the user themselves can see this information
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="content-row photo" id="photo" style="height:80px">
+
+                                        <div class="row">
+
+                                            <div class="col-3 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-4 p-2 left-col-title" style="cursor:auto;"> Photo </div>
+                                            </div>
+                                            {% comment %} <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-4 p-2" style="cursor:auto;"> Add photo to make your profile with more personal characteristic </div>
+                                            </div> {% endcomment %}
+                                            <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-4 p-2" style="cursor:auto;"> </div>
+                                                    {%if customerProfile.avatars%}
+                                                        <img class="rounded-circle profile-picture111" style="vertical-align: middle;
+                                                        width: 50px;height: 50px;border-radius: 50%;"src="{{ customerProfile.avatars.url}}">
+                                                    {%else%}
+                                                        <img class="rounded-circle profile-picture" src="{% static 'imgs/avatar.jpg'%}">
+                                                    {%endif%}
+
+                                            </div>
+                                            <div class="col-2 p-3">
+                                                <div class="profile-imgs p-2">
+                                                    {% comment %} <!-- a method of setting div's bg img to change profile img -->
+                                                    <div class="display-img" id="display-img"></div>
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary btn-lg rounded-pill" id="save-wid-btn" style="font-size:small" value="Save" name = "btnPassport">Save</button>
+                                                        {% comment %} <input type="file" id="input-file" style="display:none;cursor:pointer;" accept="image/*"> {% endcomment %}
+                                                        {% comment %} <label id="label-for-input" for="input-file">Edit</label> {% endcomment %}
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="content-row" id="WalletAddress" style="border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
+
+                                        <div class="row">
+
+                                            <div class="col-3 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2 left-col-title" style="cursor:auto;"> WalletAddress </div>
+                                            </div>
+
+                                            <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="cursor:auto;"> {{customerProfile.personal_walletId}} </div>
+                                            </div>
+                                            <!--
+                                            <div class="col-2 p-3"
+                                                style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="margin: 0 auto;"> > </div>
+                                            </div> -->
+
+                                        </div>
+                                        <input type="button" class="btn btn-primary btn-lg rounded-pill" id="save-wid-btn" style="font-size:10px; float:right;" value="Revise" name = "btnPassport"/>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $("input[name=btnPassport]").click(function () {
+                                        if ($(this).val() == "Revise") {
+                                            $(".infos11").hide();
+                                            $(".infos").show();
+
+                                        } else {
+                                            $(".infos").hide();
+                                            $(".infos11").show();
+                                        }
+                                    });
+                                });
+
+                            </script>
+
+                            <!-- contact card -->
+                            <div class="row mt-5 p-3" id="contact-card">
+
+                                <div id="contacts" style="width:100%;">
+
+                                    <div class="mt-2 mb-2 p-2" id="info-card-title" style="width:100%;">
+                                        <div class="row p-0" style="margin: 0 auto;display:block">
+                                            <div class="col-12" style="text-align:center;">
+                                                <h3 style="text-align:center;font-weight:600;">Contact Informations</h3>
+                                            </div>
+                                            <div class="col-12" style="text-align:center;">
+                                                <small style="width: fit-content;font-size:14px;">
+                                                    Only the user themselves can see this information
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="content-row" id="name">
+
+                                        <div class="row">
+
+                                            <div class="col-3 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2 left-col-title" style="cursor:auto;"> Name </div>
+                                            </div>
+
+                                            <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="cursor:auto;"> {{customerProfile.customeruser.username}} </div>
+                                            </div>
+                                            <!--
+                                            <div class="col-2 p-3"
+                                                style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="margin: 0 auto;"> > </div>
+                                            </div> -->
+
+                                        </div>
+
+                                    </div>
+                                    {% comment %} <div class="content-row" id="phone">
+
+                                        <div class="row">
+
+                                            <div class="col-3 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2 left-col-title" style="cursor:auto;"> Phone Number
+                                                </div>
+                                            </div>
+
+                                            <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="cursor:auto;"> 0950 766 872 </div>
+                                            </div>
+                                            <!--
+                                            <div class="col-2 p-3"
+                                                style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="margin: 0 auto;"> > </div>
+                                            </div> -->
+
+                                        </div>
+
+                                    </div> {% endcomment %}
+
+                                    <div class="content-row" id="email" style="border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
+
+                                        <div class="row">
+
+                                            <div class="col-3 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2 left-col-title" style="cursor:auto;"> Email </div>
+                                            </div>
+
+                                            <div class="col-7 p-3" style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="cursor:auto;"> {{customerProfile.personal_email}} </div>
+                                            </div>
+                                            <!--
+                                            <div class="col-2 p-3"
+                                                style="display:flex;justify-content:flex-start;align-items: center;">
+                                                <div class="mt-0 p-2" style="margin: 0 auto;"> > </div>
+                                            </div> -->
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
                             </div>
 
                             <!-- security img and notations -->
-                            <div class="row mt-5" id="info-instruction">
-                                <div class="col-12 col-sm-12 col-md-10 col-lg-6 col-xl-5 p-0" id="security-img-div">
-                                    <img id="security-img" src="{% static 'imgs/Data-security.jpg' %}">
+                            <div class="row mt-5 p-3" id="info-instruction" style="margin:0 9%;">
+
+                                <div class="col-12 col-sm-12 col-md-10 col-lg-6 col-xl-6 p-0" id="security-img-div">
+                                    <img id="security-img" src="{% static 'imgs/Data-security-nobg.png'%}">
                                 </div>
+
                                 <div class="col-12 col-sm-12 col-md-10 col-lg-6 col-xl-6 p-3" id="notation">
-                                    <h2 style="font-weight: 600;">Notations !</h2>
+
+                                    <h2 style=" font-weight: 600;">Notations !</h2>
+
                                     <!-- modal -->
                                     <div class="mb-3">
-                                        <p class="label" for="term-of-service" style="cursor:auto;">Data showing here
-                                            were
-                                            already stored in database. We sure will be use these data
-                                            for ligilimate purposes as mentioned in our
-                                            <a href="#" data-toggle="modal" data-target="#exampleModalCenter"
-                                                style="font-weight:bolder;"> terms of Service</a>.
-                                            Users can feel free to
-                                            discover the joy of life of your own through our website. And most
-                                            importantly, our
-                                            team
-                                            will try our best to prevent hackers and other users from stealing and
-                                            reaching your
-                                            personal data.
+                                        <p class="label" for="term-of-service" style="cursor:auto;">Data showing here were already stored in database. We sure would use these data for ligilimate purposes as mentioned in our
+                                            <a href="#" data-toggle="modal" data-target="#exampleModalCenter" style="font-weight:bolder;"> terms of Service</a>. Users can feel free to discover the joy of life of your own through our website. And most
+                                            importantly, our team will try our best to prevent hackers and other users from stealing and reaching your personal data.
 
                                             <!-- Modal content -->
-                                        <div class="modal fade bd-example-modal-lg" id="exampleModalCenter"
-                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">Terms and
-                                                            Conditions for Sign Up</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
+                                            <div class="modal fade bd-example-modal-md" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="solve">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Terms and Conditions for Data Usage</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
-                                                    </div>
-                                                    <div class="modal-body" style="line-height:1.7em;cursor: auto;">
+                                                        </div>
+                                                        <div class="modal-body" style="line-height:1.7em;cursor: auto;">
 
-                                                        <h3>Terms and Conditions for Sign Up</h3>
-                                                        <h5>Terms and Conditions</h5>
-                                                        Last updated: February 18, 2022<br><br>
+                                                            <h3>Terms and Conditions for Sign Up</h3>
+                                                            <h5>Terms and Conditions</h5>
+                                                            Last updated: February 18, 2022<br><br> Please read these terms and conditions carefully before using Our Service.
+                                                            <br><br>
 
-                                                        Please read these terms and conditions carefully before using
-                                                        Our
-                                                        Service.<br><br>
+                                                            <h3 style="margin-bottom: 5%;">Interpretation and Definitions
+                                                            </h3>
+                                                            <h5>Interpretation</h5>
+                                                            <p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear
+                                                                in singular or in plural.
+                                                            </p>
 
-                                                        <h3 style="margin-bottom: 5%;">Interpretation and Definitions
-                                                        </h3>
-                                                        <h5>Interpretation</h5>
-                                                        <p>The words of which the initial letter is capitalized have
-                                                            meanings defined under the
-                                                            following
-                                                            conditions. The following definitions shall have the same
-                                                            meaning regardless of whether
-                                                            they
-                                                            appear in singular or in plural.
-                                                        </p>
+                                                            <h3>Definitions</h3>
+                                                            For the purposes of these Terms and Conditions:<br>
 
-                                                        <h3>Definitions</h3>
-                                                        For the purposes of these Terms and Conditions:<br>
+                                                            <p>
+                                                                Affiliate means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing
+                                                                authority.
+                                                                <br><br> Country refers to: Taiwan<br><br> Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Sign Up.<br><br> Device means any device that can
+                                                                access the Service such as a computer, a cellphone or a digital tablet.
+                                                                <br><br> Service refers to the Website.<br><br> Terms and Conditions (also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company
+                                                                regarding the use of the Service. This Terms and Conditions agreement has been created with the help of the Terms and Conditions Generator.
+                                                                <br><br> Third-party Social Media Service means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made
+                                                                available by the Service.<br><br> Website refers to Sign Up, accessible from <a href="signUp.html">http://127.0.0.1:5500/signUp.html</a><br><br> You means the individual accessing or using
+                                                                the Service, or the enterprice, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.
+                                                                <br><br>
+                                                            </p>
 
-                                                        <p>
-                                                            Affiliate means an entity that controls, is controlled by or
-                                                            is
-                                                            under common control with
-                                                            a
-                                                            party, where "control" means ownership of 50% or more of the
-                                                            shares, equity interest or
-                                                            other
-                                                            securities entitled to vote for election of directors or
-                                                            other
-                                                            managing authority.<br><br>
+                                                            <h3>Acknowledgment</h3>
+                                                            <p>
+                                                                These are the Terms and Conditions governing the use of this Service and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.
+                                                                <br><br> Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users
+                                                                and others who access or use the Service.<br><br> By accessing or using the Service You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions
+                                                                then You may not access the Service.
+                                                                <br><br> You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.
+                                                                <br><br> Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the Privacy Policy of the Company. Our Privacy Policy describes Our policies and
+                                                                procedures on the collection, use and disclosure of Your personal information when You use the Application or the Website and tells You about Your privacy rights and how the law protects
+                                                                You. Please read Our Privacy Policy carefully before using Our Service.
+                                                                <br><br>
+                                                            </p>
 
-                                                            Country refers to: Taiwan<br><br>
+                                                            <h3>Links to Other Websites</h3>
+                                                            <p>
+                                                                Our Service may contain links to third-party web sites or services that are not owned or controlled by the Company.
+                                                                <br><br> The Company has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge
+                                                                and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance
+                                                                on any such content, goods or services available on or through any such web sites or services.
+                                                                <br><br> We strongly advise You to read the terms and conditions and privacy policies of any third-party web sites or services that You visit.<br><br>
+                                                            </p>
 
-                                                            Company (referred to as either "the Company", "We", "Us" or
-                                                            "Our" in this Agreement)
-                                                            refers to
-                                                            Sign Up.<br><br>
+                                                            <h3>Termination</h3>
+                                                            <p>
+                                                                We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, including without limitation if You breach these Terms and Conditions.
+                                                                <br><br> Upon termination, Your right to use the Service will cease immediately.
+                                                                <br><br>
+                                                            </p>
 
-                                                            Device means any device that can access the Service such as
-                                                            a
-                                                            computer, a cellphone or a
-                                                            digital
-                                                            tablet.<br><br>
+                                                            <h3>Limitation of Liability</h3>
+                                                            <p>
+                                                                Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of this Terms and Your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by You through
+                                                                the Service or 100 USD if You haven't purchased anything through the Service.
+                                                                <br><br> To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever
+                                                                (including, but not limited to, damages for loss of profits, loss of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way
+                                                                related to the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in connection with any provision of this Terms),
+                                                                even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.
+                                                                <br><br> Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, which means that some of the above limitations may
+                                                                not apply. In these states, each party's liability will be limited to the greatest extent permitted by law.<br><br>
+                                                            </p>
 
-                                                            Service refers to the Website.<br><br>
+                                                            <h3>"AS IS" and "AS AVAILABLE" Disclaimer</h3>
+                                                            <p>
+                                                                The Service is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their
+                                                                respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties
+                                                                of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. Without
+                                                                limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Service will meet Your requirements, achieve any intended results,
+                                                                be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any
+                                                                errors or defects can or will be corrected.<br><br> Without limiting the foregoing, neither the Company nor any of the enterprice's
+                                                                provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Service, or the information, content, and materials or products
+                                                                included thereon; (ii) that the Service will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Service;
+                                                                or (iv) that the Service, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful
+                                                                components.
+                                                                <br><br> Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and
+                                                                limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section shall be applied to the greatest extent enforceable under applicable law.
+                                                                <br><br>
+                                                            </p>
 
-                                                            Terms and Conditions (also referred as "Terms") mean these
-                                                            Terms
-                                                            and Conditions that form
-                                                            the
-                                                            entire agreement between You and the Company regarding the
-                                                            use
-                                                            of the Service. This Terms
-                                                            and
-                                                            Conditions agreement has been created with the help of the
-                                                            Terms
-                                                            and Conditions
-                                                            Generator.<br><br>
+                                                            <h3>Governing Law</h3>
+                                                            <p>
+                                                                The laws of the Country, excluding its conflicts of law rules, shall govern this Terms and Your use of the Service. Your use of the Application may also be subject to other local, state, national, or international laws.<br><br>
+                                                            </p>
 
-                                                            Third-party Social Media Service means any services or
-                                                            content
-                                                            (including data,
-                                                            information,
-                                                            products or services) provided by a third-party that may be
-                                                            displayed, included or made
-                                                            available by the Service.<br><br>
+                                                            <h3>Disputes Resolution</h3>
+                                                            <p>
+                                                                If You have any concern or dispute about the Service, You agree to first try to resolve the dispute informally by contacting the Company.
+                                                                <br><br>
+                                                            </p>
 
-                                                            Website refers to Sign Up, accessible from <a
-                                                                href="signUp.html">http://127.0.0.1:5500/signUp.html</a><br><br>
+                                                            <h3>For European Union (EU) Users</h3>
+                                                            <p>
+                                                                If You are a European Union consumer, you will benefit from any mandatory provisions of the law of the country in which you are resident in.<br><br>
+                                                            </p>
 
-                                                            You means the individual accessing or using the Service, or
-                                                            the
-                                                            enterprice, or other legal
-                                                            entity
-                                                            on behalf of which such individual is accessing or using the
-                                                            Service, as
-                                                            applicable.<br><br>
-                                                        </p>
+                                                            <h3>United States Legal Compliance</h3>
+                                                            <p>
+                                                                You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on
+                                                                any United States government list of prohibited or restricted parties.
+                                                                <br><br>
+                                                            </p>
 
-                                                        <h3>Acknowledgment</h3>
-                                                        <p>
-                                                            These are the Terms and Conditions governing the use of this
-                                                            Service and the agreement
-                                                            that
-                                                            operates between You and the Company. These Terms and
-                                                            Conditions
-                                                            set out the rights and
-                                                            obligations of all users regarding the use of the
-                                                            Service.<br><br>
+                                                            <h3>Severability and Waiver</h3>
+                                                            <h5>Severability</h5>
+                                                            <p>
+                                                                If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will
+                                                                continue in full force and effect.
+                                                                <br><br>
+                                                            </p>
 
-                                                            Your access to and use of the Service is conditioned on Your
-                                                            acceptance of and compliance
-                                                            with
-                                                            these Terms and Conditions. These Terms and Conditions apply
-                                                            to
-                                                            all visitors, users and
-                                                            others
-                                                            who access or use the Service.<br><br>
+                                                            <h3>Waiver</h3>
+                                                            <p>
+                                                                Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not effect a party's ability to exercise such right or require such performance at any time thereafter nor shall the waiver of
+                                                                a breach constitute a waiver of any subsequent breach.
+                                                                <br><br>
+                                                            </p>
 
-                                                            By accessing or using the Service You agree to be bound by
-                                                            these
-                                                            Terms and Conditions. If
-                                                            You
-                                                            disagree with any part of these Terms and Conditions then
-                                                            You
-                                                            may not access the
-                                                            Service.<br><br>
+                                                            <h3>Translation Interpretation</h3>
+                                                            <p>
+                                                                These Terms and Conditions may have been translated if We have made them available to You on our Service. You agree that the original English text shall prevail in the case of a dispute.
+                                                                <br><br>
+                                                            </p>
 
-                                                            You represent that you are over the age of 18. The Company
-                                                            does
-                                                            not permit those under 18
-                                                            to
-                                                            use
-                                                            the Service.<br><br>
+                                                            <h3>Changes to These Terms and Conditions</h3>
+                                                            <p>
+                                                                We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will make reasonable efforts to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material
+                                                                change will be determined at Our sole discretion.<br><br> By continuing to access or use Our Service after those revisions
+                                                                become effective, You agree to be bound by the revised terms. If You do not agree to the new terms, in whole or in part, please stop using the website and the Service.<br><br>
+                                                            </p>
 
-                                                            Your access to and use of the Service is also conditioned on
-                                                            Your acceptance of and
-                                                            compliance
-                                                            with the Privacy Policy of the Company. Our Privacy Policy
-                                                            describes Our policies and
-                                                            procedures
-                                                            on the collection, use and disclosure of Your personal
-                                                            information when You use the
-                                                            Application
-                                                            or the Website and tells You about Your privacy rights and
-                                                            how
-                                                            the law protects You.
-                                                            Please
-                                                            read
-                                                            Our Privacy Policy carefully before using Our
-                                                            Service.<br><br>
-                                                        </p>
-
-                                                        <h3>Links to Other Websites</h3>
-                                                        <p>
-                                                            Our Service may contain links to third-party web sites or
-                                                            services that are not owned or
-                                                            controlled by the Company.<br><br>
-
-                                                            The Company has no control over, and assumes no
-                                                            responsibility
-                                                            for, the content, privacy
-                                                            policies, or practices of any third party web sites or
-                                                            services.
-                                                            You further acknowledge
-                                                            and
-                                                            agree that the Company shall not be responsible or liable,
-                                                            directly or indirectly, for any
-                                                            damage or loss caused or alleged to be caused by or in
-                                                            connection with the use of or
-                                                            reliance
-                                                            on
-                                                            any such content, goods or services available on or through
-                                                            any
-                                                            such web sites or
-                                                            services.<br><br>
-
-                                                            We strongly advise You to read the terms and conditions and
-                                                            privacy policies of any
-                                                            third-party
-                                                            web sites or services that You visit.<br><br>
-                                                        </p>
-
-                                                        <h3>Termination</h3>
-                                                        <p>
-                                                            We may terminate or suspend Your access immediately, without
-                                                            prior notice or liability,
-                                                            for
-                                                            any reason whatsoever, including without limitation if You
-                                                            breach these Terms and
-                                                            Conditions.<br><br>
-
-                                                            Upon termination, Your right to use the Service will cease
-                                                            immediately.<br><br>
-                                                        </p>
-
-                                                        <h3>Limitation of Liability</h3>
-                                                        <p>
-                                                            Notwithstanding any damages that You might incur, the entire
-                                                            liability of the Company and
-                                                            any
-                                                            of its suppliers under any provision of this Terms and Your
-                                                            exclusive remedy for all of
-                                                            the
-                                                            foregoing shall be limited to the amount actually paid by
-                                                            You
-                                                            through the Service or 100
-                                                            USD
-                                                            if You haven't purchased anything through the
-                                                            Service.<br><br>
-
-                                                            To the maximum extent permitted by applicable law, in no
-                                                            event
-                                                            shall the Company or its
-                                                            suppliers be liable for any special, incidental, indirect,
-                                                            or
-                                                            consequential damages
-                                                            whatsoever
-                                                            (including, but not limited to, damages for loss of profits,
-                                                            loss of data or other
-                                                            information, for business interruption, for personal injury,
-                                                            loss of privacy arising out
-                                                            of or in any way
-                                                            related to the use of or inability to use the Service,
-                                                            third-party software and/or
-                                                            third-party
-                                                            hardware used with the Service, or otherwise in connection
-                                                            with
-                                                            any provision of this
-                                                            Terms),
-                                                            even if the Company or any supplier has been advised of the
-                                                            possibility of such damages
-                                                            and
-                                                            even if the remedy fails of its essential purpose.<br><br>
-
-                                                            Some states do not allow the exclusion of implied warranties
-                                                            or
-                                                            limitation of liability
-                                                            for
-                                                            incidental or consequential damages, which means that some
-                                                            of
-                                                            the above limitations may
-                                                            not
-                                                            apply. In these states, each party's liability will be
-                                                            limited
-                                                            to the greatest extent
-                                                            permitted by law.<br><br>
-                                                        </p>
-
-                                                        <h3>"AS IS" and "AS AVAILABLE" Disclaimer</h3>
-                                                        <p>
-                                                            The Service is provided to You "AS IS" and "AS AVAILABLE"
-                                                            and
-                                                            with all faults and defects
-                                                            without warranty of any kind. To the maximum extent
-                                                            permitted
-                                                            under applicable law, the
-                                                            Company, on its own behalf and on behalf of its Affiliates
-                                                            and
-                                                            its and their respective
-                                                            licensors and
-                                                            service providers, expressly disclaims all warranties,
-                                                            whether
-                                                            express, implied, statutory
-                                                            or
-                                                            otherwise, with respect to the Service, including all
-                                                            implied
-                                                            warranties of
-                                                            merchantability,
-                                                            fitness for a particular purpose, title and
-                                                            non-infringement,
-                                                            and warranties that may
-                                                            arise
-                                                            out of course of dealing, course of performance, usage or
-                                                            trade
-                                                            practice. Without
-                                                            limitation to
-                                                            the foregoing, the Company provides no warranty or
-                                                            undertaking,
-                                                            and makes no
-                                                            representation of any
-                                                            kind that the Service will meet Your requirements, achieve
-                                                            any
-                                                            intended results, be
-                                                            compatible
-                                                            or work with any other software, applications, systems or
-                                                            services, operate without
-                                                            interruption, meet any performance or reliability standards
-                                                            or
-                                                            be error free or that any
-                                                            errors or defects can or will be corrected.<br><br>
-
-                                                            Without limiting the foregoing, neither the Company nor any
-                                                            of
-                                                            the enterprice's provider
-                                                            makes
-                                                            any representation or warranty of any kind, express or
-                                                            implied:
-                                                            (i) as to the operation or
-                                                            availability of the Service, or the information, content,
-                                                            and
-                                                            materials or products
-                                                            included
-                                                            thereon; (ii) that the Service will be uninterrupted or
-                                                            error-free; (iii) as to the
-                                                            accuracy,
-                                                            reliability, or currency of any information or content
-                                                            provided
-                                                            through the Service; or
-                                                            (iv)
-                                                            that the Service, its servers, the content, or e-mails sent
-                                                            from
-                                                            or on behalf of the
-                                                            Company
-                                                            are free of viruses, scripts, trojan horses, worms, malware,
-                                                            timebombs or other harmful
-                                                            components.<br><br>
-
-                                                            Some jurisdictions do not allow the exclusion of certain
-                                                            types
-                                                            of warranties or
-                                                            limitations on
-                                                            applicable statutory rights of a consumer, so some or all of
-                                                            the
-                                                            above exclusions and
-                                                            limitations may not apply to You. But in such a case the
-                                                            exclusions and limitations set
-                                                            forth
-                                                            in this section shall be applied to the greatest extent
-                                                            enforceable under applicable
-                                                            law.<br><br>
-                                                        </p>
-
-                                                        <h3>Governing Law</h3>
-                                                        <p>
-                                                            The laws of the Country, excluding its conflicts of law
-                                                            rules,
-                                                            shall govern this Terms and
-                                                            Your use of the Service. Your use of the Application may
-                                                            also be
-                                                            subject to other local,
-                                                            state,
-                                                            national, or international laws.<br><br>
-                                                        </p>
-
-                                                        <h3>Disputes Resolution</h3>
-                                                        <p>
-                                                            If You have any concern or dispute about the Service, You
-                                                            agree
-                                                            to first try to resolve
-                                                            the
-                                                            dispute informally by contacting the Company.<br><br>
-                                                        </p>
-
-                                                        <h3>For European Union (EU) Users</h3>
-                                                        <p>
-                                                            If You are a European Union consumer, you will benefit from
-                                                            any
-                                                            mandatory provisions of
-                                                            the
-                                                            law of the country in which you are resident in.<br><br>
-                                                        </p>
-
-                                                        <h3>United States Legal Compliance</h3>
-                                                        <p>
-                                                            You represent and warrant that (i) You are not located in a
-                                                            country that is subject to the
-                                                            United States government embargo, or that has been
-                                                            designated by
-                                                            the United States
-                                                            government
-                                                            as a "terrorist supporting" country, and (ii) You are not
-                                                            listed
-                                                            on any United States
-                                                            government
-                                                            list of prohibited or restricted parties.<br><br>
-                                                        </p>
-
-                                                        <h3>Severability and Waiver</h3>
-                                                        <h5>Severability</h5>
-                                                        <p>
-                                                            If any provision of these Terms is held to be unenforceable
-                                                            or
-                                                            invalid, such provision
-                                                            will be
-                                                            changed and interpreted to accomplish the objectives of such
-                                                            provision to the greatest
-                                                            extent
-                                                            possible under applicable law and the remaining provisions
-                                                            will
-                                                            continue in full force and
-                                                            effect.<br><br>
-                                                        </p>
-
-                                                        <h3>Waiver</h3>
-                                                        <p>
-                                                            Except as provided herein, the failure to exercise a right
-                                                            or to
-                                                            require performance of an
-                                                            obligation under these Terms shall not effect a party's
-                                                            ability
-                                                            to exercise such right or
-                                                            require such performance at any time thereafter nor shall
-                                                            the
-                                                            waiver of a breach
-                                                            constitute a
-                                                            waiver of any subsequent breach.<br><br>
-                                                        </p>
-
-                                                        <h3>Translation Interpretation</h3>
-                                                        <p>
-                                                            These Terms and Conditions may have been translated if We
-                                                            have
-                                                            made them available to You
-                                                            on
-                                                            our Service. You agree that the original English text shall
-                                                            prevail in the case of a
-                                                            dispute.<br><br>
-                                                        </p>
-
-                                                        <h3>Changes to These Terms and Conditions</h3>
-                                                        <p>
-                                                            We reserve the right, at Our sole discretion, to modify or
-                                                            replace these Terms at any
-                                                            time. If
-                                                            a revision is material We will make reasonable efforts to
-                                                            provide at least 30 days' notice
-                                                            prior
-                                                            to any new terms taking effect. What constitutes a material
-                                                            change will be determined at
-                                                            Our
-                                                            sole discretion.<br><br>
-
-                                                            By continuing to access or use Our Service after those
-                                                            revisions
-                                                            become effective, You
-                                                            agree
-                                                            to be bound by the revised terms. If You do not agree to the
-                                                            new
-                                                            terms, in whole or in
-                                                            part,
-                                                            please stop using the website and the Service.<br><br>
-                                                        </p>
-
-                                                        <h3>Contact Us</h3>
-                                                        <p>
-                                                            If you have any questions about these Terms and Conditions,
-                                                            You
-                                                            can contact us:<br><br>
-
-                                                            By email: onestoptk@gmail.com
-                                                        </p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Close</button>
+                                                            <h3>Contact Us</h3>
+                                                            <p>
+                                                                If you have any questions about these Terms and Conditions, You can contact us:<br><br> By email: onestoptk@gmail.com
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- end modal content -->
-
-
+                                            <!-- end modal content -->
 
                                         </p>
                                     </div>
@@ -688,39 +521,38 @@
                 </div>
 
             </div>
-            <!-- end contnet -->
+
+        {% comment %} </div>
+        <!-- end wrapper --> {% endcomment %}
 
 
+        <!-- to top button -->
+        {% comment %} <button onclick="topFunction()" class="btn btn-circle" id="myBtn" title="Go to top">
+            <i class="fa-solid fa-angles-up"></i>
+        </button> {% endcomment %}
+
+    {% comment %} </div>
+    <!-- end container --> {% endcomment %}
 
 
-
-        </div>
-        <!-- end sidebar + content -->
-
-        <!-- --------------------------------------------------------------------------------------------------------------------- -->
-
-
-
-
-
-    </div>
-    <!-- end container -->
-
-    <!-- --------------------------------------------------------------------------------------------------------------------- -->
-
-    {% comment %} <!-- font awesome link  -->
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <!-- font awesome link  -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <!-- chart.js 3.7.1 CDN (Content Delivery Network) -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <!-- Bootstrap JS -->
+    {% comment %} <!-- Bootstrap JS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    {% comment %} <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
-    {% comment %} <script type="text/javascript" src="{% static 'js/personal.js'%}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+    <script type="text/javascript" src="{% static 'js/personal.js'%}"></script>
 
-    {% comment %} <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> {% endcomment %}
-    {% comment %} <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js"
-        type="text/javascript"></script> {% endcomment %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
+
+{% comment %} </body> {% endcomment %}
+
+{% comment %} </html> {% endcomment %}
+
+
 {% endblock %}
+
+

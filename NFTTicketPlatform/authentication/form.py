@@ -45,9 +45,7 @@ class RegistrationForm(UserCreationForm):
 
         fields = ('username', 'email','password1', 'password2','is_staff')
         # widgets = {
-        #     'username': forms.fields.TextInput(attrs={
-        #                 'class':'form-control',
-        #                 'placeholder':'Username here',
+        #     'is_staff': forms.BooleanField(attrs={'width':'50px','height':'50px',
         #         }),
         #     'email': forms.fields.EmailInput(attrs={
         #                 'class':'form-control',
@@ -65,10 +63,11 @@ class RegistrationForm(UserCreationForm):
         # }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'placeholder':_('Username.....')})
-        self.fields['email'].widget.attrs.update({'placeholder':_('Email....')})
-        self.fields['password1'].widget.attrs.update({'placeholder':_('Password....')})
-        self.fields['password2'].widget.attrs.update({'placeholder':_('Repeat password....')})
+        self.fields['username'].widget.attrs.update({'placeholder':_('Username.....'),'class':'form-control rounded-pill personal-input'})
+        self.fields['email'].widget.attrs.update({'placeholder':_('Email....'),'class':'form-control rounded-pill personal-input'})
+        self.fields['password1'].widget.attrs.update({'placeholder':_('Password....'),'class':'form-control rounded-pill personal-input'})
+        self.fields['password2'].widget.attrs.update({'placeholder':_('Repeat password....'),'class':'form-control rounded-pill personal-input'})
+        self.fields['is_staff'].widget.attrs.update({'style':'width:30 px;height:30px;float: left ; border: none;width=30%;',})
 class DateTimePickerInput(forms.DateTimeInput):
         input_type = 'datetime'
 
@@ -99,18 +98,18 @@ class EventCreateForm(forms.ModelForm):
             ('exhibition', 'exhibition'),
             )
     category = forms.CharField(label='活動類型',widget=forms.RadioSelect(choices=CATEGORY))
-    eventname = forms.CharField(max_length=100, label='活動名稱:', widget = forms.TextInput(attrs={'class': 'form-control','placeholder':'OneOffs NFT 國際藝術博覽會'}))
-    eventdescription = forms.CharField(max_length=200, label='活動內容:',widget = forms.TextInput(attrs={'class': 'form-control','placeholder':'W Taipei 登場。橫跨藝術、區塊鏈、 VR 等不同領域，為未來的全球島嶼連線策展鳴啟第一槍。',}))
-    eventticketnumber = forms.IntegerField( label='票券數量:',widget = forms.TextInput(attrs={'class': 'form-control','placeholder':'50','maxlength':'100',
+    eventname = forms.CharField(max_length=100, label='活動名稱:', widget = forms.TextInput(attrs={'class': 'form-control rounded-pill','placeholder':'OneOffs NFT 國際藝術博覽會'}))
+    eventdescription = forms.CharField(max_length=200, label='活動內容:',widget = forms.TextInput(attrs={'class': 'form-control rounded-pill','placeholder':'W Taipei 登場。橫跨藝術、區塊鏈、 VR 等不同領域，為未來的全球島嶼連線策展鳴啟第一槍。',}))
+    eventticketnumber = forms.IntegerField( label='票券數量:',widget = forms.TextInput(attrs={'class': 'form-control rounded-pill','placeholder':'50','maxlength':'100',
     'minlength':'1'}))
-    eventprice = forms.DecimalField(label='票券價格:',widget = forms.NumberInput(attrs={'class': 'form-control','placeholder':'0.99', }))
+    eventprice = forms.DecimalField(label='票券價格:',widget = forms.NumberInput(attrs={'class': 'form-control rounded-pill','placeholder':'0.99', }))
     date_StartTime=forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M:%S'],
         widget=forms.DateTimeInput(
             format ='%d/%m/%Y %H:%M:%S',
             attrs={
             'type': 'datetime-local',
-            'class': 'form-control datetimepicker-input',
+            'class': 'form-control rounded-pill datetimepicker-input',
             'placeholder':'March 31, 2022, 12:56 p.m.'
             # 'data-target': '#datetimepicker1'
         })
@@ -121,7 +120,7 @@ class EventCreateForm(forms.ModelForm):
             format ='%d/%m/%Y %H:%M:%S',
             attrs={
             'type': 'datetime-local',
-            'class': 'form-control datetimepicker-input',
+            'class': 'form-control rounded-pill datetimepicker-input',
             'placeholder':'April 30, 2022, 12:56 p.m.'
 
             # 'data-target': '#datetimepicker1'
@@ -136,13 +135,13 @@ class EventCreateForm(forms.ModelForm):
         model = Events
         fields = ('category', 'eventname', 'eventdescription', 'eventticketnumber', 'eventprice','date_StartTime','date_EndTime','event_pic')
         widgets = {
-            'category': forms.RadioSelect(attrs={'class': 'form-control'}),
-            'eventname': forms.TextInput(attrs={'class': 'form-control'}),
-            'eventdescription': forms.TextInput(attrs={'class': 'form-control'}),
-            'eventticketnumber': forms.TextInput(attrs={'class': 'form-control'}),
-            'eventprice': forms.NumberInput(attrs={'class': 'form-control'}),
-            'date_StartTime':forms.DateTimeInput(attrs={'class': 'form-control'}),
-            'date_EndTime':forms.DateTimeInput(attrs={'class': 'form-control'}),
+            'category': forms.RadioSelect(attrs={'class': 'form-control rounded-pill'}),
+            'eventname': forms.TextInput(attrs={'class': 'form-control rounded-pill'}),
+            'eventdescription': forms.TextInput(attrs={'class': 'form-control rounded-pill'}),
+            'eventticketnumber': forms.TextInput(attrs={'class': 'form-control rounded-pill'}),
+            'eventprice': forms.NumberInput(attrs={'class': 'form-control rounded-pill'}),
+            'date_StartTime':forms.DateTimeInput(attrs={'class': 'form-control rounded-pill'}),
+            'date_EndTime':forms.DateTimeInput(attrs={'class': 'form-control rounded-pill'}),
 
         }
     def __init__(self, *args, **kwargs):

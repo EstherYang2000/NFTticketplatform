@@ -2,166 +2,609 @@
 <html lang="en">
 
 <head>
-  {% load static %}
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  {% comment %} <script src="{% static 'js/buyConfirm/jquery-3.3.1.min.js' %}"></script>
-  <script src="{% static 'js/buyConfirm/jquery-ui.min.js' %}"></script> {% endcomment %}
+    <link rel="shortcut icon" href="{% static 'imgs/ape.jpeg'%}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&display=swap">
+
+    <!-- font awesome link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <!-- jquery cdn -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    {% comment %} <script type="text/javascript" src="{% static 'js/index.js' %}"></script> {% endcomment %}
+
+    <title>Funket</title>
+    <style>
+        * {
+            font-family: 'Barlow', sans-serif;
+        }
+
+        {% comment %} .container-fluid {
+            /* background-color: var(--clr-ganache-light); */
+            /* background-image: linear-gradient(to bottom, #480592, #400d7b, #371165, #2f1350, #26133b); */
+            /* background-image: linear-gradient(to top, #5017db, #4a17af, #411686, #35155f, #26133b); */
+            background-image: url(./static/imgs/bg-img.jpg);
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        } {% endcomment %}
+
+        .navbar #brand-name {
+            font-size: 30px;
+            font-weight: 900;
+            color: white;
+            opacity: 0.7;
+            transition: 0.5s;
+        }
+
+        .navbar #brand-name:hover {
+            color: white;
+            opacity: 1;
+            transition: 0.5s;
+        }
+
+        .navbar-custom {
+            background-color: #301451;
+        }
+
+        .navbar .nav-link {
+            font-size: 16px;
+            /* color: var(--clr-ganache-brown); */
+            color: white !important;
+            font-weight: 600;
+            opacity: 0.7;
+            transition: 0.5s;
+        }
+
+        .navbar .nav-link:hover {
+            transition: 0.5s;
+            opacity: 1;
+            color: var(--clr-ganache-brown);
+        }
+
+        .navbar .nav-item .dropdown-menu>a {
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .navbar .nav-item .dropdown-menu>a:hover {
+            background-color: var(--clr-ganache-light);
+            color: var(--clr-ganache-dark);
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .container-fluid .navbar .navbar-toggler {
+            color: white;
+        }
+
+        /* -------------------------- carousel -------------------------- */
+
+        .container-fluid #second-fluid .carousel {
+            /* border: 2px solid yellow; */
+            width: 100%;
+            height: 700px;
+            color: var(--clr-ganache-light);
+            /* border: 2px solid black; */
+        }
+
+        .container-fluid #second-fluid .carousel #carouselExampleCaptions .carousel-inner {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container-fluid #second-fluid .carousel #carouselExampleCaptions .carousel-inner .carousel-item {
+            height: 100%;
+            /* border: 2px solid lime; */
+        }
 
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        /* this method controls the img from not excceding the width of the container
+        and never scale up to be larger than its original size: */
 
-  <link rel="stylesheet" href="{% static 'css/index.css' %}">
-  <link rel="shortcut icon" href="{%static 'imgs/ape.jpeg' %}">
+        .container-fluid #second-fluid .carousel #carouselExampleCaptions .carousel-inner .carousel-item img {
+            /* border: 3px solid lime; */
+            height: 100%;
+            /* object-fit: cover; */
+        }
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-    integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-  <title>NFT Platform</title>
-  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/buyConfirm/jquery-ui.min.css' %}"> {% endcomment %}
+        .container-fluid #second-fluid .carousel #carouselExampleCaptions button {
+            color: white;
+            opacity: 1;
+            transition: 0.4s;
+        }
 
-  <!-- font awesome link  -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" type="text/css" href="{% static 'css/buyConfirm/opensans-font.css' %}">
+        .container-fluid #second-fluid .carousel #carouselExampleCaptions button:hover {
+            background-color: lightgray;
+            opacity: 0.2;
+            transition: 0.4s;
+        }
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+        /* ------------------------------------- content cards --------------------------------------- */
+
+        #content .row .events {
+            /* background-color: #9acef9; */
+            border-radius: 5px;
+            /* border: 5px solid black; */
+            color: white;
+            /* opacity: 0.6; */
+        }
+
+        #content .row .events h3 {
+            font-weight: 600;
+            /* border: 3px solid blue; */
+            padding: 0px 10px;
+        }
+
+        #content .row .events .heading h3 span {
+            font-weight: 600;
+            font-size: 18px;
+            float: right;
+            cursor: pointer;
+            opacity: 0.5;
+            color: black;
+            transition: 0.4s;
+            padding: 10px;
+        }
+
+        #content .row .events .heading h3 span:hover {
+            color: white;
+            opacity: 1;
+            transition: 0.4s;
+        }
+
+        #content .row .events h3 span a {
+            color: white;
+        }
+
+        #content .row .events h3 span a:hover {
+            text-decoration: none;
+        }
+
+
+        /* -------------------- cards -------------------- */
+
+        #content .row .events .cards .row .card {
+            background-image: linear-gradient(to top, #3e1979, #391869, #331659, #2d154a, #26133b);
+            /* overflow: hidden; */
+            margin-top: 15px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            transition: 0.4s;
+            position: relative;
+            height: 300px;
+        }
+
+        #content .row .events .cards .row .card .card-body {
+            /* outline: 2px solid white; */
+            position: absolute;
+            bottom: 0;
+            height: 116px;
+            margin-top: 0px;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+            background-image: linear-gradient(to bottom, #4b0c86, #3a0e6d, #2a0d55, #1d0b3d, #140027);
+        }
+
+        #content .row .events .cards .row .card:hover .card-body {
+            position: absolute;
+            /* top: 20px; */
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 80%;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-sizing: border-box;
+            color: cyan;
+        }
+
+        #content .row .events .cards .row .card .card-body a {
+            color: cyan;
+        }
+
+        /* #content .row .events .cards .row .card .card-body a:hover {} */
+
+        #content .row .events .cards .row .card .more-author {
+            width: 40%;
+            height: auto;
+            position: relative;
+            left: 160px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        #content .row .events .cards .row .card .more-author:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #content .row .events .cards .row .card .card-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-bottom: 0;
+            /* the sizes are according to orin size after padding
+             oringinal size is w:286, h:180 */
+            width: 100%;
+            height: 180px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        #content .row .events .cards .row .card .card-img:hover {
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        #content .row .events .cards .row .card .card-body p {
+            font-size: 14px;
+        }
+        /* -------------------- footer -------------------- */
+
+.footer {
+    background-color: rgb(32, 1, 32);
+    position: relative;
+    bottom: 0px;
+    z-index: 3;
+    color: black;
+}
+
+.footer .links-div {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    /* justify-content: flex-end; */
+    /* align-items: center; */
+}
+
+
+/* this means styles are apply to all descendants (childrens) */
+
+.footer .links-div .sub {
+    /* border: 2px solid cyan; */
+    border-radius: 5px;
+    width: 50%;
+    height: auto;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footer .sub-header {
+    /* border: 2px solid gray; */
+    color: rgba(169, 0, 202, 0.71);
+    width: 100%;
+    text-align: center;
+}
+
+.footer .links-div .sub ul {
+    width: 90%;
+    margin: 0 auto;
+    /* border: 2px solid gray; */
+}
+
+.footer .links-div .sub ul li {
+    list-style-type: none;
+    width: 100%;
+    margin: 5px auto;
+    /* border: 2px solid white; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+}
+
+.footer .links-div .sub ul li a {
+    /* border: 2px solid lightcoral; */
+    color: white;
+    margin: 0 auto;
+    font-size: 14px;
+    transition: 0.3s;
+    opacity: 0.7;
+}
+
+.footer .links-div .sub ul li a:hover {
+    text-decoration: none;
+    transition: 0.3s;
+    opacity: 1;
+}
+
+
+
+    </style>
 
 </head>
 
 <body>
-{% load static %}
-  <!-- fixed container -->
-  <div class="container-fluid p-0">
-     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom sticky-top shadow p-2">
-      <div class="btn-div">
-          <button type="button" class="btn" id="close-btn">
-              <img
-                  src="https://img.icons8.com/external-flat-icons-inmotus-design/30/000000/external-bar-messenger-flat-icons-inmotus-design.png" />
-              <!-- <i class="fa-solid fa-bars"></i> -->
-          </button>
-          <button type="button" class="btn" id="open-btn" style="display: none;">
-              <img
-                  src="https://img.icons8.com/external-flat-icons-inmotus-design/30/000000/external-bar-messenger-flat-icons-inmotus-design.png" />
-              <!-- <i class="fa-solid fa-bars"></i> -->
-          </button>
-      </div>
 
-      <a class="navbar-brand" id="brand" href="{%url 'home'%}">Minterlake</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- fixed container -->
+    <div class="container-fluid p-0" id="first-fluid">
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                  <a class="nav-link" href="{%url 'home'%}">主頁</a>
-              </li>
-              {%if user.is_authenticated%}
-              <li class="nav-item">
-                <a class="nav-link" href="{%url 'signout_user'%}">登出</a>
-              </li>
-              {% else %}
-              <li class="nav-item">
-                  <a class="nav-link" href="{%url 'login_user'%}">登入</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{%url 'register'%}">註冊</a>
-              </li>
-              {%endif%}
-              {%if user.is_authenticated%}
-                {%if user.is_staff == True%}
-                  <li class="nav-item">
-                    <a class="nav-link active" href="{%url 'company'%}">公司專區 <span class="sr-only">(current)</span></a>
-                </li>
-                {% else %}
-                  <li class="nav-item">
-                      <a class="nav-link active" href="{%url 'personal'%}">個人專區 <span class="sr-only">(current)</span></a>
-                  </li>
-                {%endif%}
-              {%endif%}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-expanded="false">
-                    所有活動
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{%url 'exhibition'%}"><i class="fa-solid fa-paintbrush"
-                            style="margin-right: 10px;font-size:25px;"></i>展覽
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{%url 'performance'%}"><i class="fa-solid fa-masks-theater"
-                            style="margin-right: 10px;font-size:25px;"></i>表演活動
-                    </a>
-                </div>
-              </li>
-
-
-          </ul>
-          {%if user.is_authenticated%}
-          <span class ="hello-msg111" >Hello,{{request.user}}</span>
-          {% endif %}
-        <form action="{% url 'searchEvent' %}" method="GET" class="d-flex">
-          <input class="form-control me-2" name="query" type="text" placeholder="Search">
-          <button class="btn btn-primary" type="submit">Search</button>
-        </form>
-      </nav>
-      <div class="container">
-        {%if messages%}
-          {%for message in messages%}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              {{message}}
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-custom sticky-top shadow p-2" style="background-color:#301451 !important;">
+            <!--  logo  -->
+            <div class=" logos" style="width:200px; height:80%">
+                <a href="{%url 'home'%}"><img class="embed-responsive-item" src="{% static 'imgs/NFT.png'%}"  alt="cannot display" style="object-fit: contain; width:200px;"></img></a>
             </div>
-         {% endfor %}
-        {%endif%}
-
-        {% if form.errors%}
-          {%for error in errors%}
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{error}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            {% comment %} <a class="navbar-brand" id="brand-name" href="{%url 'home'%}" style="position: relative;left: -20px;">Funket</a> {% endcomment %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-          </div>
-          {% endfor %}
-        {%endif%}
 
-      </div>
-    </nav>
-  <!-- end navbar -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" style="color: white;">
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="{%url 'home'%}">Home</a>
+                    </li>
+                    {%if user.is_authenticated%}
+                      <li class="nav-item mr-3">
+                        <a class="nav-link" href="{%url 'signout_user'%}">Sign Out</a>
+                      </li>
+                    {% else %}
+                      <li class="nav-item mr-3">
+                          <a class="nav-link" href="{%url 'login_user'%}">Sign In</a>
+                      </li>
+                      <li class="nav-item mr-3">
+                          <a class="nav-link" href="{%url 'register'%}">Sign Up</a>
+                      </li>
+                    {%endif%}
+                    {%if user.is_authenticated%}
+                      {%if user.is_staff == True%}
+                        <li class="nav-item mr-3">
+                            <a class="nav-link active" href="{%url 'company'%}">Company Funket<span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                      {% else %}
+                        <li class="nav-item mr-3">
+                        <a class="nav-link active" href="{%url 'personal'%}">My Funket<span
+                                class="sr-only">(current)</span></a>
+                        </li>
+
+                      {%endif%}
+                    {%endif%}
 
 
-    {%block content%}{%endblock%}
+                    <li class="nav-item mr-3 dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Events
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{%url 'exhibition'%}"><i class="fa-solid fa-paintbrush" style="font-size: 18px;"></i>Exhibitions
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{%url 'performance'%}"><i class="fa-solid fa-masks-theater" style="font-size: 18px;"></i>Shows
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                {%if user.is_authenticated%}
+                  <span class ="hello-msg111" style="font-family:'Barlow';color:white;font-size:20px;margin-right:20px;" >Hello,{{request.user}}</span>
+                {% endif %}
+                <form action="{% url 'searchEvent' %}" method="GET" class="form-inline active-cyan-4" style="display:flex;">
+                  <input class="form-control form-control-sm mr-3 w-75" name="query" type="text" placeholder="Search">
+                  {% comment %} <button class="btn" type="submit"><i class="fas fa-search" aria-hidden="true"></i></button> {% endcomment %}
+                  <button style="background:#301451;"><i class="fas fa-search" aria-hidden="true" type="submit" style="color:white;font-size:20px;"></i> </button>
+                  {% comment %} <button class="btn btn-primary" type="submit">Search</button> {% endcomment %}
+                </form>
+
+            </div>
+        </nav>
 
 
+        <div class="container-fluid p-0" id="second-fluid">
+            <div class="container" style="z-index:100000;">
+                {%if messages%}
+                  {%for message in messages%}
+                    {% comment %} {% if message.tags =='success'%} {% endcomment %}
+                    {% comment %} {{message}} {% endcomment %}
+                    <script>
+                        $(document).ready(function(){
+                            $("#myMessage").modal('show');
+
+                        });
+                    </script>
+                    <!-- Button trigger modal -->
+                    {% comment %} <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myMessage">
+                        Launch demo modal
+                    </button> {% endcomment %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="myMessage" style="color:black !important;" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content" >
+                            <div class="modal-header" >
+                            <h5 class="modal-title" id="myMessage"></i>Message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="text-align: center;">
+                                <div class ="text-center text-success mt-3" style="text-align: center;">
+                                    <i class="far fa-check-circle fa-6x" style="color:rgb(42, 184, 210);text-align: center;"></i>
+                                </div>
+                                <br>
+                                <div class='mb-3' >{{message}}</div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" style="background:rgb(42, 184, 210);" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    {% comment %} <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      {{message}}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div> {% endcomment %}
+                    {% endfor %}
+                {%endif%}
 
 
-  </div>
-  <!-- end of fixed container -->
+                {% if form.errors%}
+                  {%for error in errors%}
 
-  <!-- Bootstrap Bundle -->
+                  <script>
+                    $(document).ready(function(){
+                        $("#myError").modal('show');
 
+                    });
 
+                    </script>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myError" style="color:black !important;"data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content" >
+                            <div class="modal-header" >
+                            <h5 class="modal-title" id="myError"></i>Errors</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="text-align: center; color:black;">
+                                <div class ="text-center text-success mt-3" style="text-align: center;">
+                                    <i class="far fa-check-circle fa-6x" style="color:rgb(42, 184, 210);text-align: center;"></i>
+                                </div>
+                                <br>
+                                <div class='mb-3' style="color:black;">{{error}}</div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" style="background:rgb(42, 184, 210);" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    {% comment %} <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{error}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div> {% endcomment %}
+                  {% endfor %}
+                {%endif%}
+
+            </div>
+
+            {%block content%}{%endblock%}
+
+            <!-- footer -->
+            <div class="footer p-0">
+
+                <div class="row links-div p-1">
+
+                    <!--  logo  -->>
+                    <div class=" col-2 sub embed-responsive embed-responsive-1by1">
+                        <img class="embed-responsive-item" src="{% static 'imgs/NFT-nobg.png'%}" alt="cannot display" style="object-fit: cover;"></img>
+                    </div>
+                    <!-- contact us -->
+                    <div class=" col-2 sub contact-us">
+                        <div class="sub-header">
+                            <h4>聯絡我們</h4>
+                        </div>
+                        <ul class="mt-1 ml-4">
+
+                            <li class="p-0">
+                                <div class="a">
+                                    <a href="#"><i class="fa-solid fa-file-signature"></i> Contact Us </a>
+                                </div>
+                            </li>
+                            <!-- <li class="p-0">
+                    <div class="a"><a href="#">Report Issue </a></div>
+                </li> -->
+                            <li class="p-0">
+                                <div class="a">
+                                    <a href="#"><i class="fa-solid fa-bug"></i> Trouble Shooting </a>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- service policy -->
+                    <div class="col-2 sub policy">
+                        <div class="sub-header">
+                            <h4>服務政策</h4>
+                        </div>
+                        <ul class="mt-1 ml-4">
+
+                            <li class="p-0">
+                                <div class="a">
+                                    <a href="#"><i class="fa-solid fa-bell-concierge"></i> Terms of Services </a>
+                                </div>
+                            </li>
+
+                            <li class="p-0">
+                                <div class="a">
+                                    <a href="#"><i class="fa-solid fa-scale-balanced"></i> Privacy Policy </a>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <!-- about us -->
+                    <div class="col-2 sub about-us">
+                        <div class="sub-header">
+                            <h4>關於我們</h4>
+                        </div>
+                        <ul class="mt-1 ml-4" style="display: flex;">
+
+                            <li class="p-0">
+                                <div class="a">
+                                    <a href="#" title="Minterlake facebook" style="font-size:20px;">
+                                        <i class="fa-brands fa-facebook"></i>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <li class="p-0">
+                                <div class="a">
+                                    <a href="#" title="Minterlake instagram" style="font-size:24px;">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Bootstrap Bundle -->
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-    crossorigin="anonymous"></script>
-    <script src="{% static 'js/buyConfirm/jquery.steps.js' %}"></script>
-  	<script src="{% static 'js/buyConfirm/jquery.steps.min.js' %}"></script>
-	  <script src="{% static 'js/buyConfirm/main.js' %}"></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+  crossorigin="anonymous"></script>
 
 </body>
 
